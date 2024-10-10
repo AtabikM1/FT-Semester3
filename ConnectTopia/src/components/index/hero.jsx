@@ -44,7 +44,7 @@ const IndexHero = () => {
         <p className="text-3xl font-thin text-gray-300">
           Connecting Talent, Shaping Futures.
         </p>
-        <button className="text-white mt-6 px-4 py-2 shadow-2xl outline outline-2 outline-white rounded-xl hover:bg-white hover:text-black">
+        <button className="w-40 text-white mt-6 px-4 py-2 shadow-2xl outline outline-2 outline-white rounded-xl hover:bg-white hover:text-black">
           Learn more
         </button>
       </div>
