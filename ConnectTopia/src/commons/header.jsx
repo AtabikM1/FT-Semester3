@@ -78,7 +78,7 @@ const Header = () => {
           ref={textRef}
           className="flex items-center justify-between h-full"
         >
-          <h1 className="font-semibold">ConnectTopia</h1>
+          <h1 className="font-semibold">Polinema Carrier</h1>
           
           <nav ref={listRef} className="flex items-center gap-8">
             {listMenu.map((menuItem) => (

@@ -39,7 +39,7 @@ const IndexHero = () => {
     <div className="min-h-screen bg-slate-950 flex justify-around items-center">
       <div ref={textRef} className="">
         <h1 className="mb-2 text-6xl font-bold text-white">
-          Connect<span className="text-neutral-500">Topia</span>
+          Polinema<span className="text-neutral-500">Carrier</span>
         </h1>
         <p className="text-3xl font-thin text-gray-300">
           Connecting Talent, Shaping Futures.
@@ -50,8 +50,8 @@ const IndexHero = () => {
       </div>
       <div className="">
         <img
-          src=""
-          alt="template.jpeg"
+          src="template.jpeg"
+  
           className="h-[30rem] w-[30rem] object-cover shadow-2xl rounded-md"
         />
       </div>
