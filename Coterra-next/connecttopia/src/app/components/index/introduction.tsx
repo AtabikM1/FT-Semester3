@@ -123,7 +123,7 @@ const IndexIntroduction: React.FC = () => {
       <animated.div
         ref={cardRef}
         style={cardSpring}
-        className="flex-shrink-0 w-[40rem] h-[20rem] bg-slate-950 rounded-lg flex flex-col justify-center items-center space-y-5"
+        className="flex-shrink-0 w-[40rem] h-[20rem] bg-gradient-to-br from-black to-gray-900 rounded-lg flex flex-col justify-center items-center space-y-5"
       >
         <div className="flex justify-between w-full px-8 items-center">
           <div className="flex">
