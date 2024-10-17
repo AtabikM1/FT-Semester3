@@ -17,7 +17,7 @@ export default function Home() {
       <IndexIntroduction />
       <Benefits />
       <PlatformPerformanceChart />
-      {/* <FeaturedJobs /> */}
+      <FeaturedJobs />
       <IndexCTA />
       <Footer />
     </>

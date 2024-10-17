@@ -4,15 +4,15 @@ import Image from "next/image";
 
 export default function Footer(): JSX.Element {
   return (
-    <div className="relative min-h-40 flex items-center justify-around">
-      <Image
+    <div className="relative min-h-40 flex items-center justify-around bg-black">
+      {/* <Image
         src={backgroundImage}
         alt="Background"
         layout="fill"
         objectFit="cover"
         quality={100}
       />
-      <div className="absolute bg-black inset-0 opacity-80 backdrop-blur-sm "></div>
+      <div className="absolute bg-black inset-0 opacity-80 backdrop-blur-sm "></div> */}
       <div className="relative inline-0 text-white">
         <h2>ConnectTopia</h2>
       </div>

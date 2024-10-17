@@ -2,6 +2,7 @@ import { Sparkles } from "lucide-react";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Button } from "@/components/ui/button";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,7 +53,7 @@ const IndexCTA = () => {
   return (
     <main
       ref={sectionRef}
-      className="flex min-h-screen items-center justify-center bg-gradient-to-b from-black to-gray-950 py-20"
+      className="flex min-h-screen items-center justify-center bg-gradient-to-br from-black to-black py-20"
     >
       <section className="mx-auto w-full max-w-3xl px-4">
         <article
@@ -60,27 +61,32 @@ const IndexCTA = () => {
           className="relative flex flex-col items-center text-center"
         >
           <h1 className="mb-6 text-4xl font-black leading-tight text-white sm:text-5xl">
-            What Are You <span className="text-gray-500">Waiting</span> For?
+            Ready to Advance Your <span className="text-slate-500">Career</span>
+            ?
           </h1>
-
-          <p className="mb-8 max-w-2xl text-lg text-gray-600">
-            Join{" "}
-            <span className="font-semibold text-gray-500">ConnectTopia</span>{" "}
-            today and turn your creative ideas into reality. Our community of
-            creators is waiting for you.
+          <p className="mb-8 max-w-2xl text-lg text-white/90">
+            Join <span className="font-semibold text-slate-500">thousands</span>{" "}
+            of professionals who've already taken the next step in their career
+            journey. Your dream job is waiting.
           </p>
-
           <div ref={buttonRef} className="flex flex-wrap justify-center gap-4">
-            <a className="transform rounded-full bg-white px-8 py-3 font-bold text-black transition duration-300 ease-in-out hover:scale-105 hover:bg-[#d57260]">
-              Start Creating
-            </a>
-            <a className="transform rounded-full border-2 text-black border-gray-400 bg-white px-8 py-3 font-bold transition duration-300 ease-in-out hover:scale-105 hover:bg-[#e68369] hover:text-white">
-              About Us
-            </a>
+            <Button
+              variant="secondary"
+              size="lg"
+              className="transform transition duration-300 ease-in-out hover:scale-105"
+            >
+              Create Profile
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="transform border-2 border-white bg-transparent text-white transition duration-300 ease-in-out hover:scale-105 hover:bg-white hover:text-blue-500"
+            >
+              Browse Jobs
+            </Button>
           </div>
-
-          <Sparkles className="absolute -left-4 top-0 h-8 w-8 text-gray-700 opacity-75" />
-          <Sparkles className="absolute -right-4 bottom-0 h-8 w-8 text-gray-700 opacity-75" />
+          <Sparkles className="absolute -left-4 top-0 h-8 w-8 text-white opacity-75" />
+          <Sparkles className="absolute -right-4 bottom-0 h-8 w-8 text-white opacity-75" />
         </article>
       </section>
     </main>
