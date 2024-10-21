@@ -214,7 +214,7 @@ export const IndexIntroduction = () => {
               ref={(el) => (reviewCardsRef.current[index] = el)}
               className="flex-shrink-0 w-[40rem] h-[20rem] bg-slate-900 rounded-lg flex flex-col justify-center items-center space-y-5 opacity-0"
             >
-              <div className="flex justify-between w-full px-8">
+              <div className="flex justify-between w-full px-8 items-center">
                 <div className="flex">
                   <img
                     src={user.image}
