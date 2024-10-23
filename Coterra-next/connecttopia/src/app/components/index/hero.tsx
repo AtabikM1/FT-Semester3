@@ -15,8 +15,8 @@ const SUGGESTED_JOBS = [
 
 export default function IndexHero() {
   return (
-    <section className="h-screen bg-gradient-to-br from-sky-950 to-sky-900">
-      <div className="container mx-auto h-full w-4/5 flex items-center justify-between px-4">
+    <section className="h-screen bg-gradient-to-br from-sky-950 to-sky-950">
+      <div className="container mx-auto h-full w-4/5 flex items-center justify-between px-4 md:gap-4">
         <div className="max-w-xl space-y-8 text-white">
           <h1 className="text-5xl font-bold text-[#F7D13A] tracking-tight">
             ConnectTopia
@@ -64,7 +64,7 @@ export default function IndexHero() {
           </div>
         </div>
         <div className="hidden lg:block">
-          <div className="relative h-96 w-96 overflow-hidden rounded-lg shadow-xl">
+          <div className="relative h-[28rem] w-[28rem] overflow-hidden rounded-lg shadow-xl">
             <Image
               src={templateImage}
               alt="Platform preview"

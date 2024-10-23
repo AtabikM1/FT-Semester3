@@ -31,7 +31,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50 bg-sky-950 shadow-lg text-white backdrop-blur-md">
       <div className="h-24 px-6 md:px-8 mx-auto max-w-7xl">
         <div className="flex items-center justify-between h-full">
-          <h1 className="font-extrabold text-2xl md:text-3xl text-[#F7D13A] hover:scale-105 transition-all duration-500 tracking-tight">
+          <h1 className="font-bold text-2xl md:text-3xl text-[#F7D13A] hover:scale-105 transition-all duration-500 tracking-tight">
             ConnectTopia
           </h1>
 
