@@ -13,13 +13,13 @@ export default function Home() {
   return (
     <>
       <Header />
-      <IndexHero />
+      <IndexHero /> {/*
       <IndexIntroduction />
       <Benefits />
       <PlatformPerformanceChart />
       <FeaturedJobs />
       <IndexCTA />
-      <Footer />
+      <Footer /> */}
     </>
   );
 }

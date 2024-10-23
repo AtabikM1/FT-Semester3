@@ -1,49 +1,78 @@
 import React from "react";
+import templateImage from "@/public/templatePost.png";
+import Image from "next/image";
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import templateImage from "@/public/template1.jpg";
 
-export default function IndexHero(): JSX.Element {
+const SUGGESTED_JOBS = [
+  "Management",
+  "Sales",
+  "Digital Marketing",
+  "Programming",
+  "Design",
+];
+
+export default function IndexHero() {
   return (
-    <div className="relative h-screen flex items-center justify-center">
-      <Image
-        src={templateImage}
-        alt="Background"
-        layout="fill"
-        objectFit="cover"
-        quality={100}
-      />
-      <div className="absolute inset-0 bg-black opacity-70"></div>
-      <div className="relative z-10 max-w-4xl mx-auto text-center text-white p-6">
-        <h1 className="text-5xl font-bold mb-4">
-          Find Your <span className="text-gray-500">Dream Career</span>
-        </h1>
-        <p className="text-xl mb-8 text-gray-300">
-          Connect with professionals, discover opportunities, and take the next
-          step <br />
-          in your career journey.
-        </p>
-        <div className="flex items-center justify-center space-x-2">
-          <Input
-            type="text"
-            placeholder="Search for jobs, skills, or companies"
-            className="w-full max-w-lg bg-white text-gray-800"
-          />
-          <Button variant="secondary" size="icon">
-            <Search className="h-4 w-4" />
-          </Button>
+    <section className="h-screen bg-gradient-to-br from-sky-950 to-sky-900">
+      <div className="container mx-auto h-full w-4/5 flex items-center justify-between px-4">
+        <div className="max-w-xl space-y-8 text-white">
+          <h1 className="text-5xl font-bold text-[#F7D13A] tracking-tight">
+            ConnectTopia
+          </h1>
+          <div className="space-y-6">
+            <p className="text-base font-normal leading-relaxed text-gray-200">
+              With a user-friendly interface and a vast network of
+              professionals, we make job searching and hiring efficient and
+              effective. Join us and take the next step towards a brighter
+              future!
+            </p>
+            <div className="space-y-4">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search job titles..."
+                  className="h-12 w-full bg-white rounded-lg pl-10 text-base text-gray-800 placeholder:text-gray-400"
+                />
+              </div>
+              <Button
+                size="lg"
+                className="w-full bg-blue-600 text-base font-medium hover:bg-blue-700"
+              >
+                Find Job
+              </Button>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-sm font-medium text-gray-300">
+                  Suggestions:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {SUGGESTED_JOBS.map((job) => (
+                    <Button
+                      key={job}
+                      variant="ghost"
+                      size="sm"
+                      className="rounded-full bg-white/10 text-xs text-gray-200 hover:bg-white/20"
+                    >
+                      {job}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="mt-12 flex justify-center space-x-4 text-black">
-          <Button variant="secondary" size="lg">
-            Find Jobs
-          </Button>
-          <Button variant="outline" size="lg">
-            Build Your Network
-          </Button>
+        <div className="hidden lg:block">
+          <div className="relative h-96 w-96 overflow-hidden rounded-lg shadow-xl">
+            <Image
+              src={templateImage}
+              alt="Platform preview"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
