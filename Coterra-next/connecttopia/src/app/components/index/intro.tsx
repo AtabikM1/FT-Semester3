@@ -36,11 +36,11 @@ const JOB_STEPS: JobStep[] = [
 
 export default function IndexIntro() {
   return (
-    <section className="min-h-screen bg-sky-950 py-16 px-4 md:py-24">
+    <section className="h-[90vh] bg-[#1C2056] py-16 px-4 md:py-24">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           <div className="flex flex-col justify-center">
-            <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 lg:mb-0">
+            <h1 className="text-white text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-4 lg:mb-0 max-w-[30rem]">
               Mulai Karirmu dalam{" "}
               <span className="text-yellow-400">4 Tahap</span>
             </h1>
@@ -79,7 +79,9 @@ export default function IndexIntro() {
             </div>
           ))}
         </div>
-        <h1 className="text-2xl text-white mt-10 italic">-Hanya beberapa klik saja, mudah bukan??</h1>
+        <h1 className="text-2xl text-white mt-10 italic">
+          -Hanya beberapa klik saja, mudah bukan??
+        </h1>
       </div>
     </section>
   );

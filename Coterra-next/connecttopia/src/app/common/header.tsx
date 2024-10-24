@@ -28,11 +28,11 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-sky-950 shadow-lg text-white backdrop-blur-md">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#1C2056] shadow-lg text-white backdrop-blur-md">
       <div className="h-24 px-6 md:px-8 mx-auto max-w-7xl">
         <div className="flex items-center justify-between h-full">
           <h1 className="font-bold text-2xl md:text-3xl text-[#F7D13A] hover:scale-105 transition-all duration-500 tracking-tight">
-            ConnectTopia
+            PolinemaCarrier
           </h1>
 
           <nav className="hidden md:flex items-center gap-10">
@@ -46,11 +46,11 @@ const Header = () => {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-8 font-semibold">
             <a className="cursor-pointer text-gray-100 font-medium hover:text-[#F7D13A] hover:scale-105 transition duration-300">
               Login
             </a>
-            <a className="cursor-pointer px-8 py-3 flex items-center gap-2 rounded-full text-gray-900 font-semibold bg-[#F7D13A] hover:scale-105 hover:bg-[#F7D13A]/90 transition duration-300">
+            <a className="cursor-pointer px-8 py-3 flex items-center gap-2 rounded-full text-gray-900  bg-[#F7D13A] hover:scale-105 hover:bg-[#F7D13A]/90 transition duration-300">
               Register Now <ArrowRight className="w-5 h-5" />
             </a>
           </div>

@@ -18,6 +18,7 @@ export default function Home() {
       <IndexHero />
       <IndexLogo />
       <IndexIntro />
+      <FeaturedJobs />
       {/*
       <IndexIntroduction />
       <Benefits />
