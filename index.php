@@ -4,6 +4,8 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<br><br>
+<link rel="stylesheet" href="/asset/css/style.css">
 
 <head>
     <meta charset="UTF-8">
@@ -46,7 +48,7 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
                     <span class="absolute inset-0 bg-[#4a90e2]/10 rounded-2xl blur-3xl"></span>
                     <span
                         class="absolute top-1/2 -translate-y-1/2 right-10 w-[70%] h-[130%] bg-[#357abd] rounded-2xl"></span>
-                    <img src="assets/hero-image.jpg" alt="Hero Image"
+                    <img src="asset/about-us.jpg" alt="Hero Image"
                         class="rounded-2xl shadow-lg border-4 border-[#4a90e2] relative z-10" />
                 </div>
             </div>
@@ -84,3 +86,27 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
     // Include footer jika ada
     include 'include/footer.php';
     ?>
+
+    <script>// Tunggu hingga halaman selesai dimuat
+        window.addEventListener("load", function () {
+            // Cari semua link (anchor) yang mengarah ke halaman lain
+            const links = document.querySelectorAll('a[href], button[data-href]'); // Menambahkan button dengan data-href
+
+            links.forEach(function (link) {
+                link.addEventListener("click", function (event) {
+                    // Cegah aksi default link (pindah halaman langsung)
+                    event.preventDefault();
+
+                    // Tambahkan kelas slide-out untuk transisi ke kiri
+                    document.querySelector('body').classList.add('slide-out');
+
+                    // Tunggu durasi transisi selesai (500ms) sebelum arahkan ke halaman tujuan
+                    setTimeout(function () {
+                        // Jika link adalah anchor, pindah ke href, jika button, ambil data-href
+                        const target = link.getAttribute('href') || link.getAttribute('data-href');
+                        window.location.href = target; // Arahkan ke halaman yang dituju
+                    }, 500); // Durasi animasi slide-out
+                });
+            });
+        });
+    </script>

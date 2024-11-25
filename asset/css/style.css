@@ -1,0 +1,12 @@
+.page {
+    position: relative;
+    transition: transform 0.5s ease-in-out;
+}
+
+.page.slide-out {
+    transform: translateX(-100%);
+}
+
+.page.slide-in {
+    transform: translateX(0);
+}

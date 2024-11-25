@@ -16,7 +16,7 @@ $sql_aplikasi = "SELECT loker.judul, aplikasi.status
                  FROM aplikasi
                  JOIN loker ON aplikasi.id_loker = loker.idLoker
                  WHERE aplikasi.username_pelamar = ?";
-$stmt_aplikasi = sqlsrv_prepare($conn, $sql_aplikasi, array($_SESSION['username']));
+$stmt_aplikasi = sqlsrv_prepare($conn, $sql_aplikasi, array($_SESSION['Role']));
 sqlsrv_execute($stmt_aplikasi);
 ?>
 <br><br>

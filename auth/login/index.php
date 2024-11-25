@@ -114,6 +114,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <a href="/register.php" class="text-sm text-gray-600 hover:underline">Create Account</a>
             </div>
         </div>
+        <script>
+            const loginButton = document.getElementById('login-button');
+            const loginForm = document.getElementById('login-form');
+            const loginContainer = document.getElementById('login-container');
+
+
+        </script>
     </div>
 
 </body>

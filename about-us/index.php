@@ -37,7 +37,7 @@ include '../include/header.php';
 
         <!-- Hero Image Section -->
         <div class="mt-12">
-            <img src="path/to/hero-image.jpg" alt="Hero image" class="w-full rounded-lg shadow-xl object-cover">
+            <img src="../asset/about-us.jpg" alt="Hero image" class="w-full rounded-lg shadow-xl object-cover">
         </div>
     </div>
 </section>
@@ -80,7 +80,7 @@ include '../include/header.php';
 <section class="bg-white py-20 px-4 lg:px-8">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-4xl font-bold text-[#0d5c91] mb-8">Meet Our Team</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             <!-- Team member -->
             <?php
             // List of team members
@@ -113,4 +113,4 @@ include '../include/header.php';
 <?php
 
 ?>
-ß<?php include '../include/footer.php'; ?>
+<?php include '../include/footer.php'; ?>

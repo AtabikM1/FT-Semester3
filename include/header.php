@@ -9,6 +9,8 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 $isUserLoggedIn = isset($_SESSION['username']);
 $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
+
+
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +41,8 @@ $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
 
                 <!-- Navigation Menu -->
                 <nav class="hidden md:flex items-center gap-10">
-
+                    <a href="../../dashboard"
+                        class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Dashboard</a>
                     <a href="../../contact"
                         class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Contact</a>
                     <a href="../../about-us"
@@ -66,12 +69,12 @@ $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
                                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
                                 <a href="/dashboard/pelamar"
                                     class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dashboard</a>
-                                <a href="/profile"
+                                <a href="../../profile/pelamar"
                                     class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profile</a>
                                 <div class="h-px bg-gray-200 my-2"></div>
-                                <a href="../../auth/login.php" <?php session_unset();
-                                session_destroy(); ?>
+                                <a href="/auth/logout/index.php"
                                     class="block px-4 py-2 text-red-600 hover:bg-red-50">Logout</a>
+
                             </div>
                         </div>
                     <?php else: ?>
@@ -104,7 +107,7 @@ $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
                 <a href="/main/about-us"
                     class="text-lg font-medium text-gray-200 hover:text-amber-300 transition duration-300">About Us</a>
                 <?php if ($isUserLoggedIn): ?>
-                    <a href="../../login.php"
+                    <a href="../auth/logout"
                         class="text-lg font-medium text-red-600 hover:text-red-400 transition duration-300">Logout</a>
                 <?php else: ?>
                     <a href="/auth/login"
@@ -113,6 +116,7 @@ $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
                         class="text-lg font-medium text-amber-400 hover:text-amber-300 transition duration-300">Register
                         Now</a>
                 <?php endif; ?>
+
             </nav>
         </div>
     </header>

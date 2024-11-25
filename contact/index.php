@@ -25,8 +25,8 @@ include '../include/header.php';
     </div>
 
     <!-- Contact Information Section -->
-    <div class="bg-white rounded-lg shadow-xl flex justify-center items-center p-0">
-        <div class="bg-[#1C2056] text-white rounded-lg p-10 max-w-md w-full flex flex-col justify-between">
+    <div class="flex justify-center items-center w-full ">
+        <div class="bg-[#1C2056] text-white rounded-lg p-10">
             <div class="z-10 space-y-6">
                 <h1 class="text-3xl font-semibold">Contact Information</h1>
                 <p class="text-gray-300">
