@@ -12,6 +12,7 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PolinemaCareer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="../asset/logooo.png" type="image/png">
 </head>
 
 <body class="bg-gray-50 text-gray-900">

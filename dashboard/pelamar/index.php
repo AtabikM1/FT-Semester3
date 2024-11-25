@@ -11,6 +11,7 @@ $sql_loker = "SELECT * FROM loker";
 $result_loker = sqlsrv_query($conn, $sql_loker);
 include "../../include/header.php";
 
+
 // Query untuk mendapatkan data aplikasi pelamar jika ada
 $sql_aplikasi = "SELECT loker.judul, aplikasi.status 
                  FROM aplikasi

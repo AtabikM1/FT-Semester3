@@ -2,6 +2,19 @@
 // Include header file for the website's header
 include '../include/header.php';
 ?>
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$isUserLoggedIn = isset($_SESSION['username']);
+$currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
+$userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
+
+// Ambil foto profil dari session
+$perusahaanFoto = isset($_SESSION['perusahaanFoto']) ? $_SESSION['perusahaanFoto'] : 'https://via.placeholder.com/40';
+$userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.placeholder.com/40';
+?>
 
 <!-- About Us Section -->
 <section class="bg-white py-20 px-4 lg:px-8">

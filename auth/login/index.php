@@ -52,8 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+// Simpan foto ke session setelah login
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
