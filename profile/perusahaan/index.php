@@ -26,7 +26,7 @@ WHERE
 $stmt_perusahaan = sqlsrv_prepare($conn, $sql_perusahaan, array($username));
 sqlsrv_execute($stmt_perusahaan);
 $perusahaan = sqlsrv_fetch_array($stmt_perusahaan, SQLSRV_FETCH_ASSOC);
-$perusahaanFoto = $perusahaan['foto'] ? 'data:image/jpeg;base64,' . base64_encode($perusahaan['foto']) : 'https://via.placeholder.com/40';
+
 include "../../include/header.php";
 ?>
 <div class="min-h-screen bg-gray-50 pt-20">

@@ -3,13 +3,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+
 // Mengecek status login
 $isUserLoggedIn = isset($_SESSION['username']);
 $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
 $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null; // Mendapatkan Role pengguna dari session
-
-$perusahaanFoto = isset($_SESSION['perusahaanFoto']) ? $_SESSION['perusahaanFoto'] : 'https://via.placeholder.com/40';
-$userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.placeholder.com/40';
 ?>
 
 <!DOCTYPE html>
@@ -56,14 +54,15 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
                                 class="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-300">
                                 <div class="relative">
                                     <?php if ($userRole == '3'): ?>
-                                        <!-- Jika role perusahaan, tampilkan foto perusahaan -->
-                                        <img src="<?php echo $perusahaanFoto; ?>" alt="Company Logo"
-                                            class="w-8 h-8 rounded-full shadow-md border-amber-400">
-                                    <?php else: ?>
-                                        <!-- Jika bukan perusahaan, tampilkan foto user -->
-                                        <img src="<?php echo $user['foto'] ? 'data:image/jpeg;base64,' . base64_encode($user['foto']) : 'https://via.placeholder.com/40'; ?>"
+                                        <!-- Jika role perusahaan, gunakan foto dari sesi perusahaan -->
+                                        <img src="<?php echo isset($_SESSION['perusahaanFoto']) ? $_SESSION['perusahaanFoto'] : '/path/to/default-logo.jpeg'; ?>"
+                                            alt="Company Logo" class="w-8 h-8 rounded-full shadow-md border-amber-400">
+                                    <?php elseif ($userRole == '2'): ?>
+                                        <!-- Jika role pelamar, gunakan foto dari sesi user -->
+                                        <img src="<?php echo isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.placeholder.com/40'; ?>"
                                             alt="User Photo" class="w-8 h-8 rounded-full shadow-md border-amber-400">
                                     <?php endif; ?>
+
                                     <div
                                         class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white shadow-sm">
                                     </div>

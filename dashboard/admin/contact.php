@@ -1,23 +1,8 @@
 <?php
-include '../include/header.php';
+include "header.php";
 ?>
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-$isUserLoggedIn = isset($_SESSION['username']);
-$currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
-$userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
-
-// Ambil foto profil dari session
-$perusahaanFoto = isset($_SESSION['perusahaanFoto']) ? $_SESSION['perusahaanFoto'] : 'https://via.placeholder.com/40';
-$userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.placeholder.com/40';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
-<br><br><br><br>
 
 <head>
     <meta charset="UTF-8">
@@ -25,41 +10,13 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
     <title>Contact Us</title>
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        /* Custom fade-in animation */
-        .fade-in {
-            animation: fadeIn 1s ease-out;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Custom transition for smooth hover effects */
-        .smooth-transition {
-            transition: all 0.3s ease-in-out;
-        }
-
-        /* Hover effect for icons */
-        .hover-effect:hover {
-            transform: scale(1.1);
-        }
-    </style>
 </head>
+<br><br><br><br>
 
-<body
-    class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col justify-center items-center py-20 fade-in">
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col justify-center items-center py-20">
 
     <!-- Header Section -->
-    <div class="text-center mb-10 fade-in">
+    <div class="text-center mb-10">
         <h1 class="text-5xl text-amber-400 font-semibold">Contact Us</h1>
         <h2 class="text-xl font-light text-gray-600 mt-4">
             Reach out to us with your thoughts, and we'll get back to you!
@@ -67,7 +24,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
     </div>
 
     <!-- Contact Information Section -->
-    <div class="flex justify-center items-center w-full fade-in">
+    <div class="flex justify-center items-center w-full ">
         <div class="bg-[#1C2056] text-white rounded-lg p-10">
             <div class="z-10 space-y-6">
                 <h1 class="text-3xl font-semibold">Contact Information</h1>
@@ -78,7 +35,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
 
             <!-- Contact Details -->
             <div class="z-10 space-y-6 mt-8">
-                <div class="flex items-center gap-4 group cursor-pointer smooth-transition hover-effect">
+                <div class="flex items-center gap-4 group cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="group-hover:text-amber-400 transition-colors w-6 h-6"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -86,7 +43,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
                     </svg>
                     <p class="group-hover:text-amber-400 transition-colors">081235305531</p>
                 </div>
-                <div class="flex items-center gap-4 group cursor-pointer smooth-transition hover-effect">
+                <div class="flex items-center gap-4 group cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="group-hover:text-amber-400 transition-colors w-6 h-6"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -94,7 +51,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
                     </svg>
                     <p class="group-hover:text-amber-400 transition-colors">contact@polinemacarrier.com</p>
                 </div>
-                <div class="flex items-center gap-4 group cursor-pointer smooth-transition hover-effect">
+                <div class="flex items-center gap-4 group cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" class="group-hover:text-amber-400 transition-colors w-6 h-6"
                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -106,21 +63,21 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
 
             <!-- Social Media Icons -->
             <div class="z-10 flex space-x-4 mt-8">
-                <div class="bg-white/10 p-2 rounded-full cursor-pointer smooth-transition hover:bg-[#1DA1F2]">
+                <div class="bg-white/10 p-2 rounded-full cursor-pointer hover:bg-[#1DA1F2] transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M7.5 12a4.5 4.5 0 019 0 4.5 4.5 0 01-9 0zM12 3v3m0 0h-3m3 0h3M9 21v-6m3 6v-6m3 6v-6" />
                     </svg>
                 </div>
-                <div class="bg-white/10 p-2 rounded-full cursor-pointer smooth-transition hover:bg-[#E4405F]">
+                <div class="bg-white/10 p-2 rounded-full cursor-pointer hover:bg-[#E4405F] transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 2a10 10 0 0110 10v2a2 2 0 01-2 2H14v6a2 2 0 01-2 2h-4a2 2 0 01-2-2v-6H4a2 2 0 01-2-2V12a10 10 0 0110-10z" />
                     </svg>
                 </div>
-                <div class="bg-white/10 p-2 rounded-full cursor-pointer smooth-transition hover:bg-[#5865F2]">
+                <div class="bg-white/10 p-2 rounded-full cursor-pointer hover:bg-[#5865F2] transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -130,7 +87,6 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
             </div>
         </div>
     </div>
-
 </body>
 
 </html>

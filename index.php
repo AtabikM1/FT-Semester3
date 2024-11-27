@@ -1,6 +1,10 @@
 <?php
 // Include header jika ada
-include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
+include './include/header.php'; // Misalnya header.php berisi struktur HTML awal
+
+// Cek apakah pengguna sudah login
+$isLoggedIn = isset($_SESSION['username']); // Username disimpan dalam sesi
+$userRole = $isLoggedIn ? $_SESSION['Role'] : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,6 +20,43 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
 </head>
 
 <body class="bg-gray-50 text-gray-900">
+    <!-- Inline Tailwind CSS for Animations -->
+    <style>
+        /* Animasi untuk teks dan gambar */
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 1s ease-out forwards;
+        }
+
+        .animate-slideInRight {
+            animation: slideInRight 1s ease-out forwards;
+        }
+    </style>
+
+    <!-- Welcome Section -->
     <section class="relative min-h-screen bg-[#f0f8ff] overflow-hidden">
         <div class="absolute top-20 -left-96 w-[500px] h-[500px] bg-[#4a90e2]/10 rounded-full blur-3xl opacity-80">
         </div>
@@ -24,7 +65,7 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
         <div class="container mx-auto px-6 lg:px-20 py-28">
             <div class="grid lg:grid-cols-2 gap-12 items-center">
                 <!-- Konten Teks -->
-                <div class="space-y-8">
+                <div class="space-y-8 animate-slideInLeft">
                     <h1 class="text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
                         Welcome to <span class="text-[#4a90e2]">PolinemaCareer</span>
                     </h1>
@@ -33,7 +74,15 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
                         opportunities with us.
                     </p>
                     <div class="flex gap-6">
-                        <a href="./auth/register.php"
+                        <a href="<?php
+                        if (!$isLoggedIn) {
+                            echo './auth/login'; // Belum login
+                        } elseif ($userRole == '2') {
+                            echo '/browse-jobs'; // Pelamar
+                        } elseif ($userRole == '3') {
+                            echo '/post-job'; // Perusahaan
+                        }
+                        ?>"
                             class="px-6 py-3 bg-[#4a90e2] text-white font-semibold rounded-lg shadow-lg hover:bg-[#357abd] transition">
                             Get Started
                         </a>
@@ -45,7 +94,7 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
                 </div>
 
                 <!-- Gambar Hero -->
-                <div class="relative hidden lg:block">
+                <div class="relative hidden lg:block animate-slideInRight">
                     <span class="absolute inset-0 bg-[#4a90e2]/10 rounded-2xl blur-3xl"></span>
                     <span
                         class="absolute top-1/2 -translate-y-1/2 right-10 w-[70%] h-[130%] bg-[#357abd] rounded-2xl"></span>
@@ -111,3 +160,6 @@ include 'include/header.php'; // Misalnya header.php berisi struktur HTML awal
             });
         });
     </script>
+</body>
+
+</html>

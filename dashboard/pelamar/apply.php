@@ -8,7 +8,7 @@ if (isset($_POST['id_loker']) && isset($_POST['username_pelamar'])) {
     $username_pelamar = $_POST['username_pelamar'];
 
     // Cek apakah pelamar sudah melamar lowongan ini
-    $sql_check = "SELECT * FROM aplikasi WHERE id_loker = ? AND username_pelamar = ?";
+    $sql_check = "SELECT * FROM melamar WHERE Loker_idLoker = ? AND User_pelamar = ?";
     $stmt_check = sqlsrv_prepare($conn, $sql_check, array($id_loker, $username_pelamar));
     sqlsrv_execute($stmt_check);
 
@@ -16,7 +16,8 @@ if (isset($_POST['id_loker']) && isset($_POST['username_pelamar'])) {
         echo "Anda sudah melamar lowongan ini.";  // Pesan jika sudah melamar
     } else {
         // Menyimpan aplikasi baru
-        $sql_insert = "INSERT INTO aplikasi (id_loker, username_pelamar, status) VALUES (?, ?, 'Pending')";
+        $sql_insert = "INSERT INTO melamar (Loker_idLoker, User_pelamar, status_lamaran_id, waktu) VALUES (?, ?, 1, GETDATE())";
+
         $stmt_insert = sqlsrv_prepare($conn, $sql_insert, array($id_loker, $username_pelamar));
 
         if (sqlsrv_execute($stmt_insert)) {

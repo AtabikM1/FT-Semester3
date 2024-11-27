@@ -15,20 +15,20 @@ $sql_user = "SELECT
     [user].nama,
     [user].password,
     [user].Role_idRole,
-    profile.foto,
-    profile.alamat,
-    profile.tanggal_lahir,
-    profile.gender,
-    profile.tanggal_daftar,
-    profile.telepon,
-    profile.email,
-    profile.bio
+    pelamar.foto,
+    pelamar.alamat,
+    pelamar.tanggal_lahir,
+    pelamar.gender,
+    pelamar.tanggal_daftar,
+    pelamar.telepon,
+    pelamar.email,
+    pelamar.bio
 FROM 
     [user]
 LEFT JOIN 
-    profile 
+    pelamar 
 ON 
-    [user].username = profile.User_username
+    [user].username = pelamar.User_username
 WHERE 
     [user].username = 'atabikm';
 ";

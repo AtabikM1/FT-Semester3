@@ -21,8 +21,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Query untuk mencari user berdasarkan username dan password
         $query = "SELECT * FROM dbo.[user] WHERE username = ? AND password = ?";
 
-
-
         // Menyiapkan query
         $stmt = sqlsrv_prepare($conn, $query, array(&$username, &$password, &$role));
 
@@ -34,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nama'] = $row['nama'];
                 $_SESSION['password'] = $row['password'];
                 $_SESSION['Role'] = $row['Role_idRole'];
-
                 // Redirect berdasarkan role pengguna
                 if ($_SESSION['Role'] == '2') {
                     header("Location: /dashboard/pelamar");
@@ -43,6 +40,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     header("Location: /dashboard/admin");
                 }
+                if ($row['Role_idRole'] == 3) { // Role perusahaan
+                    $fotoQuery = "SELECT foto FROM perusahaan WHERE User_username = ?";
+                    $stmtFoto = sqlsrv_prepare($conn, $fotoQuery, array($username));
+                    sqlsrv_execute($stmtFoto);
+                    if ($fotoRow = sqlsrv_fetch_array($stmtFoto, SQLSRV_FETCH_ASSOC)) {
+                        $_SESSION['perusahaanFoto'] = $fotoRow['foto'] ? 'data:image/jpeg;base64,' . base64_encode($fotoRow['foto']) : 'https://via.placeholder.com/40';
+                    }
+                } elseif ($row['Role_idRole'] == 2) { // Role pelamar
+                    $fotoQuery = "SELECT foto FROM pelamar WHERE User_username = ?";
+                    $stmtFoto = sqlsrv_prepare($conn, $fotoQuery, array($username));
+                    sqlsrv_execute($stmtFoto);
+                    if ($fotoRow = sqlsrv_fetch_array($stmtFoto, SQLSRV_FETCH_ASSOC)) {
+                        $_SESSION['userFoto'] = $fotoRow['foto'] ? 'data:image/jpeg;base64,' . base64_encode($fotoRow['foto']) : 'https://via.placeholder.com/40';
+                    }
+                }
+
                 exit;
             } else {
                 $error = "Username atau password salah";
@@ -56,7 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -65,14 +77,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Menyertakan Tailwind CSS -->
+    <style>
+        /* Animasi login form dari kanan ke tengah */
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in {
+            animation: slideIn 0.6s ease-out forwards;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-50">
 
     <!-- Form Login -->
     <div class="flex justify-center items-center h-screen">
-        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md slide-in">
             <h1 class="text-3xl font-bold text-center text-gray-900 mb-6">Login</h1>
             <p class="text-center text-gray-600 mb-4">Unlock Endless Possibilities with Us</p>
 
@@ -113,16 +140,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Create Account Link -->
             <div class="text-center mt-4">
-                <a href="/register.php" class="text-sm text-gray-600 hover:underline">Create Account</a>
+                <a href="./register" class="text-sm text-gray-600 hover:underline">Create Account</a>
             </div>
         </div>
-        <script>
-            const loginButton = document.getElementById('login-button');
-            const loginForm = document.getElementById('login-form');
-            const loginContainer = document.getElementById('login-container');
-
-
-        </script>
     </div>
 
 </body>
