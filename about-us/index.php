@@ -40,18 +40,54 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
 
 <!-- About Us Section -->
 <section class="bg-white py-20 px-4 lg:px-8">
-    <div class="max-w-7xl mx-auto text-center">
-        <h2 class="text-4xl font-bold text-[#0d5c91] mb-6 opacity-0 animate-fadeIn">Our Mission & Vision</h2>
-        <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
-            We are your digital enablement partner to accelerate your transformation journey. Whether it is augmenting
-            your
-            existing team, leveraging our global talent centers for specialized skills, or delivering managed programs
-            for
-            your digital journey.
-        </p>
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+        <!-- Left side: About Us Image -->
+        <div class="w-full md:w-1/2">
+            <img src="../asset/about-us.jpg" alt="Polinema Career" class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-fadeInDelay">
+        </div> 
 
-        <h3 class="text-3xl font-semibold text-[#0d5c91] mb-8 opacity-0 animate-fadeInDelay">Reasons to Work With Us:
-        </h3>
+        <!-- Right side: About Us Text -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-fadeIn">About Us</h2>
+            <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
+                Polinema Career is here to simplify the job and internship search process for Polinema alumni and students.
+                We provide a platform that connects job seekers with companies looking for top talent, while also helping
+                students and alumni prepare for the workforce. By streamlining the process, we make finding a job or internship
+                more efficient and targeted, opening doors to a brighter future.
+            </p>
+            <a
+    class="w-32 px-4 py-3 bg-[#1C2056] text-white font-semibold rounded-3xl shadow-lg hover:bg-amber-400 hover:text-indigo-900 transition text-center inline-block">
+    Join Us
+</a>
+
+
+        </div>
+        
+    </div>
+    <div class="flex gap-6">
+    <br><br><br>
+
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
+        <!-- Left side: About Us Image -->
+       
+
+        <!-- Right side:visi misi Text -->
+        <div class="w-full md:w-1/2 flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-fadeIn">Our mission & vision</h2>
+            <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
+            We are your digital enablement partner to accelerate your transformation journey. Whether it’s augmenting your
+            existing team, leveraging our global talent centers for specialized skills, or delivering managed programs
+            for your digital journey, we are here to help you succeed.
+            </p>
+        </div>
+        <div class="w-full md:w-1/2">
+            <img src="../asset/about-us.jpg" alt="Polinema Career" class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-fadeInDelay">
+        </div> 
+    </div>
+
+    <!-- Our Mission & Vision Section -->
+    <div class="max-w-7xl mx-auto text-center mt-16">
+        <h3 class="text-3xl font-semibold text-[#0d5c91] mb-8 opacity-0 animate-fadeInDelay">Reasons to Work With Us:</h3>
         <ul class="list-none space-y-4 text-lg text-[#627785] max-w-2xl mx-auto opacity-0 animate-fadeInDelay">
             <li class="flex items-start space-x-3">
                 <span class="text-[#0d5c91]">✔️</span>
@@ -141,12 +177,14 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
                             </div>
                             <h3 class="text-xl font-semibold text-gray-800">' . $member['name'] . '</h3>
                             <p class="text-gray-600">' . $member['role'] . '</p>
-                        </div>
-                    ';
+                        </div>';
             }
             ?>
         </div>
     </div>
 </section>
 
-<?php include '../include/footer.php'; ?>
+<?php
+// Include footer file for the website's footer
+include '../include/footer.php';
+?>
