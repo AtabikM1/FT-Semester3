@@ -2,7 +2,6 @@
 session_start();
 include '../include/koneksi.php';
 
-
 // Memastikan user sudah login
 if (isset($_SESSION['username'])) {
     $user_id = $_SESSION['username']; // Menggunakan session untuk user_id
@@ -41,6 +40,13 @@ if ($idLoker) {
     echo "Job ID is missing.";
     exit;
 }
+// Debugging: Memeriksa hasil eksekusi query
+if (!$stmt) {
+    die(print_r(sqlsrv_errors(), true));  // Menampilkan error SQL
+} elseif (!sqlsrv_execute($stmt)) {
+    die(print_r(sqlsrv_errors(), true));  // Menampilkan error jika query gagal
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -99,10 +105,10 @@ if ($idLoker) {
                         class="px-6 py-3 bg-yellow-400 text-gray-900 rounded-lg font-semibold hover:bg-yellow-500 transition">
                         Apply Now
                     </button>
-                    <button
+                    <!-- <button
                         class="px-6 py-3 border border-gray-300 rounded-lg font-semibold hover:bg-gray-50 transition">
                         Save Job
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
@@ -142,19 +148,30 @@ if ($idLoker) {
     <div id="applyModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white p-6 rounded-xl shadow-lg w-1/3">
             <h3 class="text-lg font-semibold mb-4">Are you sure you want to apply for this job?</h3>
-            <div class="flex justify-between">
-                <button id="cancelBtn" class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
-                <button id="applyBtn" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Apply</button>
+            <form action="apply_job.php" method="POST">
+                <!-- Input hidden untuk mengirimkan data ke PHP -->
+                <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['username']) ?>" />
+                <input type="hidden" name="job_id" value="<?= htmlspecialchars($idLoker) ?>" />
+                <div class="flex justify-between">
+                    <button type="button" id="cancelBtn" class="px-4 py-2 bg-gray-300 rounded-lg">Cancel</button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Apply</button>
+                </div>
+            </form>
+        </div>
+        <!-- Modal Success -->
+        <div id="successModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-6 rounded-xl shadow-lg w-1/3">
+                <h3 class="text-lg font-semibold mb-4">Application Submitted Successfully!</h3>
+                <p>Your application has been successfully submitted. We will get back to you soon.</p>
+                <div class="flex justify-center mt-4">
+                    <button onclick="closeModal()" class="px-4 py-2 bg-blue-600 text-white rounded-lg">Close</button>
+                </div>
             </div>
         </div>
+
     </div>
 
-
     <script>
-        // Mengambil user_id dari PHP dan menghindari masalah dengan karakter invalid di JS
-        const userId = <?= isset($_SESSION['username']) ? json_encode($_SESSION['username']) : 'null'; ?>;
-        const jobId = <?= isset($idLoker) ? json_encode($idLoker) : 'null'; ?>;
-
         // Menampilkan modal ketika tombol apply diklik
         document.getElementById('applyBtnShow').addEventListener('click', function () {
             document.getElementById('applyModal').style.display = 'flex';
@@ -164,49 +181,16 @@ if ($idLoker) {
         document.getElementById('cancelBtn').addEventListener('click', function () {
             document.getElementById('applyModal').style.display = 'none';
         });
-
-        // Mengirimkan aplikasi ketika tombol apply ditekan
-        document.getElementById('applyBtn').addEventListener('click', function () {
-            // Menampilkan User ID di alert untuk memastikan
-            alert(`User ID: ${userId} Job ID: ${jobId}`);
-
-            // Mengirim data menggunakan fetch untuk melamar pekerjaan
-            fetch('/apply_job.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id: userId,
-                    job_id: jobId
-                })
-            })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    return response.text();  // Dapatkan response sebagai teks dulu
-                })
-                .then(text => {
-                    try {
-                        const data = JSON.parse(text);  // Parse teks menjadi JSON
-                        if (data.success) {
-                            alert('Application successful!');
-                        } else {
-                            alert('Error: ' + (data.error || 'Unknown error'));
-                        }
-                    } catch (error) {
-                        console.error('Error parsing JSON:', error);
-                        alert('Failed to parse response. Invalid JSON.');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('An error occurred: ' + error.message);
-                });
-        });
     </script>
 
+    <script>
+        // Menutup modal setelah tombol close ditekan
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+            window.location.href = '../browse-jobs'; // Redirect setelah menutup modal
+        }
+
+    </script>
 </body>
 
 </html>
