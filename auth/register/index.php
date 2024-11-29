@@ -20,11 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($nama) || empty($password) || empty($role)) {
         $error = "Semua kolom harus diisi";
     } else {
+        // Enkripsi password menggunakan MD5
+        $hashedPassword = md5($password);
+
         // Query untuk insert data pengguna baru
         $query = "INSERT INTO dbo.[user] (username, nama, Role_idRole, password) VALUES (?, ?, ?, ?)";
 
         // Menyiapkan query
-        $stmt = sqlsrv_prepare($conn, $query, array(&$username, &$nama, &$role, &$password));
+        $stmt = sqlsrv_prepare($conn, $query, array(&$username, &$nama, &$role, &$hashedPassword));
 
         if ($stmt && sqlsrv_execute($stmt)) {
             // Redirect setelah berhasil daftar
@@ -36,6 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

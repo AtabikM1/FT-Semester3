@@ -13,8 +13,49 @@ $sql_loker = "SELECT * FROM loker WHERE Username_perusahaan = ?";
 $stmt_loker = sqlsrv_prepare($conn, $sql_loker, array($_SESSION['username']));
 sqlsrv_execute($stmt_loker);
 
+// Query untuk mendapatkan pelamar yang melamar ke lowongan perusahaan ini
+$sql_pelamar = "
+    SELECT 
+    m.User_pelamar AS pelamar_username, 
+    p.User_username AS pelamar_id, 
+    u.nama AS pelamar_nama, 
+    l.judul AS judul_loker, 
+    sl.status_code AS status_lamaran, 
+    sl.description AS deskripsi_status, 
+    m.waktu
+FROM 
+    melamar m
+INNER JOIN 
+    pelamar p ON m.User_pelamar = p.User_username
+INNER JOIN 
+    [user] u ON p.User_username = u.username
+INNER JOIN 
+    loker l ON m.Loker_idLoker = l.idLoker
+INNER JOIN 
+    status_lamaran sl ON m.status_lamaran_id = sl.id
+WHERE 
+    l.Username_perusahaan = 'fwd';
+";
+$stmt_pelamar = sqlsrv_prepare($conn, $sql_pelamar, array($_SESSION['username']));
+sqlsrv_execute($stmt_pelamar);
+
+// Proses perubahan status lamaran
+if (isset($_POST['action']) && isset($_POST['idMelamar'])) {
+    $idMelamar = $_POST['idMelamar'];
+    $status = $_POST['action'] === 'approve' ? 'ter' : 'tol'; // "ter" untuk diterima, "tol" untuk ditolak
+
+    $sql_update_status = "UPDATE pelamar SET Status = ? WHERE idMelamar = ?";
+    $stmt_update_status = sqlsrv_prepare($conn, $sql_update_status, array($status, $idMelamar));
+
+    if (sqlsrv_execute($stmt_update_status)) {
+        echo "<script>alert('Status lamaran berhasil diperbarui!'); window.location.reload();</script>";
+    } else {
+        echo "<script>alert('Terjadi kesalahan saat memperbarui status lamaran.');</script>";
+    }
+}
+
 // Proses tambah lowongan
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST['action'])) {
     $judul = $_POST['judul'];
     $tipe_loker = $_POST['tipe_loker'];
     $lokasi = $_POST['lokasi'];
@@ -71,34 +112,47 @@ include "../../include/header.php";
         </table>
     </div>
 
-    <!-- Form untuk Menambah Lowongan Baru -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Tambah Lowongan Baru</h2>
-    <form action="" method="POST" class="bg-white shadow rounded-lg p-6">
-        <div class="mb-4">
-            <label for="judul" class="block text-gray-700">Judul Lowongan</label>
-            <input type="text" name="judul" id="judul" class="w-full p-3 border border-gray-300 rounded" required>
-        </div>
-        <div class="mb-4">
-            <label for="tipe_loker" class="block text-gray-700">Tipe Lowongan</label>
-            <select name="tipe_loker" id="tipe_loker" class="w-full p-3 border border-gray-300 rounded" required>
-                <option value="Full-Time">Full-Time</option>
-                <option value="Part-Time">Part-Time</option>
-                <option value="Freelance">Freelance</option>
-            </select>
-        </div>
-        <div class="mb-4">
-            <label for="lokasi" class="block text-gray-700">Lokasi</label>
-            <input type="text" name="lokasi" id="lokasi" class="w-full p-3 border border-gray-300 rounded" required>
-        </div>
-        <div class="mb-4">
-            <label for="deskripsi" class="block text-gray-700">Deskripsi</label>
-            <textarea name="deskripsi" id="deskripsi" rows="4" class="w-full p-3 border border-gray-300 rounded"
-                required></textarea>
-        </div>
-        <div class="mb-4">
-            <button type="submit" class="bg-blue-500 text-white px-6 py-2 rounded">Tambah Lowongan</button>
-        </div>
-    </form>
+    <!-- Daftar Pelamar -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Pelamar</h2>
+    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left">Nama Pelamar</th>
+                    <th class="px-6 py-3 text-left">Lowongan</th>
+                    <th class="px-6 py-3 text-left">Status</th>
+                    <th class="px-6 py-3 text-left">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($pelamar = sqlsrv_fetch_array($stmt_pelamar, SQLSRV_FETCH_ASSOC)): ?>
+                    <tr class="border-b">
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['pelamar_nama']); ?></td>
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['judul_loker']); ?></td>
+                        <td class="px-6 py-4">
+                            <?php echo $pelamar['status_lamaran'] === '2' ? 'Diterima' : ($pelamar['status_lamaran'] === '3' ? 'Ditolak' : 'Menunggu'); ?>
+                        </td>
+                        <td class="px-6 py-4">
+                            <?php if ($pelamar['status_lamaran'] === null || $pelamar['status_lamaran'] === 1): ?>
+                                <form action="" method="POST" style="display:inline;">
+                                    <input type="hidden" name="idMelamar" value="<?php echo $pelamar['status_lamaran']; ?>">
+                                    <button type="submit" name="action" value="approve"
+                                        class="bg-green-500 text-white px-4 py-2 rounded">Approve</button>
+                                </form>
+                                <form action="" method="POST" style="display:inline;">
+                                    <input type="hidden" name="idMelamar" value="<?php echo $pelamar['status_lamaran']; ?>">
+                                    <button type="submit" name="action" value="reject"
+                                        class="bg-red-500 text-white px-4 py-2 rounded">Reject</button>
+                                </form>
+                            <?php else: ?>
+                                <span class="text-gray-500">Aksi Selesai</span>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <?php include '../../include/footer.php'; ?>

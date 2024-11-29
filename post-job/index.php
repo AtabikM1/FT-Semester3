@@ -32,7 +32,7 @@
                         class="mt-2 p-3 w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600">
                         <option value="Full Time">Full Time</option>
                         <option value="Part Time">Part Time</option>
-                        <option value="Internship">Internship</option>
+                        <option value="Magang">Magang</option>
                     </select>
                 </div>
 

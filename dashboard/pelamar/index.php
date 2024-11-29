@@ -45,28 +45,6 @@ sqlsrv_execute($stmt_aplikasi);
 <!-- Dashboard Content -->
 <div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
 
-    <!-- Aplikasi Saya (Paling atas) -->
-    <div class="bg-white shadow rounded-lg mb-6 p-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Aplikasi Saya</h2>
-        <div class="overflow-x-auto">
-            <table class="min-w-full table-auto">
-                <thead class="bg-gray-200">
-                    <tr>
-                        <th class="px-6 py-3 text-left">Lowongan</th>
-                        <th class="px-6 py-3 text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($aplikasi = sqlsrv_fetch_array($stmt_aplikasi, SQLSRV_FETCH_ASSOC)): ?>
-                        <tr class="border-b">
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($aplikasi['judul_lowongan']); ?></td>
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($aplikasi['status_lamaran']); ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
 
     <!-- Bagian Ringkasan Statistik dan Status Aplikasi (dalam dua kolom) -->
     <div class="flex space-x-4 mb-6">
@@ -137,5 +115,28 @@ sqlsrv_execute($stmt_aplikasi);
         }
     });
 </script>
+<!-- Aplikasi Saya (Paling atas) -->
+<div class="bg-white shadow rounded-lg mb-6 p-6">
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Aplikasi Saya</h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left">Lowongan</th>
+                    <th class="px-6 py-3 text-left">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($aplikasi = sqlsrv_fetch_array($stmt_aplikasi, SQLSRV_FETCH_ASSOC)): ?>
+                    <tr class="border-b">
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($aplikasi['judul_lowongan']); ?></td>
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($aplikasi['status_lamaran']); ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 
 <?php include '../../include/footer.php'; ?>

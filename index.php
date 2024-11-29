@@ -67,7 +67,7 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                 <!-- Konten Teks -->
                 <div class="space-y-8 animate-slideInLeft">
                     <h1 class="text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                        Welcome to <span class="text-[#4a90e2]">PolinemaCareer</span>
+                        Welcome to <span class="text-[#1C2056]">PolinemaCareer</span>
                     </h1>
                     <p class="text-lg text-gray-600 max-w-xl leading-relaxed">
                         Your gateway to a brighter future. Connect with top companies and explore endless career
@@ -83,23 +83,20 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                             echo '/post-job'; // Perusahaan
                         }
                         ?>"
-                            class="px-6 py-3 bg-[#4a90e2] text-white font-semibold rounded-lg shadow-lg hover:bg-[#357abd] transition">
+                            class="px-6 py-3 bg-[#1C2056] text-white font-semibold rounded-lg shadow-lg hover:bg-[#357abd] transition">
                             Get Started
                         </a>
-                        <a href="./about/index.php"
-                            class="px-6 py-3 bg-gray-200 text-slate-900 font-semibold rounded-lg hover:bg-gray-300 transition">
-                            Learn More
-                        </a>
+
                     </div>
                 </div>
 
                 <!-- Gambar Hero -->
                 <div class="relative hidden lg:block animate-slideInRight">
-                    <span class="absolute inset-0 bg-[#4a90e2]/10 rounded-2xl blur-3xl"></span>
+                    <span class="absolute inset-0 bg-[#1C2056]/10 rounded-2xl blur-3xl"></span>
                     <span
-                        class="absolute top-1/2 -translate-y-1/2 right-10 w-[70%] h-[130%] bg-[#357abd] rounded-2xl"></span>
+                        class="absolute top-1/2 -translate-y-1/2 right-10 w-[70%] h-[130%] bg-[#1C2056] rounded-2xl"></span>
                     <img src="asset/about-us.jpg" alt="Hero Image"
-                        class="rounded-2xl shadow-lg border-4 border-[#4a90e2] relative z-10" />
+                        class="rounded-2xl shadow-lg border-4 border-[#1C2056] relative z-10" />
                 </div>
             </div>
         </div>
@@ -109,19 +106,19 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
     <section class="bg-white py-16">
         <div class="container mx-auto px-6 lg:px-20">
             <h2 class="text-4xl font-bold text-center text-slate-900 mb-12">
-                Why Choose <span class="text-[#4a90e2]">PolinemaCareer?</span>
+                Why Choose <span class="text-[#1C2056]">PolinemaCareer?</span>
             </h2>
             <div class="grid md:grid-cols-3 gap-10">
                 <?php
                 $features = [
-                    ["icon" => "users.svg", "title" => "Large Network", "desc" => "Connect with 500+ companies worldwide."],
-                    ["icon" => "rocket.svg", "title" => "Career Boost", "desc" => "Get resources to enhance your professional journey."],
-                    ["icon" => "shield.svg", "title" => "Trusted Platform", "desc" => "Your security and success are our priorities."],
+                    ["icon" => "network.png", "title" => "Large Network", "desc" => "Connect with 500+ companies worldwide."],
+                    ["icon" => "boost.webp", "title" => "Career Boost", "desc" => "Get resources to enhance your professional journey."],
+                    ["icon" => "trusted.png", "title" => "Trusted Platform", "desc" => "Your security and success are our priorities."],
                 ];
                 foreach ($features as $feature) {
                     echo '<div class="p-6 bg-[#f0f8ff] rounded-lg shadow-lg hover:shadow-xl transition">';
                     echo '<div class="flex items-center gap-4 mb-4">';
-                    echo '<img src="icons/' . $feature['icon'] . '" alt="' . $feature['title'] . '" class="w-12 h-12">';
+                    echo '<img src="asset/' . $feature['icon'] . '" alt="' . $feature['title'] . '" class="w-12 h-12">';
                     echo '<h3 class="text-xl font-bold text-slate-900">' . $feature['title'] . '</h3>';
                     echo '</div>';
                     echo '<p class="text-gray-600">' . $feature['desc'] . '</p>';
