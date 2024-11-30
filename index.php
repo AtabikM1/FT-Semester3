@@ -83,7 +83,7 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                             echo '/post-job'; // Perusahaan
                         }
                         ?>"
-                            class="px-6 py-3 bg-[#1C2056] text-white font-semibold rounded-lg shadow-lg hover:bg-[#357abd] transition">
+                            class="px-6 py-3 bg-[#1C2056] text-white font-semibold rounded-lg shadow-lg hover:bg-amber-400 hover:text-indigo-900 transition">
                             Get Started
                         </a>
 

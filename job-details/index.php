@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../include/koneksi.php';
-
+include '../include/header.php';
 // Memastikan user sudah login
 if (isset($_SESSION['username'])) {
     $user_id = $_SESSION['username']; // Menggunakan session untuk user_id
@@ -59,9 +59,10 @@ if (!$stmt) {
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-50 pt-20">
-    <div class="max-w-7xl mx-auto px-4 py-12">
+<body class="bg-gray-50 pt-20 ">
+    <div class="max-w-7xl mx-auto px-4 py-12 min-h-screen">
         <!-- Header Section -->
+        <br><br><br>
         <div class="bg-white rounded-xl shadow-md p-8">
             <div class="flex flex-col md:flex-row gap-8">
                 <div class="w-24 h-24 bg-gray-200 rounded-xl">
@@ -194,3 +195,5 @@ if (!$stmt) {
 </body>
 
 </html>
+
+<?php include '../include/footer.php'; ?>
