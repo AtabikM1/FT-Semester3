@@ -76,7 +76,7 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                     <div class="flex gap-6">
                         <a href="<?php
                         if (!$isLoggedIn) {
-                            echo './auth/login'; // Belum login
+                            echo '/polka/auth/login'; // Belum login
                         } elseif ($userRole == '2') {
                             echo '/browse-jobs'; // Pelamar
                         } elseif ($userRole == '3') {

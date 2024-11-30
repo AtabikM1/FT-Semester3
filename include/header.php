@@ -85,13 +85,13 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null; // Mendapatkan Role peng
                                         class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profile</a>
                                 <?php endif; ?>
                                 <div class="h-px bg-gray-200 my-2"></div>
-                                <a href="/auth/logout" class="block px-4 py-2 text-red-600 hover:bg-red-50">Logout</a>
+                                <a href="/polka/auth/logout" class="block px-4 py-2 text-red-600 hover:bg-red-50">Logout</a>
                             </div>
                         </div>
                     <?php else: ?>
-                        <a href="/auth/login"
+                        <a href="/polka/auth/login"
                             class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Login</a>
-                        <a href="/auth/register"
+                        <a href="/polka/auth/register"
                             class="px-6 py-2 rounded-full text-indigo-900 bg-amber-400 hover:bg-amber-300 hover:scale-105 transition duration-300 shadow-md">
                             Register Now
                         </a>
