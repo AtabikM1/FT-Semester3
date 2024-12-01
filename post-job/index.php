@@ -86,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             bottom: 0;
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 50;
-            display: flex;
             justify-content: center;
             align-items: center;
         }
@@ -95,25 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body class="bg-gray-50">
 
-    <!-- Modal Sukses -->
-    <div id="successModal" class="modal">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-green-600 font-bold text-xl mb-4">Berhasil!</h2>
-            <p>Lowongan kerja berhasil diposting.</p>
-            <button onclick="closeModal('successModal')"
-                class="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg">Tutup</button>
-        </div>
-    </div>
 
-    <!-- Modal Gagal -->
-    <div id="errorModal" class="modal">
-        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-red-600 font-bold text-xl mb-4">Gagal!</h2>
-            <p id="errorMessage">Ada kesalahan saat memposting lowongan kerja.</p>
-            <button onclick="closeModal('errorModal')"
-                class="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">Tutup</button>
-        </div>
-    </div>
 
     <!-- Form Post a Job -->
     <div class="flex justify-center items-center h-screen">
@@ -191,6 +172,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             document.getElementById(modalId).style.display = 'none';
         }
     </script>
+    <!-- Modal Sukses -->
+    <div id="successModal" class="modal">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-green-600 font-bold text-xl mb-4">Berhasil!</h2>
+            <p>Lowongan kerja berhasil diposting.</p>
+            <button onclick="closeModal('successModal')"
+                class="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg">Tutup</button>
+        </div>
+    </div>
+
+    <!-- Modal Gagal -->
+    <div id="errorModal" class="modal">
+        <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+            <h2 class="text-red-600 font-bold text-xl mb-4">Gagal!</h2>
+            <p id="errorMessage">Ada kesalahan saat memposting lowongan kerja.</p>
+            <button onclick="closeModal('errorModal')"
+                class="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">Tutup</button>
+        </div>
+    </div>
 
 </body>
 

@@ -1,10 +1,36 @@
 <?php
 session_start();
-include '../../include/koneksi.php'; // Pastikan koneksi database sudah ada
+include '../../include/koneksi.php'; // Pastikan koneksi database ada
+
+// Aktifkan error reporting
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 // Pastikan pengguna adalah perusahaan
 if ($_SESSION['Role'] != 3) {
     header("Location: login.php");
+    exit;
+}
+
+// Proses perubahan status lamaran
+if (isset($_POST['action'], $_POST['pelamar_id'], $_POST['loker_id'])) {
+    $status = ($_POST['action'] === 'approve') ? 2 : 3; // 2 untuk diterima, 3 untuk ditolak
+    $pelamar_id = $_POST['pelamar_id'];
+    $loker_id = $_POST['loker_id'];
+
+    $sql_update_status = "
+        UPDATE melamar 
+        SET status_lamaran_id = ? 
+        WHERE User_pelamar = ? AND Loker_idLoker = ?";
+    $stmt_update_status = sqlsrv_prepare($conn, $sql_update_status, array($status, $pelamar_id, $loker_id));
+
+    if (sqlsrv_execute($stmt_update_status)) {
+        $_SESSION['status_message'] = 'Status lamaran berhasil diperbarui!';
+    } else {
+        $_SESSION['status_message'] = 'Terjadi kesalahan saat memperbarui status lamaran.';
+    }
+
+    header("Location: " . $_SERVER['PHP_SELF']);
     exit;
 }
 
@@ -16,69 +42,40 @@ sqlsrv_execute($stmt_loker);
 // Query untuk mendapatkan pelamar yang melamar ke lowongan perusahaan ini
 $sql_pelamar = "
     SELECT 
-    m.User_pelamar AS pelamar_username, 
-    p.User_username AS pelamar_id, 
-    u.nama AS pelamar_nama, 
-    l.judul AS judul_loker, 
-    sl.status_code AS status_lamaran, 
-    sl.description AS deskripsi_status, 
-    m.waktu
-FROM 
-    melamar m
-INNER JOIN 
-    pelamar p ON m.User_pelamar = p.User_username
-INNER JOIN 
-    [user] u ON p.User_username = u.username
-INNER JOIN 
-    loker l ON m.Loker_idLoker = l.idLoker
-INNER JOIN 
-    status_lamaran sl ON m.status_lamaran_id = sl.id
-WHERE 
-    l.Username_perusahaan = 'fwd';
-";
+        m.User_pelamar AS pelamar_username, 
+        u.nama AS pelamar_nama, 
+        l.judul AS judul_loker, 
+        sl.status_code AS status_lamaran, 
+        sl.description AS deskripsi_status, 
+        m.Loker_idLoker, 
+        m.waktu
+    FROM 
+        melamar m
+    INNER JOIN 
+        pelamar p ON m.User_pelamar = p.User_username
+    INNER JOIN 
+        [user] u ON p.User_username = u.username
+    INNER JOIN 
+        loker l ON m.Loker_idLoker = l.idLoker
+    INNER JOIN 
+        status_lamaran sl ON m.status_lamaran_id = sl.id
+    WHERE 
+        l.Username_perusahaan = ?";
 $stmt_pelamar = sqlsrv_prepare($conn, $sql_pelamar, array($_SESSION['username']));
 sqlsrv_execute($stmt_pelamar);
 
-// Proses perubahan status lamaran
-if (isset($_POST['action']) && isset($_POST['idMelamar'])) {
-    $idMelamar = $_POST['idMelamar'];
-    $status = $_POST['action'] === 'approve' ? 'ter' : 'tol'; // "ter" untuk diterima, "tol" untuk ditolak
-
-    $sql_update_status = "UPDATE pelamar SET Status = ? WHERE idMelamar = ?";
-    $stmt_update_status = sqlsrv_prepare($conn, $sql_update_status, array($status, $idMelamar));
-
-    if (sqlsrv_execute($stmt_update_status)) {
-        echo "<script>alert('Status lamaran berhasil diperbarui!'); window.location.reload();</script>";
-    } else {
-        echo "<script>alert('Terjadi kesalahan saat memperbarui status lamaran.');</script>";
-    }
-}
-
-// Proses tambah lowongan
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST['action'])) {
-    $judul = $_POST['judul'];
-    $tipe_loker = $_POST['tipe_loker'];
-    $lokasi = $_POST['lokasi'];
-    $deskripsi = $_POST['deskripsi'];
-    $username_perusahaan = $_SESSION['username'];
-
-    // Query untuk menambahkan lowongan baru
-    $sql_tambah = "INSERT INTO loker (judul, tipe_loker, lokasi, deskripsi, Username_perusahaan) 
-                   VALUES (?, ?, ?, ?, ?)";
-    $stmt_tambah = sqlsrv_prepare($conn, $sql_tambah, array($judul, $tipe_loker, $lokasi, $deskripsi, $username_perusahaan));
-
-    if (sqlsrv_execute($stmt_tambah)) {
-        echo "<script>alert('Lowongan berhasil ditambahkan!'); window.location.href='../dashboard/perusahaan';</script>";
-    } else {
-        echo "<script>alert('Terjadi kesalahan saat menambahkan lowongan.');</script>";
-    }
-}
-
 include "../../include/header.php";
 ?>
-<br><br>
+
 <!-- Dashboard Content -->
 <div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
+    <?php if (isset($_SESSION['status_message'])): ?>
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+            <?php echo $_SESSION['status_message'];
+            unset($_SESSION['status_message']); ?>
+        </div>
+    <?php endif; ?>
+
     <!-- Daftar Lowongan -->
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
     <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
@@ -129,18 +126,18 @@ include "../../include/header.php";
                     <tr class="border-b">
                         <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['pelamar_nama']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['judul_loker']); ?></td>
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['deskripsi_status']); ?></td>
                         <td class="px-6 py-4">
-                            <?php echo $pelamar['status_lamaran'] === '2' ? 'Diterima' : ($pelamar['status_lamaran'] === '3' ? 'Ditolak' : 'Menunggu'); ?>
-                        </td>
-                        <td class="px-6 py-4">
-                            <?php if ($pelamar['status_lamaran'] === null || $pelamar['status_lamaran'] === 1): ?>
+                            <?php if ((int) $pelamar['status_lamaran'] === 1): ?>
                                 <form action="" method="POST" style="display:inline;">
-                                    <input type="hidden" name="idMelamar" value="<?php echo $pelamar['status_lamaran']; ?>">
+                                    <input type="hidden" name="pelamar_id" value="<?php echo $pelamar['pelamar_username']; ?>">
+                                    <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
                                     <button type="submit" name="action" value="approve"
                                         class="bg-green-500 text-white px-4 py-2 rounded">Approve</button>
                                 </form>
                                 <form action="" method="POST" style="display:inline;">
-                                    <input type="hidden" name="idMelamar" value="<?php echo $pelamar['status_lamaran']; ?>">
+                                    <input type="hidden" name="pelamar_id" value="<?php echo $pelamar['pelamar_username']; ?>">
+                                    <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
                                     <button type="submit" name="action" value="reject"
                                         class="bg-red-500 text-white px-4 py-2 rounded">Reject</button>
                                 </form>

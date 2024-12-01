@@ -144,12 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </button>
             </form>
 
-            <!-- Forgot Password Link -->
             <div class="text-center mt-4">
-                <a href="/forgot-password.php" class="text-sm text-gray-600 hover:underline">Forgot Password?</a>
+                <a href="/auth/forgot-password" class="text-sm text-gray-600 hover:underline">Forgot Password?</a>
             </div>
 
-            <!-- Create Account Link -->
             <div class="text-center mt-4">
                 <a href="./register" class="text-sm text-gray-600 hover:underline">Create Account</a>
             </div>
