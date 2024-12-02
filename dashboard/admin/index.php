@@ -39,12 +39,12 @@ while ($row = sqlsrv_fetch_array($stmt_chart, SQLSRV_FETCH_ASSOC)) {
 // Menyertakan header
 include "./header.php";
 ?>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- HTML Content -->
 <br><br><br>
 <div class="max-w-7xl mx-auto p-6">
 
-    <!-- Chart Section -->
+    <!-- Statistik Lowongan -->
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Statistik Lowongan</h2>
     <div class="mb-6">
         <canvas id="myChart" width="400" height="200"></canvas>
@@ -70,9 +70,12 @@ include "./header.php";
                         <td class="px-6 py-4">
                             <?php echo $user['Role_idRole'] == 1 ? 'Admin' : ($user['Role_idRole'] == 2 ? 'Pelamar' : 'Perusahaan'); ?>
                         </td>
-                        <td class="px-6 py-4"><a href="delete_loker.php?id=<?php echo $loker['idLoker']; ?>"
+                        <td class="px-6 py-4">
+                            <a href="edit_user.php?id=<?php echo $user['username']; ?>"
+                                class="bg-blue-500 text-white px-4 py-2 rounded">Edit</a>
+                            <a href="delete_user.php?id=<?php echo $user['username']; ?>"
                                 class="bg-red-500 text-white px-4 py-2 rounded"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">Delete</a>
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus pengguna ini?');">Delete</a>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -89,6 +92,7 @@ include "./header.php";
                     <th class="px-6 py-3 text-left">Judul</th>
                     <th class="px-6 py-3 text-left">Perusahaan</th>
                     <th class="px-6 py-3 text-left">Tipe</th>
+                    <th class="px-6 py-3 text-left">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -97,6 +101,13 @@ include "./header.php";
                         <td class="px-6 py-4"><?php echo htmlspecialchars($loker['judul']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($loker['Username_perusahaan']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($loker['tipe_loker']); ?></td>
+                        <td class="px-6 py-4">
+                            <a href="edit_loker.php?id=<?php echo $loker['idLoker']; ?>"
+                                class="bg-blue-500 text-white px-4 py-2 rounded">Edit</a>
+                            <a href="delete_loker.php?id=<?php echo $loker['idLoker']; ?>"
+                                class="bg-red-500 text-white px-4 py-2 rounded"
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">Delete</a>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -111,6 +122,7 @@ include "./header.php";
                 <tr>
                     <th class="px-6 py-3 text-left">Judul</th>
                     <th class="px-6 py-3 text-left">Penulis</th>
+                    <th class="px-6 py-3 text-left">Aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -118,6 +130,13 @@ include "./header.php";
                     <tr class="border-b">
                         <td class="px-6 py-4"><?php echo htmlspecialchars($artikel['judul']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($artikel['User_username']); ?></td>
+                        <td class="px-6 py-4">
+                            <a href="edit_artikel.php?id=<?php echo $artikel['IdArtikel']; ?>"
+                                class="bg-blue-500 text-white px-4 py-2 rounded">Edit</a>
+                            <a href="delete_artikel.php?id=<?php echo $artikel['IdArtikel']; ?>"
+                                class="bg-red-500 text-white px-4 py-2 rounded"
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus artikel ini?');">Delete</a>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -125,53 +144,22 @@ include "./header.php";
     </div>
 </div>
 
-<!-- Footer -->
-<?php include '../../include/footer.php'; ?>
-
-<!-- Chart.js Script -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Data yang didapat dari PHP
-    const chartData = <?php echo json_encode($chartData); ?>;
-
-    // Menyiapkan data untuk chart
-    // Menyiapkan data untuk chart
-    const labels = chartData.map(item => `Kelompok ID ${item.id_kelompok * 10} - ${item.id_kelompok * 10 + 9}`); // Label sumbu X dengan kelompok ID
-    const data = chartData.map(item => item.jumlah_loker); // Data jumlah loker
-
-    // Membuat chart menggunakan Chart.js
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-        type: 'bar', // Jenis chart (bar, line, pie, dll)
+    // Inisialisasi chart menggunakan data
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
         data: {
-            labels: labels, // Label sumbu X
+            labels: <?php echo json_encode(array_column($chartData, 'id_kelompok')); ?>,
             datasets: [{
-                label: 'Jumlah Loker',
-                data: data, // Data untuk chart
-                backgroundColor: '#4e73df', // Warna untuk setiap bar
-                borderColor: '#4e73df',
+                label: 'Jumlah Lowongan',
+                data: <?php echo json_encode(array_column($chartData, 'jumlah_loker')); ?>,
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true, // Memastikan sumbu Y mulai dari 0
-                    title: {
-                        display: true,
-                        text: 'Jumlah Loker' // Nama sumbu Y
-                    }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Kelompok ID Loker' // Nama sumbu X
-                    }
-                }
-            }
         }
     });
-
 </script>
 
 </body>

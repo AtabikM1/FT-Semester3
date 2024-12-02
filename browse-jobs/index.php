@@ -64,14 +64,14 @@ $total_pages = ceil($total_row / $limit);
                     value="<?= htmlspecialchars($search) ?>"
                     class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
                 <button type="submit"
-                    class="px-6 py-3 bg-blue-500 text-white rounded-lg shadow-lg hover:bg-blue-600 transition">Search</button>
+                    class="px-6 py-3 bg-[#1C2056] text-white rounded-lg shadow-lg hover:bg-blue-600 transition">Search</button>
             </div>
         </form>
 
         <!-- Tabel Lowongan -->
         <div class="bg-white shadow-md rounded-lg overflow-hidden">
             <table class="table-auto w-full">
-                <thead class="bg-blue-500 text-white">
+                <thead class="bg-[#1C2056] text-white">
                     <tr>
                         <th class="px-6 py-3">Job Title</th>
                         <th class="px-6 py-3">Location</th>
@@ -92,7 +92,7 @@ $total_pages = ceil($total_row / $limit);
                                 <td class="px-6 py-4"><?= htmlspecialchars($row['gaji']) ?: 'Negotiable' ?></td>
                                 <td class="px-6 py-4 text-center">
                                     <a href="./job-details/?id=<?= urlencode($row['idLoker']) ?>"
-                                        class="text-blue-500 hover:underline">View</a>
+                                        class="text-[#1C2056] hover:underline">View</a>
 
                                 </td>
                             </tr>
@@ -110,7 +110,7 @@ $total_pages = ceil($total_row / $limit);
         <div class="flex justify-center mt-6">
             <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                 <a href="?search=<?= urlencode($search) ?>&page=<?= $i ?>"
-                    class="px-4 py-2 mx-1 <?= $i === $page ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700' ?> rounded-lg">
+                    class="px-4 py-2 mx-1 <?= $i === $page ? 'bg-[#1C2056] text-white' : 'bg-gray-200 text-gray-700' ?> rounded-lg">
                     <?= $i ?>
                 </a>
             <?php endfor; ?>

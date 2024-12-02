@@ -47,15 +47,11 @@ include "../../include/header.php";
                             </h1>
                             <p class="text-lg text-gray-600">Perusahaan</p>
                         </div>
-                        <a href="edit_profile.php"
-                            class="flex items-center gap-2 px-4 py-2 bg-amber-400 text-gray-900 rounded-lg hover:bg-amber-500 transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 12l-6 6m0-6l6-6" />
-                            </svg>
+                        <a href="/profile/perusahaan/edit.php<?php echo htmlspecialchars($perusahaan['username'] ?? ''); ?>"
+                            class="inline-flex items-center px-4 py-2 bg-amber-400 text-gray-900 rounded-lg hover:bg-amber-500 transition">
                             Edit Profile
                         </a>
+
                     </div>
                     <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="flex items-center gap-3 text-gray-600">

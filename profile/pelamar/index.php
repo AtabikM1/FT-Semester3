@@ -22,7 +22,8 @@ $sql_user = "SELECT
     pelamar.tanggal_daftar,
     pelamar.telepon,
     pelamar.email,
-    pelamar.bio
+    pelamar.bio,
+    pelamar.resume
 FROM 
     [user]
 LEFT JOIN 
@@ -69,11 +70,15 @@ include "../../include/header.php";
                         alt="Profile Picture"
                         class="rounded-full border-4 border-white shadow-lg object-cover w-32 h-32">
                 </div>
-                <div class="mt-16" data-aos="fade-up">
+                <div class="mt-16">
                     <h1 class="text-3xl font-bold text-gray-900"><?php echo htmlspecialchars($user['nama']); ?></h1>
                     <p class="text-lg text-gray-600">
                         <?php echo $user['Role_idRole'] == 1 ? 'Admin' : ($user['Role_idRole'] == 2 ? 'Pelamar' : 'Perusahaan'); ?>
                     </p>
+                    <a href="/profile/pelamar/edit-profile.php"
+                        class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+                        Edit Profile
+                    </a>
                 </div>
             </div>
         </div>
@@ -93,7 +98,25 @@ include "../../include/header.php";
                 <!-- Resume -->
                 <div class="bg-white rounded-xl shadow-md p-6" data-aos="fade-left">
                     <h2 class="text-xl font-semibold">Resume</h2>
-                    <p class="mt-2 text-gray-500">Unggah resume Anda di pengaturan profil.</p>
+                    <?php
+                    if ($user['resume']) {
+                        $formatted_resume = htmlspecialchars($user['resume']);
+                        $formatted_resume = str_replace(
+                            ["Professional Summary:", "Work Experience:", "- ", "Education:"],
+                            ["<strong>Professional Summary:</strong>", "<strong>Work Experience:</strong>", "<li>", "<strong>Education:</strong>"],
+                            $formatted_resume
+                        );
+
+                        // Bungkus Work Experience dengan list
+                        $formatted_resume = preg_replace('/<strong>Work Experience:<\/strong>(.*?)<strong>/s', '<strong>Work Experience:</strong><ul>$1</ul><strong>', $formatted_resume);
+
+                        echo nl2br($formatted_resume);
+                    } else {
+                        echo 'Unggah resume Anda di pengaturan profil.';
+                    }
+                    ?>
+
+                    </p>
                 </div>
             </div>
         </div>

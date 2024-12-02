@@ -63,10 +63,41 @@ $sql_pelamar = "
         l.Username_perusahaan = ?";
 $stmt_pelamar = sqlsrv_prepare($conn, $sql_pelamar, array($_SESSION['username']));
 sqlsrv_execute($stmt_pelamar);
+// Query untuk menghitung jumlah pelamar per lowongan
+$sql_loker_stats = "
+    SELECT 
+        l.judul AS judul_loker, 
+        COUNT(m.User_pelamar) AS jumlah_pelamar
+    FROM 
+        melamar m
+    INNER JOIN 
+        loker l ON m.Loker_idLoker = l.idLoker
+    WHERE 
+        l.Username_perusahaan = ?
+    GROUP BY 
+        l.judul
+    ORDER BY 
+        jumlah_pelamar DESC";
+$stmt_loker_stats = sqlsrv_prepare($conn, $sql_loker_stats, array($_SESSION['username']));
+sqlsrv_execute($stmt_loker_stats);
+
+// Statistik Aplikasi
+$sql_stats = "
+    SELECT 
+        SUM(CASE WHEN status_lamaran_id = 1 THEN 1 ELSE 0 END) AS tertunda,
+        SUM(CASE WHEN status_lamaran_id = 2 THEN 1 ELSE 0 END) AS diterima,
+        SUM(CASE WHEN status_lamaran_id = 3 THEN 1 ELSE 0 END) AS ditolak,
+        COUNT(*) AS total
+    FROM melamar 
+    WHERE Loker_idLoker IN (SELECT idLoker FROM loker WHERE Username_perusahaan = ?)";
+$stmt_stats = sqlsrv_prepare($conn, $sql_stats, array($_SESSION['username']));
+sqlsrv_execute($stmt_stats);
+$stats = sqlsrv_fetch_array($stmt_stats, SQLSRV_FETCH_ASSOC);
 
 include "../../include/header.php";
 ?>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<br><br><br>
 <!-- Dashboard Content -->
 <div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
     <?php if (isset($_SESSION['status_message'])): ?>
@@ -75,6 +106,46 @@ include "../../include/header.php";
             unset($_SESSION['status_message']); ?>
         </div>
     <?php endif; ?>
+
+    <!-- Ringkasan Statistik -->
+    <div class="bg-white shadow rounded-lg p-6 mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Ringkasan Statistik Aplikasi</h2>
+        <div class="flex space-x-4">
+            <div class="bg-green-100 p-4 rounded text-center w-1/3">
+                <p class="font-semibold">Tertunda</p>
+                <p class="text-2xl"><?php echo $stats['tertunda']; ?> aplikasi</p>
+                <p class="text-sm">
+                    <?php
+                    echo ($stats['total'] > 0) ? round(($stats['tertunda'] / $stats['total']) * 100, 2) . '%' : '0%';
+                    ?>
+                </p>
+            </div>
+            <div class="bg-yellow-100 p-4 rounded text-center w-1/3">
+                <p class="font-semibold">Diterima</p>
+                <p class="text-2xl"><?php echo $stats['diterima']; ?> aplikasi</p>
+                <p class="text-sm">
+                    <?php
+                    echo ($stats['total'] > 0) ? round(($stats['diterima'] / $stats['total']) * 100, 2) . '%' : '0%';
+                    ?>
+                </p>
+            </div>
+            <div class="bg-red-100 p-4 rounded text-center w-1/3">
+                <p class="font-semibold">Ditolak</p>
+                <p class="text-2xl"><?php echo $stats['ditolak']; ?> aplikasi</p>
+                <p class="text-xs">
+                    <?php
+                    echo ($stats['total'] > 0) ? round(($stats['ditolak'] / $stats['total']) * 100, 2) . '%' : '0%';
+                    ?>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chart - Status Aplikasi -->
+    <div class="bg-white shadow rounded-lg p-6 mb-6">
+        <h3 class="text-xl font-bold text-gray-700 mb-4">Lowongan Paling Banyak Diminati</h3>
+        <canvas id="lokerChart" class="w-full h-48"></canvas>
+    </div>
 
     <!-- Daftar Lowongan -->
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
@@ -85,7 +156,7 @@ include "../../include/header.php";
                     <th class="px-6 py-3 text-left">Judul</th>
                     <th class="px-6 py-3 text-left">Tipe</th>
                     <th class="px-6 py-3 text-left">Lokasi</th>
-                    <th class="px-6 py-3 text-left">Deskripsi</th>
+
                     <th class="px-6 py-3 text-left">Aksi</th>
                 </tr>
             </thead>
@@ -95,7 +166,7 @@ include "../../include/header.php";
                         <td class="px-6 py-4"><?php echo htmlspecialchars($loker['judul']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($loker['tipe_loker']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($loker['lokasi']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['deskripsi']); ?></td>
+
                         <td class="px-6 py-4">
                             <a href="edit_loker.php?id=<?php echo $loker['idLoker']; ?>"
                                 class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
@@ -153,3 +224,40 @@ include "../../include/header.php";
 </div>
 
 <?php include '../../include/footer.php'; ?>
+
+<script>
+    // Ambil data lowongan dan jumlah pelamar
+    var lokerLabels = [];
+    var lokerData = [];
+    <?php while ($loker_stats = sqlsrv_fetch_array($stmt_loker_stats, SQLSRV_FETCH_ASSOC)): ?>
+        lokerLabels.push("<?php echo addslashes($loker_stats['judul_loker']); ?>");
+        lokerData.push(<?php echo $loker_stats['jumlah_pelamar']; ?>);
+    <?php endwhile; ?>
+
+    // Grafik Bar - Lowongan Paling Banyak Diminati
+    var ctx = document.getElementById('lokerChart').getContext('2d');
+    var lokerChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: lokerLabels,
+            datasets: [{
+                label: 'Jumlah Pelamar',
+                data: lokerData,
+                backgroundColor: '#4CAF50',
+                borderColor: '#388E3C',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true
+                },
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
