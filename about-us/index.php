@@ -40,124 +40,99 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
         animation: slideUp 1s ease-in-out forwards;
         animation-delay: 0.3s;
     }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
+        }
+    }
+
+    .animate-fadeIn {
+        animation: fadeIn 1s ease-in-out forwards;
+    }
+
+    .animate-fadeInDelay {
+        animation: fadeIn 1s ease-in-out forwards;
+        animation-delay: 0.3s;
+    }
 </style>
 
 <!-- About Us Section -->
 <section class="bg-white py-20 px-4 lg:px-8">
-<<<<<<< HEAD
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items- b">
-            <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-fadeIn">About Us</h2>
-            <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
-                Polinema Career is here to simplify the job and internship search process for Polinema alumni and students.
-                We provide a platform that connects job seekers with companies looking for top talent, while also helping
-                students and alumni prepare for the workforce. By streamlining the process, we make finding a job or internship
-=======
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-        <!-- Left side: About Us Image -->
-        <div class="w-full md:w-1/2">
-            <img src="../asset/about-us.jpg" alt="Polinema Career"
-                class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-slideUpDelay">
-        </div>
-
-        <!-- Right side: About Us Text -->
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8">
         <div class="w-full md:w-1/2 flex flex-col justify-center">
-            <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-slideUp">About Us</h2>
-            <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-slideUpDelay">
+            <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-fadeIn">About Us</h2>
+            <p class="text-lg text-[#627785] mb-6 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
                 Polinema Career is here to simplify the job and internship search process for Polinema alumni and
                 students.
                 We provide a platform that connects job seekers with companies looking for top talent, while also
                 helping
                 students and alumni prepare for the workforce. By streamlining the process, we make finding a job or
                 internship
->>>>>>> b5e432597a4c82863e3208fcc3c45349f8306737
                 more efficient and targeted, opening doors to a brighter future.
-                <br><br><a
-                    class="w-32 px-4 py-3 bg-[#1C2056] text-white font-semibold rounded-3xl shadow-lg hover:bg-amber-400 hover:text-indigo-900 transition text-center inline-block">
-                    Join Us
-                </a>
             </p>
-<<<<<<< HEAD
-            <a class="w-32 px-4 py-3 bg-[#1C2056] text-white font-semibold rounded-3xl shadow-lg hover:bg-amber-400 hover:text-indigo-900 transition text-center inline-block">
+            <a
+                class="w-32 px-4 py-3 bg-[#1C2056] text-white font-semibold rounded-3xl shadow-lg hover:bg-amber-400 hover:text-indigo-900 transition text-center inline-block">
                 Join Us
-                </a>
-                <!-- <br><br><br><br><br><br><br> -->
-=======
-
->>>>>>> b5e432597a4c82863e3208fcc3c45349f8306737
-        </div>
-    </div>
-    
-    <div class="flex gap-6">
-<<<<<<< HEAD
-=======
-        <br><br><br>
->>>>>>> b5e432597a4c82863e3208fcc3c45349f8306737
-
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-            <!-- Left side: About Us Image -->
-
-<<<<<<< HEAD
-        <!-- Right side:visi misi Text -->
-        <div class="w-full md:w-1/2 flex flex-col justify-center">
-            <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-fadeIn">Our mission & vision</h2>
-            <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
-            We are your digital enablement partner to accelerate your transformation journey. Whether it’s augmenting your
-            existing team, leveraging our global talent centers for specialized skills, or delivering managed programs
-            for your digital journey, we are here to help you succeed.
-            </p>
+            </a>
         </div>
         <div class="w-full md:w-1/2">
-            <img src="../asset/about-us.jpg" alt="Polinema Career" class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-fadeInDelay">
-        </div> 
-    </div>
-
-    <!-- Our Mission & Vision Section -->
-   
-</section>
-<div class="max-w-7xl mx-auto text-center mt-16">
-        <h3 class="text-3xl font-semibold text-[#0d5c91] mb-8 opacity-0 animate-fadeInDelay">Reasons to Work With Us:</h3>
-        <ul class="list-none space-y-4 text-lg text-[#627785] max-w-2xl mx-auto opacity-0 animate-fadeInDelay">
-            <li class="flex items-start space-x-3">
-                <span class="text-[#0d5c91]">✔️</span>
-                <p>Weekly coaching check-ins</p>
-            </li>
-            <li class="flex items-start space-x-3">
-                <span class="text-[#0d5c91]">✔️</span>
-                <p>Optimize your candidacy for interviews</p>
-            </li>
-            <li class="flex items-start space-x-3">
-                <span class="text-[#0d5c91]">✔️</span>
-                <p>We now support videos and articles</p>
-            </li>
-            <li class="flex items-start space-x-3">
-                <span class="text-[#0d5c91]">✔️</span>
-                <p>Leveraging global talent</p>
-            </li>
-        </ul>
-
-        <!-- Hero Image Section -->
-        <div class="mt-12">
-            <img src="../asset/about-us.jpg" alt="Hero image"
-                class="w-full rounded-lg shadow-xl object-cover opacity-0 animate-fadeInDelay">
-=======
-            <!-- Right side:visi misi Text -->
-            <div class="w-full md:w-1/2 flex flex-col justify-center">
-                <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-slideUp">Our mission & vision</h2>
-                <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-slideUpDelay">
-                    We are your digital enablement partner to accelerate your transformation journey. Whether it’s
-                    augmenting your
-                    existing team, leveraging our global talent centers for specialized skills, or delivering managed
-                    programs
-                    for your digital journey, we are here to help you succeed.
-                </p>
-            </div>
-            <div class="w-full md:w-1/2">
-                <img src="../asset/about-us.jpg" alt="Polinema Career"
-                    class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-slideUpDelay">
-            </div>
->>>>>>> b5e432597a4c82863e3208fcc3c45349f8306737
+            <img src="../asset/about-us.jpg" alt="About Us Image"
+                class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-fadeInDelay">
         </div>
     </div>
+</section>
+
+<section class="bg-sky-50 py-20 px-4 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8">
+        <div class="w-full md:w-1/2">
+            <img src="../asset/about-us.jpg" alt="Vision Image"
+                class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-fadeInDelay">
+        </div>
+        <div class="w-full md:w-1/2 flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-fadeIn">Our Mission & Vision</h2>
+            <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
+                We are your digital enablement partner to accelerate your transformation journey. Whether it’s
+                augmenting your
+                existing team, leveraging our global talent centers for specialized skills, or delivering managed
+                programs
+                for your digital journey, we are here to help you succeed.
+            </p>
+        </div>
+    </div>
+</section>
+
+<div class="max-w-7xl mx-auto text-center mt-16">
+    <h3 class="text-3xl font-semibold text-[#0d5c91] mb-8 opacity-0 animate-fadeInDelay">Reasons to Work With Us:</h3>
+    <ul class="list-none space-y-4 text-lg text-[#627785] max-w-2xl mx-auto opacity-0 animate-fadeInDelay">
+        <li class="flex items-start space-x-3">
+            <span class="text-[#0d5c91]">✔️</span>
+            <p>Weekly coaching check-ins</p>
+        </li>
+        <li class="flex items-start space-x-3">
+            <span class="text-[#0d5c91]">✔️</span>
+            <p>Optimize your candidacy for interviews</p>
+        </li>
+        <li class="flex items-start space-x-3">
+            <span class="text-[#0d5c91]">✔️</span>
+            <p>We now support videos and articles</p>
+        </li>
+        <li class="flex items-start space-x-3">
+            <span class="text-[#0d5c91]">✔️</span>
+            <p>Leveraging global talent</p>
+        </li>
+    </ul>
+
+    <!-- Hero Image Section -->
+    <div class="mt-12">
+        <img src="../asset/about-us.jpg" alt="Hero image"
+            class="w-full rounded-lg shadow-xl object-cover opacity-0 animate-fadeInDelay">
+    </div>
+</div>
 
 <!-- Core Values Section -->
 <section class="bg-sky-50 py-20 px-4 lg:px-8">
