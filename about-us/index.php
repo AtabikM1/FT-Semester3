@@ -40,14 +40,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
 
 <!-- About Us Section -->
 <section class="bg-white py-20 px-4 lg:px-8">
-    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
-        <!-- Left side: About Us Image -->
-        <div class="w-full md:w-1/2">
-            <img src="../asset/about-us.jpg" alt="Polinema Career" class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-fadeInDelay">
-        </div> 
-
-        <!-- Right side: About Us Text -->
-        <div class="w-full md:w-1/2 flex flex-col justify-center">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items- b">
             <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-fadeIn">About Us</h2>
             <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
                 Polinema Career is here to simplify the job and internship search process for Polinema alumni and students.
@@ -55,17 +48,15 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
                 students and alumni prepare for the workforce. By streamlining the process, we make finding a job or internship
                 more efficient and targeted, opening doors to a brighter future.
             </p>
-            <a
-    class="w-32 px-4 py-3 bg-[#1C2056] text-white font-semibold rounded-3xl shadow-lg hover:bg-amber-400 hover:text-indigo-900 transition text-center inline-block">
-    Join Us
-</a>
-
-
+            <a class="w-32 px-4 py-3 bg-[#1C2056] text-white font-semibold rounded-3xl shadow-lg hover:bg-amber-400 hover:text-indigo-900 transition text-center inline-block">
+                Join Us
+                </a>
+                <!-- <br><br><br><br><br><br><br> -->
         </div>
         
     </div>
+    
     <div class="flex gap-6">
-    <br><br><br>
 
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-8">
         <!-- Left side: About Us Image -->
@@ -86,7 +77,9 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
     </div>
 
     <!-- Our Mission & Vision Section -->
-    <div class="max-w-7xl mx-auto text-center mt-16">
+   
+</section>
+<div class="max-w-7xl mx-auto text-center mt-16">
         <h3 class="text-3xl font-semibold text-[#0d5c91] mb-8 opacity-0 animate-fadeInDelay">Reasons to Work With Us:</h3>
         <ul class="list-none space-y-4 text-lg text-[#627785] max-w-2xl mx-auto opacity-0 animate-fadeInDelay">
             <li class="flex items-start space-x-3">
@@ -113,7 +106,6 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
                 class="w-full rounded-lg shadow-xl object-cover opacity-0 animate-fadeInDelay">
         </div>
     </div>
-</section>
 
 <!-- Core Values Section -->
 <section class="bg-sky-50 py-20 px-4 lg:px-8">
