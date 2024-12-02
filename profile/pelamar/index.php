@@ -65,7 +65,7 @@ include "../../include/header.php";
             <div class="h-48 bg-gradient-to-r from-[#1C2056] to-[#2d317a]"></div>
             <div class="relative px-6 py-8" data-aos="zoom-in">
                 <div class="absolute -top-16" data-aos="fade-down">
-                    <img src="<?php echo $user['foto'] ? 'data:image/jpeg;base64,' . base64_encode($user['foto']) : '/path/to/default-image.jpeg'; ?>"
+                    <img src="<?php echo $user['foto'] ? 'data:image/jpeg;base64,' . base64_encode($user['foto']) : '/asset/defaultpfp.jpg'; ?>"
                         alt="Profile Picture"
                         class="rounded-full border-4 border-white shadow-lg object-cover w-32 h-32">
                 </div>

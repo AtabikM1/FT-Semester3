@@ -56,18 +56,31 @@ sqlsrv_execute($stmt_aplikasi);
                 <div class="bg-green-100 p-4 rounded text-center">
                     <p class="font-semibold">Tertunda</p>
                     <p class="text-2xl"><?php echo $stats['tertunda']; ?> aplikasi</p>
-                    <p class="text-sm"><?php echo round(($stats['tertunda'] / $stats['total']) * 100, 2); ?>%</p>
+                    <p class="text-sm">
+                        <?php
+                        echo ($stats['total'] > 0) ? round(($stats['tertunda'] / $stats['total']) * 100, 2) . '%' : '0%';
+                        ?>
+                    </p>
                 </div>
                 <div class="bg-yellow-100 p-4 rounded text-center">
                     <p class="font-semibold">Diterima</p>
                     <p class="text-2xl"><?php echo $stats['diterima']; ?> aplikasi</p>
-                    <p class="text-sm"><?php echo round(($stats['diterima'] / $stats['total']) * 100, 2); ?>%</p>
+                    <p class="text-sm">
+                        <?php
+                        echo ($stats['total'] > 0) ? round(($stats['diterima'] / $stats['total']) * 100, 2) . '%' : '0%';
+                        ?>
+                    </p>
                 </div>
                 <div class="bg-red-100 p-4 rounded text-center">
-                    <p class="font-semibold text-sm">Ditolak</p>
+                    <p class="font-semibold">Ditolak</p>
                     <p class="text-xl"><?php echo $stats['ditolak']; ?> aplikasi</p>
-                    <p class="text-xs"><?php echo round(($stats['ditolak'] / $stats['total']) * 100, 2); ?>%</p>
+                    <p class="text-xs">
+                        <?php
+                        echo ($stats['total'] > 0) ? round(($stats['ditolak'] / $stats['total']) * 100, 2) . '%' : '0%';
+                        ?>
+                    </p>
                 </div>
+
             </div>
         </div>
 

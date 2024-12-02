@@ -56,11 +56,11 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null; // Mendapatkan Role peng
                                 <div class="relative">
                                     <?php if ($userRole == '3'): ?>
                                         <!-- Jika role perusahaan, gunakan foto dari sesi perusahaan -->
-                                        <img src="<?php echo isset($_SESSION['perusahaanFoto']) ? $_SESSION['perusahaanFoto'] : '/path/to/default-logo.jpeg'; ?>"
+                                        <img src="<?php echo isset($_SESSION['perusahaanFoto']) ? $_SESSION['perusahaanFoto'] : '/asset/defaultpfp.jpg'; ?>"
                                             alt="Company Logo" class="w-8 h-8 rounded-full shadow-md border-amber-400">
                                     <?php elseif ($userRole == '2'): ?>
                                         <!-- Jika role pelamar, gunakan foto dari sesi user -->
-                                        <img src="<?php echo isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.placeholder.com/40'; ?>"
+                                        <img src="<?php echo isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : '/asset/defaultpfp.jpg'; ?>"
                                             alt="User Photo" class="w-8 h-8 rounded-full shadow-md border-amber-400">
                                     <?php endif; ?>
 
