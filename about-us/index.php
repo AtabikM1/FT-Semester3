@@ -81,7 +81,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
             </a>
         </div>
         <div class="w-full md:w-1/2">
-            <img src="../asset/about-us.jpg" alt="About Us Image"
+            <img src="../asset/Company-amico.png" alt="About Us Image"
                 class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-fadeInDelay">
         </div>
     </div>
@@ -90,34 +90,31 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
 <section class="bg-sky-50 py-20 px-4 lg:px-8">
     <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-8">
         <div class="w-full md:w-1/2">
-            <img src="../asset/about-us.jpg" alt="Vision Image"
-                class="w-full h-auto rounded-lg shadow-lg opacity-0 animate-fadeInDelay">
+            <img src="../asset/Good team-bro.png" alt="Vision Image"
+                class="w-5/6 h-auto rounded-lg  opacity-0 animate-fadeInDelay justify-center">
         </div>
         <div class="w-full md:w-1/2 flex flex-col justify-center">
-            <h2 class="text-4xl font-bold text-[#1C2056] mb-6 opacity-0 animate-fadeIn">Our Mission & Vision</h2>
-            <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
-                We are your digital enablement partner to accelerate your transformation journey. Whether it’s
-                augmenting your
-                existing team, leveraging our global talent centers for specialized skills, or delivering managed
-                programs
-                for your digital journey, we are here to help you succeed.
+            <h2 class="text-4xl font-bold text-[#1C2056] mb-2 opacity-0 animate-fadeIn">Vision</h2>
+            <p class="text-lg text-[#627785] mb-5 max-w-3xl mx-auto opacity-0 animate-fadeInDelay">
+            To be the leading platform in connecting top talent with outstanding opportunities,
+             empowering career growth, and transforming the recruitment landscape.
             </p>
+            <h2 class="text-4xl font-bold text-[#1C2056] mb-2 opacity-0 animate-fadeIn">Mission</h2>
+            <ul class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto space-y-2 list-disc pl-6">
+                <li>To provide innovative and tailored HR solutions that meet the unique needs of both employers and job seekers.</li>
+                <li>To create a seamless, efficient hiring process that matches the right talent with the right job.</li>
+                <li>To foster a diverse and inclusive workforce by promoting equal opportunities for all candidates.</li>
+                <li>To support the continuous development and growth of both employers and job seekers through professional guidance and resources.</li>
+            </ul>
+
+
         </div>
     </div>
 </section>
 
-<div class="max-w-7xl mx-auto text-center mt-16">
-    
-
-    <!-- Hero Image Section -->
-    <div class="mt-12">
-        <img src="../asset/about-us.jpg" alt="Hero image"
-            class="w-full rounded-lg shadow-xl object-cover opacity-0 animate-fadeInDelay">
-    </div>
-</div>
 
 <!-- Core Values Section -->
-<section class="bg-sky-50 py-20 px-4 lg:px-8">
+<section class="bg-white py-20 px-4 lg:px-8">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-4xl font-bold text-[#0d5c91] mb-6 opacity-0 animate-slideUp">What’s Our Core Value</h2>
         <p class="text-lg text-[#627785] mb-12 max-w-3xl mx-auto opacity-0 animate-slideUpDelay">
@@ -157,7 +154,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
 </section>
 
 <!-- Meet the Team Section -->
-<section class="bg-white py-20 px-4 lg:px-8">
+<section class="bg-sky-50 py-20 px-4 lg:px-8">
     <div class="max-w-7xl mx-auto text-center">
         <h2 class="text-4xl font-bold text-[#0d5c91] mb-8 opacity-0 animate-slideUp">Meet Our Team</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
