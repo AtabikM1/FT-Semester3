@@ -107,25 +107,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
 </section>
 
 <div class="max-w-7xl mx-auto text-center mt-16">
-    <h3 class="text-3xl font-semibold text-[#0d5c91] mb-8 opacity-0 animate-fadeInDelay">Reasons to Work With Us:</h3>
-    <ul class="list-none space-y-4 text-lg text-[#627785] max-w-2xl mx-auto opacity-0 animate-fadeInDelay">
-        <li class="flex items-start space-x-3">
-            <span class="text-[#0d5c91]">✔️</span>
-            <p>Weekly coaching check-ins</p>
-        </li>
-        <li class="flex items-start space-x-3">
-            <span class="text-[#0d5c91]">✔️</span>
-            <p>Optimize your candidacy for interviews</p>
-        </li>
-        <li class="flex items-start space-x-3">
-            <span class="text-[#0d5c91]">✔️</span>
-            <p>We now support videos and articles</p>
-        </li>
-        <li class="flex items-start space-x-3">
-            <span class="text-[#0d5c91]">✔️</span>
-            <p>Leveraging global talent</p>
-        </li>
-    </ul>
+    
 
     <!-- Hero Image Section -->
     <div class="mt-12">
@@ -146,7 +128,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Core Value Cards -->
             <div
-                class="p-8 bg-white rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-xl opacity-0 animate-slideUpDelay">
+                class="p-8 transition transform opacity-0 animate-slideUpDelay">
                 <h3 class="text-2xl font-semibold text-[#0d5c91] mb-4">Integrity</h3>
                 <p class="text-lg text-[#627785]">
                     Delivering managed programs across the tedious tasks of risk with utmost integrity.
@@ -157,14 +139,14 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
                 <img src="./asset/image.png" alt="">
             </div>
             <div
-                class="p-8 bg-white rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-xl opacity-0 animate-slideUpDelay">
+                class="p-8 transition transform opacity-0 animate-slideUpDelay">
                 <h3 class="text-2xl font-semibold text-[#0d5c91] mb-4">Partnerships</h3>
                 <p class="text-lg text-[#627785]">
                     Building lasting partnerships with our clients to create sustainable growth and success.
                 </p>
             </div>
             <div
-                class="p-8 bg-white rounded-lg shadow-lg transition transform hover:scale-105 hover:shadow-xl opacity-0 animate-slideUpDelay col-span-2 col-start-2">
+                class="p-8 transition transform opacity-0 animate-slideUpDelay col-span-2 col-start-2">
                 <h3 class="text-2xl font-semibold text-[#0d5c91] mb-4">Excellence</h3>
                 <p class="text-lg text-[#627785]">
                     Aiming for excellence in every project, ensuring the best results through innovation and precision.

@@ -67,7 +67,7 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                 <!-- Konten Teks -->
                 <div class="space-y-8 animate-slideInLeft">
                     <h1 class="text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-tight">
-                        Welcome to <span class="text-[#1C2056]">PolinemaCareer</span>
+                        Welcome to <span class="text-[#1C2056]">Polinema<text class="text-amber-400">Career</text> </span>
                     </h1>
                     <p class="text-lg text-gray-600 max-w-xl leading-relaxed">
                         Your gateway to a brighter future. Connect with top companies and explore endless career
@@ -93,10 +93,8 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                 <!-- Gambar Hero -->
                 <div class="relative hidden lg:block animate-slideInRight">
                     <span class="absolute inset-0 bg-[#1C2056]/10 rounded-2xl blur-3xl"></span>
-                    <span
-                        class="absolute top-1/2 -translate-y-1/2 right-10 w-[70%] h-[130%] bg-[#1C2056] rounded-2xl"></span>
-                    <img src="asset/about-us.jpg" alt="Hero Image"
-                        class="rounded-2xl shadow-lg border-4 border-[#1C2056] relative z-10" />
+                    <img src="asset/Company-rafiki.png" alt="Hero Image"
+                        class="rounded-2xl  relative z-10" />
                 </div>
             </div>
         </div>
@@ -111,8 +109,8 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
             <div class="grid md:grid-cols-3 gap-10">
                 <?php
                 $features = [
-                    ["icon" => "network.png", "title" => "Large Network", "desc" => "Connect with 500+ companies worldwide."],
-                    ["icon" => "boost.webp", "title" => "Career Boost", "desc" => "Get resources to enhance your professional journey."],
+                    ["icon" => "iconnetwork.png", "title" => "Large Network", "desc" => "Connect with 500+ companies worldwide."],
+                    ["icon" => "boost.png", "title" => "Career Boost", "desc" => "Get resources to enhance your professional journey."],
                     ["icon" => "trusted.png", "title" => "Trusted Platform", "desc" => "Your security and success are our priorities."],
                 ];
                 foreach ($features as $feature) {
