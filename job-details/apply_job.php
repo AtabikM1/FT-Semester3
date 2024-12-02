@@ -1,40 +1,68 @@
 <?php
-header('Content-Type: application/json');
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 include '../include/koneksi.php';
 
 // Pastikan user sudah login
 if (!isset($_SESSION['username'])) {
-    echo json_encode(['success' => false, 'error' => 'User is not logged in.']);
+    $_SESSION['error'] = "You must be logged in to apply for jobs.";
+    header("Location: ./login.php");
     exit;
 }
 
-// Mendapatkan data JSON dari request body (untuk POST request)
-$input = json_decode(file_get_contents('php://input'), true);
+// Mengambil nilai dari session dan form
+$user_id = $_SESSION['username']; // Gunakan session untuk user_id
+$job_id = $_POST['job_id'] ?? null; // Mengambil job_id dari form
 
-// Cek jika parameter user_id dan job_id ada
-if (isset($input['user_id']) && isset($input['job_id'])) {
-    $user_id = $input['user_id'];
-    $job_id = $input['job_id'];
+// Validasi input
+if (!$job_id) {
+    $_SESSION['error'] = "Invalid job data. Please select a valid job.";
+    header("Location: ./browse_jobs.php");
+    exit;
+}
 
-    // Query untuk melamar pekerjaan
-    $sql = "INSERT INTO melamar (Loker_idLoker, User_pelamar, waktu, status_lamaran_id) 
-            VALUES (?, ?, SYSDATETIME(), 1);";
+// Mulai transaksi untuk memastikan konsistensi
+sqlsrv_begin_transaction($conn);
 
-    $stmt = sqlsrv_prepare($conn, $sql, array(&$job_id, &$user_id));
+// Cek apakah user sudah melamar untuk pekerjaan ini
+$sql_check = "SELECT COUNT(*) FROM melamar WHERE User_pelamar = ? AND Loker_idLoker = ?";
+$stmt_check = sqlsrv_prepare($conn, $sql_check, array(&$user_id, &$job_id));
 
-    if ($stmt && sqlsrv_execute($stmt)) {
-        // Jika berhasil, kirimkan respons JSON
-        echo json_encode(['success' => true, 'message' => 'Application successful']);
-    } else {
-        // Jika gagal, kirimkan error JSON
-        echo json_encode(['success' => false, 'error' => 'Failed to apply for the job', 'sql_error' => sqlsrv_errors()]);
+if (sqlsrv_execute($stmt_check)) {
+    $row = sqlsrv_fetch_array($stmt_check, SQLSRV_FETCH_ASSOC);
+
+    if ($row[0] > 0) {
+        // Jika sudah melamar, beri pesan error dan redirect
+        $_SESSION['error'] = "You have already applied for this job.";
+        sqlsrv_rollback($conn); // Rollback transaksi jika ada kesalahan
+        header("Location: ../browse-jobs");
+        exit;
     }
 } else {
-    // Jika parameter tidak lengkap
-    echo json_encode(['success' => false, 'error' => 'Missing parameters']);
+    $_SESSION['error'] = "Error checking application status: " . print_r(sqlsrv_errors(), true);
+    sqlsrv_rollback($conn); // Rollback transaksi jika gagal mengecek
+    header("Location: ../browse-jobs");
+    exit;
 }
+
+// Jika belum melamar, lanjutkan dengan insert lamaran
+$sql = "INSERT INTO melamar (User_pelamar, Loker_idLoker, waktu, status_lamaran_id) VALUES (?, ?, GETDATE(), 1)";
+$stmt = sqlsrv_prepare($conn, $sql, array(&$user_id, &$job_id));
+
+if (sqlsrv_execute($stmt)) {
+    // Commit transaksi jika berhasil
+    sqlsrv_commit($conn);
+    $_SESSION['success'] = "Your application has been submitted successfully.";
+    echo "<script>
+            window.onload = function() {
+                document.getElementById('successModal').style.display = 'flex';
+            }
+          </script>";
+} else {
+    $_SESSION['error'] = "There was an error with your application: " . print_r(sqlsrv_errors(), true);
+    sqlsrv_rollback($conn); // Rollback transaksi jika gagal
+}
+
+// Redirect kembali ke halaman Browse Jobs
+header("Location: ../browse-jobs");
+exit;
 ?>

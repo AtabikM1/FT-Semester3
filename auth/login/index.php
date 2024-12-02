@@ -18,11 +18,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($username) || empty($password)) {
         $error = "Username dan password tidak boleh kosong";
     } else {
-        // Query untuk mencari user berdasarkan username dan password
+        // Mengubah password menjadi hash MD5
+        $hashedPassword = md5($password);
+
+        // Query untuk mencari user berdasarkan username dan hashed password
         $query = "SELECT * FROM dbo.[user] WHERE username = ? AND password = ?";
 
         // Menyiapkan query
-        $stmt = sqlsrv_prepare($conn, $query, array(&$username, &$password, &$role));
+        $stmt = sqlsrv_prepare($conn, $query, array(&$username, &$hashedPassword));
 
         if ($stmt && sqlsrv_execute($stmt)) {
             // Mengecek apakah user ditemukan
@@ -32,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['nama'] = $row['nama'];
                 $_SESSION['password'] = $row['password'];
                 $_SESSION['Role'] = $row['Role_idRole'];
+
                 // Redirect berdasarkan role pengguna
                 if ($_SESSION['Role'] == '2') {
                     header("Location: /dashboard/pelamar");
@@ -40,19 +44,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 } else {
                     header("Location: /dashboard/admin");
                 }
+
+                // Fetch foto berdasarkan role
                 if ($row['Role_idRole'] == 3) { // Role perusahaan
                     $fotoQuery = "SELECT foto FROM perusahaan WHERE User_username = ?";
                     $stmtFoto = sqlsrv_prepare($conn, $fotoQuery, array($username));
                     sqlsrv_execute($stmtFoto);
                     if ($fotoRow = sqlsrv_fetch_array($stmtFoto, SQLSRV_FETCH_ASSOC)) {
-                        $_SESSION['perusahaanFoto'] = $fotoRow['foto'] ? 'data:image/jpeg;base64,' . base64_encode($fotoRow['foto']) : 'https://via.placeholder.com/40';
+                        $_SESSION['perusahaanFoto'] = $fotoRow['foto']
+                            ? 'data:image/jpeg;base64,' . base64_encode($fotoRow['foto'])
+                            : 'https://via.placeholder.com/40';
                     }
                 } elseif ($row['Role_idRole'] == 2) { // Role pelamar
                     $fotoQuery = "SELECT foto FROM pelamar WHERE User_username = ?";
                     $stmtFoto = sqlsrv_prepare($conn, $fotoQuery, array($username));
                     sqlsrv_execute($stmtFoto);
                     if ($fotoRow = sqlsrv_fetch_array($stmtFoto, SQLSRV_FETCH_ASSOC)) {
-                        $_SESSION['userFoto'] = $fotoRow['foto'] ? 'data:image/jpeg;base64,' . base64_encode($fotoRow['foto']) : 'https://via.placeholder.com/40';
+                        $_SESSION['userFoto'] = $fotoRow['foto']
+                            ? 'data:image/jpeg;base64,' . base64_encode($fotoRow['foto'])
+                            : 'https://via.placeholder.com/40';
                     }
                 }
 
@@ -65,6 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+
 // Simpan foto ke session setelah login
 
 ?>
@@ -133,12 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </button>
             </form>
 
-            <!-- Forgot Password Link -->
             <div class="text-center mt-4">
-                <a href="/forgot-password.php" class="text-sm text-gray-600 hover:underline">Forgot Password?</a>
+                <a href="/auth/forgot-password" class="text-sm text-gray-600 hover:underline">Forgot Password?</a>
             </div>
 
-            <!-- Create Account Link -->
             <div class="text-center mt-4">
                 <a href="./register" class="text-sm text-gray-600 hover:underline">Create Account</a>
             </div>
