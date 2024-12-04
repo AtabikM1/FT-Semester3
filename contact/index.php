@@ -1,7 +1,6 @@
 <?php
 include '../include/header.php';
-?>
-<?php
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -9,24 +8,19 @@ if (session_status() === PHP_SESSION_NONE) {
 $isUserLoggedIn = isset($_SESSION['username']);
 $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
 $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
-
-// Ambil foto profil dari session
 $perusahaanFoto = isset($_SESSION['perusahaanFoto']) ? $_SESSION['perusahaanFoto'] : 'https://via.placeholder.com/40';
 $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.placeholder.com/40';
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-<br><br><br><br>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us</title>
-    <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        /* Custom fade-in animation */
         .fade-in {
             animation: fadeIn 1s ease-out;
         }
@@ -36,80 +30,145 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
-
-        /* Custom transition for smooth hover effects */
-        .smooth-transition {
-            transition: all 0.3s ease-in-out;
-        }
-
-        /* Hover effect for icons */
-        .hover-effect:hover {
-            transform: scale(1.1);
-        }
     </style>
 </head>
 
-<body
-    class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col justify-center items-center py-20 fade-in">
-
-    <!-- Header Section -->
-    <div class="text-center mb-10 fade-in">
-        <h1 class="text-5xl text-amber-400 font-semibold">Contact Us</h1>
-        <h2 class="text-xl font-light text-gray-600 mt-4">
-            Reach out to us with your thoughts, and we'll get back to you!
-        </h2>
-    </div>
-
-    <!-- Contact Information Section -->
-    <div class="flex justify-center items-center w-full fade-in">
-        <div class="bg-[#1C2056] text-white rounded-lg p-10">
-            <div class="z-10 space-y-6">
-                <h1 class="text-3xl font-semibold">Contact Information</h1>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col justify-center items-center py-20 fade-in">
+    <section class="relative bg-gradient-to-br from-[#f0f8ff] to-[#e8f4ff] py-24 overflow-hidden">
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#1C2056]/5 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-400/5 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4 md:px-6 lg:px-8 relative">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amber-400 font-semibold text-lg">Get In Touch</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-4 mb-6">
+                    Contact <span class="text-[#1C2056]">Us</span>
+                </h2>
+                <p class="text-gray-600 text-lg">
+                    Have questions? We're here to help and provide you with the best support possible.
+                </p>
             </div>
 
-            <!-- Contact Details -->
-            <div class="z-10 space-y-6 mt-8">
-                <div class="flex items-center gap-4 group cursor-pointer smooth-transition hover-effect">
-                   <img src="../asset/phone.png" class="group-hover:text-amber-400 transition-colors w-6 h-6" alt="">
-                    <p class="group-hover:text-amber-400 transition-colors">081235305531</p>
-                </div>
-                <div class="flex items-center gap-4 group cursor-pointer smooth-transition hover-effect">
-                    <img src="../asset/mail.png" class="group-hover:text-amber-400 transition-colors w-6 h-6" alt="">
-                    <p class="group-hover:text-amber-400 transition-colors">contact@polinemacarrier.com</p>
-                </div>
-                <div class="flex items-center gap-4 group cursor-pointer smooth-transition hover-effect">
-                    <img src="../asset/location.png" class="group-hover:text-amber-400 transition-colors w-6 h-6" alt="">
-                    <p class="group-hover:text-amber-400 transition-colors">Malang, East Java, Indonesia</p>
-                </div>
-            </div>
-
-            <!-- Social Media Icons -->
-            <div class="z-10 flex space-x-4 mt-8">
-                <div class="bg-white/10 p-2 rounded-full cursor-pointer smooth-transition hover:bg-[#1DA1F2]">
-                    <img src="../asset/phone.png" class="w-5 h-5 text-white" >
-                       
-                    </img>
-                </div>
-                <div class="bg-white/10 p-2 rounded-full cursor-pointer smooth-transition hover:bg-[#E4405F]">
-                    <img src="../asset/mail.png" class="w-5 h-5 text-white" >
+            <div class="grid lg:grid-cols-3 gap-8 items-start">
+                <div class="lg:col-span-1">
+                    <div class="bg-[#1C2056] text-white rounded-2xl p-8 shadow-xl transform hover:scale-105 transition-all duration-300">
+                        <h3 class="text-2xl font-bold mb-8">Contact Information</h3>
                         
-                    </img>
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4 group">
+                                <div class="p-3 bg-white/10 rounded-lg group-hover:bg-amber-400 transition-colors">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium group-hover:text-amber-400 transition-colors">Phone</p>
+                                    <p class="text-gray-300">081235305531</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 group">
+                                <div class="p-3 bg-white/10 rounded-lg group-hover:bg-amber-400 transition-colors">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium group-hover:text-amber-400 transition-colors">Email</p>
+                                    <p class="text-gray-300">contact@polinemacarrier.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4 group">
+                                <div class="p-3 bg-white/10 rounded-lg group-hover:bg-amber-400 transition-colors">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="font-medium group-hover:text-amber-400 transition-colors">Location</p>
+                                    <p class="text-gray-300">Malang, East Java, Indonesia</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-12 flex gap-4">
+                            <a href="#" class="p-3 bg-white/10 rounded-full hover:bg-amber-400 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="p-3 bg-white/10 rounded-full hover:bg-amber-400 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm3 8h-1.35c-.538 0-.65.221-.65.778v1.222h2l-.209 2h-1.791v7h-3v-7h-2v-2h2v-2.308c0-1.769.931-2.692 3.029-2.692h1.971v3z"/>
+                                </svg>
+                            </a>
+                            <a href="#" class="p-3 bg-white/10 rounded-full hover:bg-amber-400 transition-colors">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 0c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-2 16h-2v-6h2v6zm-1-6.891c-.607 0-1.1-.496-1.1-1.109 0-.612.492-1.109 1.1-1.109s1.1.497 1.1 1.109c0 .613-.493 1.109-1.1 1.109zm8 6.891h-1.998v-2.861c0-1.881-2.002-1.722-2.002 0v2.861h-2v-6h2v1.093c.872-1.616 4-1.736 4 1.548v3.359z"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <div class="bg-white/10 p-2 rounded-full cursor-pointer smooth-transition hover:bg-[#5865F2]">
-                    <img src="../asset/location.png" class="w-5 h-5 text-white" >
-                       
-                    </img>
+
+                <div class="lg:col-span-2">
+                    <div class="bg-white rounded-2xl p-8 shadow-xl">
+                        <form class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="John">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                                    <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Doe">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="john@example.com">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="How can we help?">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-amber-400 focus:border-transparent transition-all" placeholder="Your message..."></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full bg-[#1C2056] text-white py-4 px-8 rounded-lg font-semibold hover:bg-amber-400 hover:text-[#1C2056] transform hover:scale-105 transition-all duration-300">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 bg-white rounded-2xl p-6 shadow-lg">
+                <div class="aspect-w-16 aspect-h-7 rounded-xl overflow-hidden">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3951.4905335321547!2d112.61243491477913!3d-7.946611494277532!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e78827687d272e7%3A0x789ce9a636cd3aa2!2sPoliteknik%20Negeri%20Malang!5e0!3m2!1sen!2sid!4v1645523456789!5m2!1sen!2sid"
+                        width="100%" 
+                        height="400" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        class="rounded-xl">
+                    </iframe>
                 </div>
             </div>
         </div>
-    </div>
-
+    </section>
 </body>
-
 </html>
