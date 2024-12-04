@@ -75,15 +75,25 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null; // Mendapatkan Role peng
                                 <?php if ($userRole == '2'): ?>
                                     <!-- Menu untuk pelamar -->
                                     <a href="/dashboard/pelamar"
-                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dashboard</a>
+                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dasbor</a>
                                     <a href="/profile/pelamar"
-                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profile</a>
+                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profil</a>
+                                    <a href="/browse-jobs"
+                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Cari
+                                        Lowongan</a>
                                 <?php elseif ($userRole == '3'): ?>
                                     <!-- Menu untuk perusahaan -->
                                     <a href="/dashboard/perusahaan"
-                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dashboard</a>
+                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dasbor</a>
+                                    <a href="/manage-aplication"
+                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Kelola
+                                        Lamaran</a>
+                                    <a href="/post-job"
+                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Posting
+                                        Lowongan</a>
                                     <a href="/profile/perusahaan"
-                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profile</a>
+                                        class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profil</a>
+
                                 <?php endif; ?>
                                 <div class="h-px bg-gray-200 my-2"></div>
                                 <a href="/auth/logout" class="block px-4 py-2 text-red-600 hover:bg-red-50">Logout</a>

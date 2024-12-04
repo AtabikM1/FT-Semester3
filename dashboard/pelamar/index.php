@@ -98,6 +98,27 @@ sqlsrv_execute($stmt_aplikasi);
             <h3 class="text-sm font-semibold text-gray-700 mb-2">Status Aplikasi Anda</h3>
             <canvas id="statusChart" class="w-full h-32"></canvas>
         </div>
+        <div class="bg-white shadow rounded-lg p-4 w-1/3">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Aplikasi Saya</h2>
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="px-6 py-3 text-left">Lowongan</th>
+                            <th class="px-6 py-3 text-left">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php while ($aplikasi = sqlsrv_fetch_array($stmt_aplikasi, SQLSRV_FETCH_ASSOC)): ?>
+                            <tr class="border-b">
+                                <td class="px-6 py-4"><?php echo htmlspecialchars($aplikasi['judul_lowongan']); ?></td>
+                                <td class="px-6 py-4"><?php echo htmlspecialchars($aplikasi['status_lamaran']); ?></td>
+                            </tr>
+                        <?php endwhile; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
 
@@ -116,28 +137,7 @@ sqlsrv_execute($stmt_aplikasi);
         </ul>
     </div>
 
-    <!-- Aplikasi Saya -->
-    <div class="bg-white shadow rounded-lg mb-6 p-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Aplikasi Saya</h2>
-        <div class="overflow-x-auto">
-            <table class="min-w-full table-auto">
-                <thead class="bg-gray-200">
-                    <tr>
-                        <th class="px-6 py-3 text-left">Lowongan</th>
-                        <th class="px-6 py-3 text-left">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php while ($aplikasi = sqlsrv_fetch_array($stmt_aplikasi, SQLSRV_FETCH_ASSOC)): ?>
-                        <tr class="border-b">
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($aplikasi['judul_lowongan']); ?></td>
-                            <td class="px-6 py-4"><?php echo htmlspecialchars($aplikasi['status_lamaran']); ?></td>
-                        </tr>
-                    <?php endwhile; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
+
 
 </div>
 

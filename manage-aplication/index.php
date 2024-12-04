@@ -1,6 +1,6 @@
 <?php
 session_start();
-include '../../include/koneksi.php'; // Pastikan koneksi database ada
+include '../include/koneksi.php'; // Pastikan koneksi database ada
 
 // Aktifkan error reporting
 ini_set('display_errors', 1);
@@ -11,6 +11,7 @@ if ($_SESSION['Role'] != 3) {
     header("Location: login.php");
     exit;
 }
+
 
 // Proses perubahan status lamaran
 if (isset($_POST['action'], $_POST['pelamar_id'], $_POST['loker_id'])) {
@@ -25,14 +26,15 @@ if (isset($_POST['action'], $_POST['pelamar_id'], $_POST['loker_id'])) {
     $stmt_update_status = sqlsrv_prepare($conn, $sql_update_status, array($status, $pelamar_id, $loker_id));
 
     if (sqlsrv_execute($stmt_update_status)) {
-        $_SESSION['status_message'] = 'Status lamaran berhasil diperbarui!';
+        $response = ['status' => 'success', 'message' => 'Status lamaran berhasil diperbarui! Hubungi email pelamar.'];
     } else {
-        $_SESSION['status_message'] = 'Terjadi kesalahan saat memperbarui status lamaran.';
+        $response = ['status' => 'error', 'message' => 'Terjadi kesalahan saat memperbarui status lamaran.'];
     }
 
-    header("Location: " . $_SERVER['PHP_SELF']);
+    echo json_encode($response); // Kirim feedback ke client
     exit;
 }
+
 
 // Query untuk mendapatkan lowongan yang diposting oleh perusahaan ini
 $sql_loker = "SELECT * FROM loker WHERE Username_perusahaan = ?";
@@ -94,68 +96,16 @@ $stmt_stats = sqlsrv_prepare($conn, $sql_stats, array($_SESSION['username']));
 sqlsrv_execute($stmt_stats);
 $stats = sqlsrv_fetch_array($stmt_stats, SQLSRV_FETCH_ASSOC);
 
-include "../../include/header.php";
+include "../include/header.php";
 ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <br><br><br>
 <!-- Dashboard Content -->
 <div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
-    <?php if (isset($_SESSION['status_message'])): ?>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            <?php echo $_SESSION['status_message'];
-            unset($_SESSION['status_message']); ?>
-        </div>
-    <?php endif; ?>
-
-    <!-- Ringkasan Statistik -->
-    <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4"></h2>
-        <div class="flex space-x-4">
-            <div class="bg-yellow-200 p-4 rounded text-center w-1/3">
-                <p class="font-semibold">Tertunda</p>
-                <p class="text-2xl"><?php echo $stats['tertunda']; ?> aplikasi</p>
-                <p class="text-sm">
-                    <?php
-                    echo ($stats['total'] > 0) ? round(($stats['tertunda'] / $stats['total']) * 100, 2) . '%' : '0%';
-                    ?>
-                </p>
-            </div>
-            <div class="bg-green-200 p-4 rounded text-center w-1/3">
-                <p class="font-semibold">Diterima</p>
-                <p class="text-2xl"><?php echo $stats['diterima']; ?> aplikasi</p>
-                <p class="text-sm">
-                    <?php
-                    echo ($stats['total'] > 0) ? round(($stats['diterima'] / $stats['total']) * 100, 2) . '%' : '0%';
-                    ?>
-                </p>
-            </div>
-            <div class="bg-red-600 p-4 rounded text-center w-1/3">
-                <p class="font-semibold">Ditolak</p>
-                <p class="text-2xl"><?php echo $stats['ditolak']; ?> aplikasi</p>
-                <p class="text-xs">
-                    <?php
-                    echo ($stats['total'] > 0) ? round(($stats['ditolak'] / $stats['total']) * 100, 2) . '%' : '0%';
-                    ?>
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Chart - Status Aplikasi -->
-    <div class="grid-col-2 flex space-x-4">
-        <div class="bg-white shadow rounded-lg p-6 mb-6 w-1/2 gap-2">
-            <h3 class="text-xl font-bold text-gray-700 mb-4">Lowongan Paling Banyak Diminati</h3>
-            <canvas id="lokerChart" class="w-full h-48"></canvas>
-        </div>
-        <div class="bg-white shadow rounded-lg p-6 mb-6 w-1/2">
-            <h3 class="text-xl font-bold text-gray-700 mb-4">Lowongan Paling Banyak Diminati</h3>
-            <canvas id="lokerChart" class="w-full h-48"></canvas>
-        </div>
-    </div>
 
 
     <!-- Daftar Lowongan -->
-    <!-- <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
     <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
         <table class="min-w-full table-auto">
             <thead class="bg-gray-200">
@@ -175,8 +125,7 @@ include "../../include/header.php";
                         <td class="px-6 py-4"><?php echo htmlspecialchars($loker['lokasi']); ?></td>
 
                         <td class="px-6 py-4">
-                            <a href="edit_loker.php?id=<?php echo $loker['idLoker']; ?>"
-                                class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
+
                             <a href="delete_loker.php?id=<?php echo $loker['idLoker']; ?>"
                                 class="bg-red-500 text-white px-4 py-2 rounded"
                                 onclick="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">Delete</a>
@@ -185,10 +134,10 @@ include "../../include/header.php";
                 <?php endwhile; ?>
             </tbody>
         </table>
-    </div> -->
+    </div>
 
     <!-- Daftar Pelamar -->
-    <!-- <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Pelamar</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Pelamar</h2>
     <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
         <table class="min-w-full table-auto">
             <thead class="bg-gray-200">
@@ -207,30 +156,47 @@ include "../../include/header.php";
                         <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['deskripsi_status']); ?></td>
                         <td class="px-6 py-4">
                             <?php if ((int) $pelamar['status_lamaran'] === 1): ?>
-                                <form action="" method="POST" style="display:inline;">
+                                <form id="approveForm" method="POST" style="display:inline;">
                                     <input type="hidden" name="pelamar_id" value="<?php echo $pelamar['pelamar_username']; ?>">
                                     <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
-                                    <button type="submit" name="action" value="approve"
-                                        class="bg-green-500 text-white px-4 py-2 rounded">Approve</button>
+                                    <button type="button" class="bg-green-500 text-white px-4 py-2 rounded"
+                                        onclick="openModal('approve', '<?php echo $pelamar['pelamar_username']; ?>', '<?php echo $pelamar['Loker_idLoker']; ?>')">Approve</button>
                                 </form>
-                                <form action="" method="POST" style="display:inline;">
+                                <form id="rejectForm" method="POST" style="display:inline;">
                                     <input type="hidden" name="pelamar_id" value="<?php echo $pelamar['pelamar_username']; ?>">
                                     <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
-                                    <button type="submit" name="action" value="reject"
-                                        class="bg-red-500 text-white px-4 py-2 rounded">Reject</button>
+                                    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded"
+                                        onclick="openModal('reject', '<?php echo $pelamar['pelamar_username']; ?>', '<?php echo $pelamar['Loker_idLoker']; ?>')">Reject</button>
                                 </form>
                             <?php else: ?>
-                                <span class="text-gray-500">Aksi Selesai</span>
+                                <span class="text-gray-500">Hubungi email pelamar</span>
                             <?php endif; ?>
                         </td>
+
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
-    </div> -->
+    </div>
+</div>
+<!-- Modal Konfirmasi -->
+<div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
+        <h2 class="text-xl font-bold mb-4">Konfirmasi</h2>
+        <p class="mb-4">Apakah Anda yakin ingin memproses status lamaran ini?</p>
+        <form id="statusForm" method="POST">
+            <input type="hidden" name="pelamar_id" id="pelamar_id">
+            <input type="hidden" name="loker_id" id="loker_id">
+            <button type="submit" name="action" value="approve"
+                class="bg-green-500 text-white px-4 py-2 rounded mr-2">Approve</button>
+            <button type="submit" name="action" value="reject"
+                class="bg-red-500 text-white px-4 py-2 rounded">Reject</button>
+        </form>
+        <button id="closeModal" class="mt-4 bg-gray-300 px-4 py-2 rounded">Tutup</button>
+    </div>
 </div>
 
-<?php include '../../include/footer.php'; ?>
+<?php include '../include/footer.php'; ?>
 
 <script>
     // Ambil data lowongan dan jumlah pelamar
@@ -267,4 +233,38 @@ include "../../include/header.php";
             }
         }
     });
+    function openModal(action, pelamarId, lokerId) {
+        // Set form action dan input yang sesuai
+        document.getElementById('statusForm').action = window.location.href;
+        document.getElementById('pelamar_id').value = pelamarId;
+        document.getElementById('loker_id').value = lokerId;
+
+        // Tampilkan modal
+        document.getElementById('confirmModal').classList.remove('hidden');
+    }
+
+    document.getElementById('closeModal').onclick = function () {
+        document.getElementById('confirmModal').classList.add('hidden');
+    }
+
+    // Handle form submission (approve or reject)
+    document.getElementById('statusForm').onsubmit = function (event) {
+        event.preventDefault();
+        var form = event.target;
+        var action = form.querySelector('button[type="submit"]:focus').value;
+
+        // Submit the form action based on button clicked (approve or reject)
+        var formData = new FormData(form);
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Update the UI based on the result
+                alert(data.message); // Berikan feedback sukses/ gagal
+                window.location.reload(); // Refresh halaman
+            });
+    };
+
 </script>

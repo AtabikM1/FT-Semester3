@@ -10,23 +10,17 @@ if (!isset($_SESSION['username'])) {
 
 // Ambil data user perusahaan berdasarkan session
 $username = $_SESSION['username'];
-$sql_perusahaan = "SELECT 
-    perusahaan.nama,
-    perusahaan.alamat,
-    perusahaan.tanggal_berdiri,
-    perusahaan.deskripsi,
-    perusahaan.website,
-    perusahaan.telepon,
-    perusahaan.email,
-    perusahaan.foto
-FROM 
-    perusahaan
-WHERE 
-    perusahaan.User_username = ?";
-$stmt_perusahaan = sqlsrv_prepare($conn, $sql_perusahaan, array($username));
-sqlsrv_execute($stmt_perusahaan);
-$perusahaan = sqlsrv_fetch_array($stmt_perusahaan, SQLSRV_FETCH_ASSOC);
 
+// Panggil stored procedure
+$sql_perusahaan = "{CALL GetPerusahaanProfile(?)}";
+$params = array($username);
+$stmt_perusahaan = sqlsrv_prepare($conn, $sql_perusahaan, $params);
+
+if ($stmt_perusahaan && sqlsrv_execute($stmt_perusahaan)) {
+    $perusahaan = sqlsrv_fetch_array($stmt_perusahaan, SQLSRV_FETCH_ASSOC);
+} else {
+    die(print_r(sqlsrv_errors(), true)); // Debugging jika terjadi error
+}
 include "../../include/header.php";
 ?>
 <div class="min-h-screen bg-gray-50 pt-20">

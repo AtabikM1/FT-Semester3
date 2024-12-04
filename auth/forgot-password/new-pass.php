@@ -104,7 +104,7 @@ $token = htmlspecialchars($token, ENT_QUOTES, 'UTF-8');
             }
 
             try {
-                const response = await fetch('http://localhost/polka/auth/forgot-password/be/new-pass.php', {
+                const response = await fetch('http://project.test/auth/forgot-password/be/new-pass.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

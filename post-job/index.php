@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $response = ['status' => 'error', 'message' => 'Tipe loker tidak valid.'];
     } else {
         // Generate ID Loker
-        $idLoker = strtoupper(bin2hex(random_bytes(16)));
+        $idLoker = strtoupper(bin2hex(random_bytes(4)));
 
         // Query untuk insert data loker baru
         $query = "INSERT INTO dbo.loker (idLoker, judul, deskripsi, tipe_loker, lokasi, gaji, Username_perusahaan, tanggal_post, tanggal_deadline)
@@ -94,8 +94,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body class="bg-gray-50">
 
-
-
+    <?php include '../include/header.php'; ?>
+    <br><br><br><br>
     <!-- Form Post a Job -->
     <div class="flex justify-center items-center h-screen">
         <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-lg slide-in">
@@ -175,10 +175,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Modal Sukses -->
     <div id="successModal" class="modal">
         <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-            <h2 class="text-green-600 font-bold text-xl mb-4">Berhasil!</h2>
+            <h2 class="text-green-900 font-bold text-xl mb-4">Berhasil!</h2>
             <p>Lowongan kerja berhasil diposting.</p>
             <button onclick="closeModal('successModal')"
-                class="mt-4 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg">Tutup</button>
+                class="mt-4 bg-green-900 hover:bg-green-700 text-white py-2 px-4 rounded-lg">Tutup</button>
         </div>
     </div>
 
@@ -190,8 +190,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <button onclick="closeModal('errorModal')"
                 class="mt-4 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg">Tutup</button>
         </div>
-    </div>
-
+    </div><br><br><br>
+    <?php include '../include/footer.php'; ?>
 </body>
 
 </html>

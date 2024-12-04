@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validasi email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         echo json_encode(['error' => 'Invalid email address.']);
-        http_response_code(400); // Bad request
+        http_response_code(response_code: 400); // Bad request
         exit;
     }
 

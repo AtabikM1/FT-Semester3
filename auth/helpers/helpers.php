@@ -49,13 +49,13 @@ function fetchSingleRow($conn, $query, $params = [])
 
 function sendResetEmail($email, $token)
 {
-    $apiKey = 'xkeysib-8ad20niev2nq9313n130n0vein02n30gnekmalsf913nf0qwnf0sd2371bnskdg2f239jf'; // Ganti dengan API key Anda
-    $url = 'https://xxx/xxx/xxx'; // Ganti dengan URL API email Anda
+    $apiKey = ''; // Ganti dengan API key Anda
+    $url = 'https://api.brevo.com/v3/smtp/email'; // Ganti dengan URL API email Anda
 
-    $resetLink = "http://localhost/polka/auth/forgot-password/new-pass.php?token=$token"; // Ganti dengan URL reset password Anda
+    $resetLink = "http://project.test/auth/forgot-password/new-pass.php?token=$token"; // Ganti dengan URL reset password Anda
 
     $data = [
-        'sender' => ['Administrator' => 'Polinema Career', 'email' => 'email_mu@apa.com'],
+        'sender' => ['Administrator' => 'Polinema Career', 'email' => 'mutawakilatabik@gmail.com'],
         'to' => [['email' => $email]],
         'subject' => 'Password Reset Request',
         'htmlContent' => "<html><body><p>Click <a href='$resetLink'>here</a> to reset your password.</p></body></html>"

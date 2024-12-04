@@ -10,30 +10,13 @@ if (!isset($_SESSION['username'])) {
 
 // Ambil data user berdasarkan session
 $username = $_SESSION['username'];
-$sql_user = "SELECT 
-    [user].username,
-    [user].nama,
-    [user].password,
-    [user].Role_idRole,
-    pelamar.foto,
-    pelamar.alamat,
-    pelamar.tanggal_lahir,
-    pelamar.gender,
-    pelamar.tanggal_daftar,
-    pelamar.telepon,
-    pelamar.email,
-    pelamar.bio,
-    pelamar.resume
-FROM 
-    [user]
-LEFT JOIN 
-    pelamar 
-ON 
-    [user].username = pelamar.User_username
-WHERE 
-    [user].username = ?;";
+
+// Panggil stored procedure untuk mendapatkan profil pengguna
+$sql_user = "EXEC GetUserProfile ?";
 $stmt_user = sqlsrv_prepare($conn, $sql_user, array($username));
 sqlsrv_execute($stmt_user);
+
+// Ambil hasil dari stored procedure
 $user = sqlsrv_fetch_array($stmt_user, SQLSRV_FETCH_ASSOC);
 
 include "../../include/header.php";
@@ -57,7 +40,6 @@ include "../../include/header.php";
         animation: fadeIn 1s ease-out;
     }
 </style>
-
 
 <div class="min-h-screen bg-gray-50 pt-20">
     <div class="max-w-7xl mx-auto px-4 py-12">
@@ -115,8 +97,6 @@ include "../../include/header.php";
                         echo 'Unggah resume Anda di pengaturan profil.';
                     }
                     ?>
-
-                    </p>
                 </div>
             </div>
         </div>
