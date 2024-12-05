@@ -7,6 +7,10 @@ include '../include/koneksi.php';
 
 // Variabel untuk menangani error
 $response = [];
+if (!isset($_SESSION['Role']) || $_SESSION['Role'] != 3) {
+    header("Location: login.php");
+    exit;
+}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Mendapatkan data dari form
@@ -28,8 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $idLoker = strtoupper(bin2hex(random_bytes(4)));
 
         // Query untuk insert data loker baru
-        $query = "INSERT INTO dbo.loker (idLoker, judul, deskripsi, tipe_loker, lokasi, gaji, Username_perusahaan, tanggal_post, tanggal_deadline)
-                  VALUES ('$idLoker', '$judul', '$deskripsi', '$tipe_loker', '$lokasi', '$gaji', '$username_perusahaan', GETDATE(), '$tanggal_deadline')";
+        $query = "INSERT INTO dbo.loker (idLoker, judul, deskripsi, tipe_loker, lokasi, gaji, Username_perusahaan, tanggal_post, tanggal_deadline, status_approval)
+          VALUES ('$idLoker', '$judul', '$deskripsi', '$tipe_loker', '$lokasi', '$gaji', '$username_perusahaan', GETDATE(), '$tanggal_deadline', 1)";
+
 
         // Menyiapkan dan menjalankan query
         $stmt = sqlsrv_query($conn, $query);

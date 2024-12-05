@@ -88,6 +88,7 @@ $token = htmlspecialchars($token, ENT_QUOTES, 'UTF-8');
 
     <script>
         const form = document.getElementById('reset-password-form');
+        const responseMessage = document.getElementById('responseMessage');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -97,9 +98,9 @@ $token = htmlspecialchars($token, ENT_QUOTES, 'UTF-8');
             const confirmPassword = form.elements.confirm_password.value;
 
             if (password !== confirmPassword) {
-                document.getElementById('responseMessage').style.display = 'block';
-                document.getElementById('responseMessage').style.color = 'red';
-                document.getElementById('responseMessage').innerText = 'Passwords do not match';
+                responseMessage.style.display = 'block';
+                responseMessage.style.color = 'red';
+                responseMessage.innerText = 'Passwords do not match';
                 return;
             }
 
@@ -114,29 +115,26 @@ $token = htmlspecialchars($token, ENT_QUOTES, 'UTF-8');
                         password
                     })
                 });
-                //print response in console
-                console.log(response.error);
-                // Parse response from server
+
                 const result = await response.json();
 
                 if (response.ok) {
                     responseMessage.style.color = 'green';
-                    responseMessage.textContent = result.message || "Reset link sent to your email.";
+                    responseMessage.textContent = result.message || "Password reset successfully.";
                 } else {
                     responseMessage.style.color = 'red';
                     responseMessage.textContent = result.error || "Something went wrong.";
                 }
+
                 responseMessage.style.display = 'block';
-
-
             } catch (error) {
-                console.error('Error:', error);
                 responseMessage.style.color = 'red';
                 responseMessage.textContent = 'Unable to process your request.';
                 responseMessage.style.display = 'block';
             }
         });
     </script>
+
 </body>
 
 </html>

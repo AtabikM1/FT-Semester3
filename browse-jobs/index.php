@@ -18,11 +18,13 @@ $offset = ($page - 1) * $limit;
 
 // Query untuk mendapatkan data lowongan dengan fitur pencarian
 $sql_loker = "SELECT l.idLoker, l.judul, l.deskripsi, l.tipe_loker, l.lokasi, l.gaji, p.nama AS nama_perusahaan
-              FROM loker l
-              INNER JOIN perusahaan p ON l.Username_perusahaan = p.User_username
-              WHERE l.judul LIKE ? OR l.lokasi LIKE ?
-              ORDER BY l.judul ASC
-              OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+FROM loker l
+INNER JOIN perusahaan p ON l.Username_perusahaan = p.User_username
+WHERE (l.judul LIKE ? OR l.lokasi LIKE ?)
+  AND l.status_approval = 2
+ORDER BY l.judul ASC
+OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;
+";
 $params = ["%$search%", "%$search%", $offset, $limit];
 $stmt = sqlsrv_query($conn, $sql_loker, $params);
 

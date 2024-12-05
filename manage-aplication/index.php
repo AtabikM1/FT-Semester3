@@ -14,6 +14,7 @@ if ($_SESSION['Role'] != 3) {
 
 
 // Proses perubahan status lamaran
+// Proses perubahan status lamaran
 if (isset($_POST['action'], $_POST['pelamar_id'], $_POST['loker_id'])) {
     $status = ($_POST['action'] === 'approve') ? 2 : 3; // 2 untuk diterima, 3 untuk ditolak
     $pelamar_id = $_POST['pelamar_id'];
@@ -26,14 +27,16 @@ if (isset($_POST['action'], $_POST['pelamar_id'], $_POST['loker_id'])) {
     $stmt_update_status = sqlsrv_prepare($conn, $sql_update_status, array($status, $pelamar_id, $loker_id));
 
     if (sqlsrv_execute($stmt_update_status)) {
-        $response = ['status' => 'success', 'message' => 'Status lamaran berhasil diperbarui! Hubungi email pelamar.'];
+        // Redirect tanpa mengirimkan pesan ke client
+        header("Location: " . $_SERVER['PHP_SELF']); // Redirect ke halaman yang sama
+        exit;
     } else {
-        $response = ['status' => 'error', 'message' => 'Terjadi kesalahan saat memperbarui status lamaran.'];
+        // Redirect dengan error
+        header("Location: " . $_SERVER['PHP_SELF'] . "?error=true");
+        exit;
     }
-
-    echo json_encode($response); // Kirim feedback ke client
-    exit;
 }
+
 
 
 // Query untuk mendapatkan lowongan yang diposting oleh perusahaan ini
@@ -46,6 +49,7 @@ $sql_pelamar = "
     SELECT 
         m.User_pelamar AS pelamar_username, 
         u.nama AS pelamar_nama, 
+        u.email AS pelamar_email,  -- pastikan kolom email ada di sini
         l.judul AS judul_loker, 
         sl.status_code AS status_lamaran, 
         sl.description AS deskripsi_status, 
@@ -63,6 +67,7 @@ $sql_pelamar = "
         status_lamaran sl ON m.status_lamaran_id = sl.id
     WHERE 
         l.Username_perusahaan = ?";
+
 $stmt_pelamar = sqlsrv_prepare($conn, $sql_pelamar, array($_SESSION['username']));
 sqlsrv_execute($stmt_pelamar);
 // Query untuk menghitung jumlah pelamar per lowongan
@@ -129,7 +134,7 @@ include "../include/header.php";
                             <a href="delete_loker.php?id=<?php echo $loker['idLoker']; ?>"
                                 class="bg-red-500 text-white px-4 py-2 rounded"
                                 onclick="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">Delete</a>
-                        </td>
+
                     </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -169,10 +174,15 @@ include "../include/header.php";
                                         onclick="openModal('reject', '<?php echo $pelamar['pelamar_username']; ?>', '<?php echo $pelamar['Loker_idLoker']; ?>')">Reject</button>
                                 </form>
                             <?php else: ?>
-                                <span class="text-gray-500">Hubungi email pelamar</span>
+                                <!-- Tambahkan link mailto untuk menghubungi email pelamar -->
+                                <a href="mailto:<?php echo htmlspecialchars($pelamar['pelamar_email'] ?? ''); ?>?subject=Status Lamaran&body=Halo, %0A%0AKami ingin memberitahukan bahwa status lamaran Anda untuk posisi <?php echo htmlspecialchars($pelamar['judul_loker'] ?? ''); ?> adalah <?php echo htmlspecialchars($pelamar['deskripsi_status'] ?? ''); ?>.%0A%0ATerima kasih."
+                                    class="bg-blue-500 text-white px-4 py-2 rounded">
+                                    Hubungi Email Pelamar
+                                </a>
+
+
                             <?php endif; ?>
                         </td>
-
                     </tr>
                 <?php endwhile; ?>
             </tbody>
@@ -249,22 +259,39 @@ include "../include/header.php";
 
     // Handle form submission (approve or reject)
     document.getElementById('statusForm').onsubmit = function (event) {
-        event.preventDefault();
+        event.preventDefault(); // Mencegah form submit secara normal
+
         var form = event.target;
         var action = form.querySelector('button[type="submit"]:focus').value;
 
-        // Submit the form action based on button clicked (approve or reject)
+        // Ambil data dari form
         var formData = new FormData(form);
+
+        // Kirim data menggunakan AJAX (fetch)
         fetch(form.action, {
             method: 'POST',
             body: formData
         })
-            .then(response => response.json())
+            .then(response => response.json())  // Mengambil response JSON
             .then(data => {
-                // Update the UI based on the result
-                alert(data.message); // Berikan feedback sukses/ gagal
-                window.location.reload(); // Refresh halaman
+                // Menampilkan feedback dari server
+                alert(data.message);  // Tampilkan pesan sukses/gagal
+
+                if (data.status === 'success') {
+                    // Update status di tabel tanpa reload halaman
+                    // Misalnya, update kolom status di baris yang bersangkutan
+                    var statusCell = document.querySelector(`[data-pelamar-id="${formData.get('pelamar_id')}"] .status-cell`);
+                    statusCell.textContent = action === 'approve' ? 'Diterima' : 'Ditolak';
+                }
+
+                // Tutup modal setelah aksi
+                document.getElementById('confirmModal').classList.add('hidden');
+            })
+            .catch(error => {
+                alert("Terjadi kesalahan saat memproses permintaan.");
+                console.error(error);
             });
     };
+
 
 </script>
