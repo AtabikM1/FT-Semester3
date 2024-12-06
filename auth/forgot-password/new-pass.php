@@ -70,6 +70,7 @@ $token = htmlspecialchars($token, ENT_QUOTES, 'UTF-8');
 </head>
 
 <body>
+    <?php include "../../include/header.php"; ?>
     <div class="reset-container">
         <h1>Reset Password</h1>
         <form id="reset-password-form">
@@ -82,8 +83,8 @@ $token = htmlspecialchars($token, ENT_QUOTES, 'UTF-8');
             <input type="password" name="confirm_password" placeholder="Confirm Password" required>
             <button type="submit">Reset Password</button>
         </form>
-        <p id="responseMessage" style="color: green; display: none;"></p>
-        <p>Need help? <a href="/support">Contact Support</a></p>
+        <p id="responseMessage" style="color: green; display: none;"></p><br>
+        <!-- <p>Need help? <a href="/support">Contact Support</a></p> -->
     </div>
 
     <script>
@@ -105,7 +106,7 @@ $token = htmlspecialchars($token, ENT_QUOTES, 'UTF-8');
             }
 
             try {
-                const response = await fetch('http://project.test/auth/forgot-password/be/new-pass.php', {
+                const response = await fetch('http://project.test/auth/forgot-password/backend/new-pass.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

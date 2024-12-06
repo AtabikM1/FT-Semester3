@@ -62,6 +62,15 @@ $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
                                 class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-300">
                                 <a href="/dashboard/admin"
                                     class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dashboard</a>
+                                <a href="http://project.test/dashboard/admin/managejob.php"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Kelola
+                                    Lowongan</a>
+                                <a href="http://project.test/dashboard/admin/manageuser.php"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Kelola
+                                    User</a>
+                                <a href="http://project.test/dashboard/admin/artikelpost.php"
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Post
+                                    Artikel</a>
                                 <div class="h-px bg-gray-200 my-2"></div>
                                 <a href="/auth/logout" class="block px-4 py-2 text-red-600 hover:bg-red-50">Logout</a>
                             </div>

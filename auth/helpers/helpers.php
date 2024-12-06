@@ -58,7 +58,7 @@ function sendResetEmail($email, $token)
         'sender' => ['Administrator' => 'Polinema Career', 'email' => 'mutawakilatabik@gmail.com'],
         'to' => [['email' => $email]],
         'subject' => 'Password Reset Request',
-        'htmlContent' => "<html><body><p>Click <a href='$resetLink'>here</a> to reset your password.</p></body></html>"
+        'htmlContent' => "<html><body><p>Klik <a href='$resetLink'>disini</a> untuk mereset password anda.</p></body></html>"
     ];
 
     $options = [
