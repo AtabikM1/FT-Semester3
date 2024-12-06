@@ -63,6 +63,7 @@ $sql_pelamar = "
         l.Username_perusahaan = ?";
 $stmt_pelamar = sqlsrv_prepare($conn, $sql_pelamar, array($_SESSION['username']));
 sqlsrv_execute($stmt_pelamar);
+
 // Query untuk menghitung jumlah pelamar per lowongan
 $sql_loker_stats = "
     SELECT 
@@ -96,175 +97,167 @@ $stats = sqlsrv_fetch_array($stmt_stats, SQLSRV_FETCH_ASSOC);
 
 include "../../include/header.php";
 ?>
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<br><br><br>
-<!-- Dashboard Content -->
-<div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
-    <?php if (isset($_SESSION['status_message'])): ?>
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
-            <?php echo $_SESSION['status_message'];
-            unset($_SESSION['status_message']); ?>
-        </div>
-    <?php endif; ?>
 
-    <!-- Ringkasan Statistik -->
-    <div class="bg-white shadow rounded-lg p-6 mb-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4"></h2>
-        <div class="flex space-x-4">
-            <div class="bg-yellow-200 p-4 rounded text-center w-1/3">
-                <p class="font-semibold">Tertunda</p>
-                <p class="text-2xl"><?php echo $stats['tertunda']; ?> aplikasi</p>
-                <p class="text-sm">
-                    <?php
-                    echo ($stats['total'] > 0) ? round(($stats['tertunda'] / $stats['total']) * 100, 2) . '%' : '0%';
-                    ?>
-                </p>
+<!-- Main Dashboard -->
+<div class="min-h-screen bg-slate-50 pt-24 relative">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute -top-10 w-full">
+        <path fill="#3b82f6" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path>
+    </svg>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-slate-800">Dashboard Perusahaan</h1>
+            <p class="mt-2 text-slate-600">Kelola lowongan dan pelamar Anda</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <!-- Tertunda Card -->
+            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600">Lamaran Tertunda</p>
+                        <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['tertunda']; ?></h3>
+                        <p class="text-sm text-slate-500 mt-1"><?php echo round(($stats['tertunda'] / $stats['total']) * 100, 1); ?>% dari total</p>
+                    </div>
+                    <div class="bg-yellow-50 p-3 rounded-lg">
+                        <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
-            <div class="bg-green-200 p-4 rounded text-center w-1/3">
-                <p class="font-semibold">Diterima</p>
-                <p class="text-2xl"><?php echo $stats['diterima']; ?> aplikasi</p>
-                <p class="text-sm">
-                    <?php
-                    echo ($stats['total'] > 0) ? round(($stats['diterima'] / $stats['total']) * 100, 2) . '%' : '0%';
-                    ?>
-                </p>
+
+            <!-- Diterima Card -->
+            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600">Lamaran Diterima</p>
+                        <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['diterima']; ?></h3>
+                        <p class="text-sm text-slate-500 mt-1"><?php echo round(($stats['diterima'] / $stats['total']) * 100, 1); ?>% dari total</p>
+                    </div>
+                    <div class="bg-green-50 p-3 rounded-lg">
+                        <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
             </div>
-            <div class="bg-red-600 p-4 rounded text-center w-1/3">
-                <p class="font-semibold">Ditolak</p>
-                <p class="text-2xl"><?php echo $stats['ditolak']; ?> aplikasi</p>
-                <p class="text-xs">
-                    <?php
-                    echo ($stats['total'] > 0) ? round(($stats['ditolak'] / $stats['total']) * 100, 2) . '%' : '0%';
-                    ?>
-                </p>
+
+            <!-- Ditolak Card -->
+            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600">Lamaran Ditolak</p>
+                        <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['ditolak']; ?></h3>
+                        <p class="text-sm text-slate-500 mt-1"><?php echo round(($stats['ditolak'] / $stats['total']) * 100, 1); ?>% dari total</p>
+                    </div>
+                    <div class="bg-red-50 p-3 rounded-lg">
+                        <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Lowongan Chart -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">Lowongan Paling Diminati</h2>
+                <canvas id="lokerChart" height="300"></canvas>
+            </div>
+
+            <!-- Status Applications Chart -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">Status Lamaran</h2>
+                <canvas id="lokerChart2" height="300"></canvas>
             </div>
         </div>
     </div>
-
-    <!-- Chart - Status Aplikasi -->
-    <div class="grid-col-2 flex space-x-4">
-        <div class="bg-white shadow rounded-lg p-6 mb-6 w-1/2 gap-2">
-            <h3 class="text-xl font-bold text-gray-700 mb-4">Lowongan Paling Banyak Diminati</h3>
-            <canvas id="lokerChart" class="w-full h-48"></canvas>
-        </div>
-        <div class="bg-white shadow rounded-lg p-6 mb-6 w-1/2">
-            <h3 class="text-xl font-bold text-gray-700 mb-4">Lowongan Paling Banyak Diminati</h3>
-            <canvas id="lokerChart" class="w-full h-48"></canvas>
-        </div>
-    </div>
-
-
-    <!-- Daftar Lowongan -->
-    <!-- <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
-    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
-        <table class="min-w-full table-auto">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-6 py-3 text-left">Judul</th>
-                    <th class="px-6 py-3 text-left">Tipe</th>
-                    <th class="px-6 py-3 text-left">Lokasi</th>
-
-                    <th class="px-6 py-3 text-left">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($loker = sqlsrv_fetch_array($stmt_loker, SQLSRV_FETCH_ASSOC)): ?>
-                    <tr class="border-b">
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['judul']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['tipe_loker']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['lokasi']); ?></td>
-
-                        <td class="px-6 py-4">
-                            <a href="edit_loker.php?id=<?php echo $loker['idLoker']; ?>"
-                                class="bg-yellow-500 text-white px-4 py-2 rounded">Edit</a>
-                            <a href="delete_loker.php?id=<?php echo $loker['idLoker']; ?>"
-                                class="bg-red-500 text-white px-4 py-2 rounded"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">Delete</a>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div> -->
-
-    <!-- Daftar Pelamar -->
-    <!-- <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Pelamar</h2>
-    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
-        <table class="min-w-full table-auto">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-6 py-3 text-left">Nama Pelamar</th>
-                    <th class="px-6 py-3 text-left">Lowongan</th>
-                    <th class="px-6 py-3 text-left">Status</th>
-                    <th class="px-6 py-3 text-left">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($pelamar = sqlsrv_fetch_array($stmt_pelamar, SQLSRV_FETCH_ASSOC)): ?>
-                    <tr class="border-b">
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['pelamar_nama']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['judul_loker']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['deskripsi_status']); ?></td>
-                        <td class="px-6 py-4">
-                            <?php if ((int) $pelamar['status_lamaran'] === 1): ?>
-                                <form action="" method="POST" style="display:inline;">
-                                    <input type="hidden" name="pelamar_id" value="<?php echo $pelamar['pelamar_username']; ?>">
-                                    <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
-                                    <button type="submit" name="action" value="approve"
-                                        class="bg-green-500 text-white px-4 py-2 rounded">Approve</button>
-                                </form>
-                                <form action="" method="POST" style="display:inline;">
-                                    <input type="hidden" name="pelamar_id" value="<?php echo $pelamar['pelamar_username']; ?>">
-                                    <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
-                                    <button type="submit" name="action" value="reject"
-                                        class="bg-red-500 text-white px-4 py-2 rounded">Reject</button>
-                                </form>
-                            <?php else: ?>
-                                <span class="text-gray-500">Aksi Selesai</span>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div> -->
 </div>
 
-<?php include '../../include/footer.php'; ?>
-
 <script>
-    // Ambil data lowongan dan jumlah pelamar
-    var lokerLabels = [];
-    var lokerData = [];
-    <?php while ($loker_stats = sqlsrv_fetch_array($stmt_loker_stats, SQLSRV_FETCH_ASSOC)): ?>
-        lokerLabels.push("<?php echo addslashes($loker_stats['judul_loker']); ?>");
-        lokerData.push(<?php echo $loker_stats['jumlah_pelamar']; ?>);
-    <?php endwhile; ?>
+// Dummy data untuk chart
+var lokerLabels = ['Frontend Developer', 'Backend Developer', 'UI/UX Designer', 'Project Manager'];
+var lokerData = [25, 18, 15, 12];
 
-    // Grafik Bar - Lowongan Paling Banyak Diminati
-    var ctx = document.getElementById('lokerChart').getContext('2d');
-    var lokerChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: lokerLabels,
-            datasets: [{
-                label: 'Jumlah Pelamar',
-                data: lokerData,
-                backgroundColor: '#4CAF50',
-                borderColor: '#388E3C',
-                borderWidth: 1
-            }]
+// Chart configurations
+const lokerChart = new Chart(document.getElementById('lokerChart'), {
+    type: 'bar',
+    data: {
+        labels: lokerLabels,
+        datasets: [{
+            label: 'Jumlah Pelamar',
+            data: lokerData,
+            backgroundColor: '#3B82F6',
+            borderColor: '#2563EB',
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
         },
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
-                },
-                y: {
-                    beginAtZero: true
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    display: false
+                }
+            },
+            x: {
+                grid: {
+                    display: false
                 }
             }
         }
-    });
+    }
+});
+
+// Chart kedua dengan tipe berbeda
+const lokerChart2 = new Chart(document.getElementById('lokerChart2'), {
+    type: 'line',
+    data: {
+        labels: lokerLabels,
+        datasets: [{
+            label: 'Jumlah Pelamar',
+            data: lokerData,
+            backgroundColor: '#2196F3',
+            borderColor: '#1976D2',
+            borderWidth: 2,
+            fill: false
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    display: false
+                }
+            },
+            x: {
+                grid: {
+                    display: false
+                }
+            }
+        }
+    }
+});
 </script>
+
+<?php include '../../include/footer.php'; ?>
