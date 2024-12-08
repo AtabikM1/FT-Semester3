@@ -15,6 +15,12 @@ $sql_profil = "SELECT * FROM pelamar WHERE User_username = ?";
 $stmt_profil = sqlsrv_prepare($conn, $sql_profil, array($_SESSION['username']));
 sqlsrv_execute($stmt_profil);
 $profil = sqlsrv_fetch_array($stmt_profil, SQLSRV_FETCH_ASSOC);
+// Path default jika tidak ada foto
+$defaultFotoPath = '../../asset/defaultpfp.jpg';
+$foto = (!empty($profil['foto']) && file_exists('../../' . $profil['foto']))
+    ? '../../' . htmlspecialchars($profil['foto'])
+    : $defaultFotoPath;
+
 
 // Query untuk mendapatkan jumlah aplikasi berdasarkan status
 $sql_stats = "
@@ -43,7 +49,7 @@ while ($row = sqlsrv_fetch_array($stmt_lowongan, SQLSRV_FETCH_ASSOC)) {
     $lowongan_list[] = $row;
 }
 
-// Query untuk mengambil data aplikasi pelamar
+// Query untuk mengambil data aplikasi pelamar 
 $sql_aplikasi = "
     SELECT l.judul AS judul_lowongan, sl.description AS status_lamaran
     FROM melamar m
@@ -66,7 +72,8 @@ $profileButtonLink = $isProfileComplete ? '/profile/pelamar/edit-profile.php' : 
 // Set nilai default untuk profil yang belum lengkap
 $profileUsername = !empty($profil['User_username']) ? htmlspecialchars($profil['User_username']) : 'Pengguna';
 $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat']) : 'Alamat belum diisi';
-$profileFoto = !empty($profil['foto']) ? 'data:image/jpeg;base64,' . base64_encode($profil['foto']) : '../../asset/defaultpfp.jpg';
+
+
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -84,8 +91,10 @@ $profileFoto = !empty($profil['foto']) ? 'data:image/jpeg;base64,' . base64_enco
         <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200 my-16">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-4">
-                    <img src="<?php echo $profileFoto; ?>" alt="Profile"
-                        class="w-16 h-16 rounded-full border-2 border-blue-500">
+                    <img src="<?php echo $foto; ?>" alt="Profile Picture"
+                        class="rounded-full border-4 border-white shadow-lg object-cover w-24 h-24 mx-auto">
+
+
                     <div>
                         <h2 class="text-2xl font-bold text-slate-800">
                             Selamat <?php echo (date('H') < 12) ? 'Pagi' : ((date('H') < 17) ? 'Siang' : 'Sore'); ?>,

@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Form Edit Profil -->
             <form method="POST" enctype="multipart/form-data">
                 <div class="mb-6 text-center">
-                    <img src="<?php echo $foto; ?>" alt="Profile Picture"
+                    <img src="<?php echo $_SESSION['userFoto']; ?>" alt="Profile Picture"
                         class="rounded-full border-4 border-white shadow-lg object-cover w-24 h-24 mx-auto mb-4">
                     <input type="file" name="foto" class="w-full text-sm text-gray-700 py-2 px-3 rounded-md">
                 </div>

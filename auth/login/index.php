@@ -60,9 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $stmtFoto = sqlsrv_prepare($conn, $fotoQuery, array($username));
                     sqlsrv_execute($stmtFoto);
                     if ($fotoRow = sqlsrv_fetch_array($stmtFoto, SQLSRV_FETCH_ASSOC)) {
-                        $_SESSION['userFoto'] = $fotoRow['foto'] ? $fotoRow['foto'] : '../../asset/defaultpfp.jpg';
+                        // Ambil path foto dari database, jika kosong gunakan default
+                        $_SESSION['userFoto'] = !empty($fotoRow['foto'])
+                            ? $fotoRow['foto']
+                            : '../../asset/defaultpfp.jpg';
                     }
                 }
+
                 exit;
             } else {
                 $error = "Username atau password salah";

@@ -60,8 +60,11 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null; // Mendapatkan Role peng
                                             alt="Company Logo" class="w-8 h-8 rounded-full shadow-md border-amber-400">
                                     <?php elseif ($userRole == '2'): ?>
                                         <!-- Jika role pelamar, gunakan foto dari sesi user -->
-                                        <img src="<?php echo isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : '/asset/defaultpfp.jpg'; ?>"
-                                            alt="User Photo" class="w-8 h-8 rounded-full shadow-md border-amber-400">
+                                        <img src="<?php echo $_SESSION['userFoto']; ?>" alt="User Photo"
+                                            class="w-8 h-8 rounded-full shadow-md border-amber-400">
+
+
+
                                     <?php endif; ?>
 
 
