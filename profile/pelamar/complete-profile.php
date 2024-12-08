@@ -9,7 +9,8 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
-include "../../include/header.php";
+// include "../../include/header.php";
+
 // Periksa apakah pengguna sudah ada di tabel pelamar
 $sql_check = "SELECT * FROM pelamar WHERE User_username = ?";
 $stmt_check = sqlsrv_prepare($conn, $sql_check, array($username));
@@ -20,80 +21,58 @@ if (!sqlsrv_execute($stmt_check)) {
 
 $user = sqlsrv_fetch_array($stmt_check, SQLSRV_FETCH_ASSOC);
 
-// Perbarui data jika form disubmit
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $params = [];
-    $sql_update = "UPDATE pelamar SET ";
-    $isFirst = true;
+// Jika data belum ada, lanjutkan dengan insert data baru ke tabel pelamar
+if (!$user) {
+    // Perbarui data jika form disubmit
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $alamat = $_POST['alamat'] ?? '';
+        $bio = $_POST['bio'] ?? '';
+        $tanggal_lahir = $_POST['tanggal_lahir'] ?? '';
+        $gender = $_POST['gender'] ?? '';
+        $telepon = $_POST['telepon'] ?? '';
+        $email = $_POST['email'] ?? '';
 
-    // Periksa dan update kolom yang diubah
-    if (!empty($_POST['alamat'])) {
-        $sql_update .= $isFirst ? "alamat = ?" : ", alamat = ?";
-        $params[] = $_POST['alamat'];
-        $isFirst = false;
-    }
+        // Menggunakan foto default tanpa harus mengupload
+        $foto_path = '/asset/defaultpfp.jpg'; // Foto default
 
-    if (!empty($_POST['bio'])) {
-        $sql_update .= $isFirst ? "bio = ?" : ", bio = ?";
-        $params[] = $_POST['bio'];
-        $isFirst = false;
-    }
+        // Menyimpan resume sebagai teks (bukan file)
+        $resume_text = $_POST['resume'] ?? '';
 
-    if (!empty($_POST['tanggal_lahir'])) {
-        $sql_update .= $isFirst ? "tanggal_lahir = ?" : ", tanggal_lahir = ?";
-        $params[] = $_POST['tanggal_lahir'];
-        $isFirst = false;
-    }
+        // Menggunakan waktu sekarang untuk tanggal daftar
+        $tanggal_daftar = date('Y-m-d H:i:s'); // Menambahkan waktu daftar saat ini
 
-    if (!empty($_POST['gender'])) {
-        if ($_POST['gender'] === 'Male') {
-            $_POST['gender'] = 'L';
-        } elseif ($_POST['gender'] === 'Female') {
-            $_POST['gender'] = 'P';
+        // Mengubah gender sesuai dengan database (L untuk Male, P untuk Female)
+        if ($gender === 'Male') {
+            $gender = 'L';
+        } elseif ($gender === 'Female') {
+            $gender = 'P';
         }
-        if (!$isFirst) {
-            $sql_update .= ", ";
-        }
-        $sql_update .= "gender = ?";
-        $params[] = $_POST['gender'];
-        $isFirst = false;
-    }
 
-    if (!empty($_FILES['foto']['tmp_name'])) {
-        // Tentukan nama file foto yang baru
-        $foto_tmp = $_FILES['foto']['tmp_name'];
-        $foto_name = basename($_FILES['foto']['name']);
-        $target_dir = "../../asset/upload/"; // Folder tujuan upload
-        $target_file = $target_dir . $foto_name;
+        // Menyusun query INSERT untuk menambahkan data pelamar baru
+        $sql_insert = "INSERT INTO pelamar (User_username, foto, alamat, tanggal_lahir, gender, tanggal_daftar, telepon, email, bio, resume) 
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $params = array($username, $foto_path, $alamat, $tanggal_lahir, $gender, $tanggal_daftar, $telepon, $email, $bio, $resume_text);
 
-        // Cek apakah file valid dan tidak ada error
-        if (move_uploaded_file($foto_tmp, $target_file)) {
-            // Jika foto berhasil diupload, simpan path ke database
-            $sql_update .= $isFirst ? "foto = ?" : ", foto = ?";
-            $params[] = '/asset/upload/' . $foto_name; // Simpan path foto
+        $stmt_insert = sqlsrv_prepare($conn, $sql_insert, $params);
+
+        if (sqlsrv_execute($stmt_insert)) {
+            $_SESSION['message'] = "Profil berhasil ditambahkan!";
+            header("Location: profile.php"); // Redirect setelah berhasil
+            exit;
         } else {
-            $_SESSION['error'] = "Foto gagal diunggah.";
+            $_SESSION['error'] = "Gagal menambahkan profil. Error: " . print_r(sqlsrv_errors(), true);
         }
     }
 
-
-    // Jika ada perubahan data, lanjutkan dengan update
-    if (count($params) > 0) {
-        $sql_update .= " WHERE User_username = ?";
-        $params[] = $username;
-
-        $stmt_update = sqlsrv_prepare($conn, $sql_update, $params);
-
-        if (sqlsrv_execute($stmt_update)) {
-            $_SESSION['message'] = "Profil berhasil diperbarui!";
-        } else {
-            $_SESSION['error'] = "Gagal memperbarui profil. Error: " . print_r(sqlsrv_errors(), true);
-        }
-    } else {
-        $_SESSION['error'] = "Tidak ada perubahan yang disimpan.";
-    }
+} else {
+    // Jika data sudah ada, beri pesan bahwa profil sudah terdaftar
+    $_SESSION['error'] = "Profil sudah terdaftar.";
+    header("Location: profile.php");
+    exit;
 }
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -124,7 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Form Edit Profil -->
             <form method="POST" enctype="multipart/form-data">
                 <div class="mb-6 text-center">
-                    <img src="<?php echo $foto; ?>" alt="Profile Picture"
+                    <img src="<?php echo isset($user['foto']) ? 'data:image/jpeg;base64,' . base64_encode($user['foto']) : '/asset/defaultpfp.jpg'; ?>"
+                        alt="Profile Picture"
                         class="rounded-full border-4 border-white shadow-lg object-cover w-24 h-24 mx-auto mb-4">
                     <input type="file" name="foto" class="w-full text-sm text-gray-700 py-2 px-3 rounded-md">
                 </div>
@@ -151,11 +131,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mb-4">
                     <label for="gender" class="block text-sm font-medium text-gray-700">Gender</label>
                     <select name="gender" id="gender" class="w-full mt-1 px-3 py-2 border rounded-md">
-                        <option value="Male" <?php echo $user['gender'] === 'L' ? 'selected' : ''; ?>>Male</option>
-                        <option value="Female" <?php echo $user['gender'] === 'P' ? 'selected' : ''; ?>>Female
+                        <option value="L" <?php echo (isset($user['gender']) && $user['gender'] === 'L') ? 'selected' : ''; ?>>Male
                         </option>
-                        <option value="Other" <?php echo $user['gender'] === 'Other' ? 'selected' : ''; ?>>Other</option>
+                        <option value="P" <?php echo (isset($user['gender']) && $user['gender'] === 'P') ? 'selected' : ''; ?>>Female
+                        </option>
                     </select>
+                </div>
+
+
+
+                <div class="mb-4">
+                    <label for="bio" class="block text-sm font-medium text-gray-700">Resume</label>
+                    <textarea name="bio" id="bio" rows="4"
+                        class="w-full mt-1 px-3 py-2 border rounded-md"><?php echo htmlspecialchars($user['resume'] ?? ''); ?></textarea>
                 </div>
 
                 <div class="text-center">

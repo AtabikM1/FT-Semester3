@@ -337,7 +337,7 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
     <!-- End of Featured Jobs Section -->
 
     <!-- Testimonial Section -->
-    <section class="relative bg-gradient-to-br from-[#1C2056] to-[#2d317a] py-24 overflow-hidden">
+    <!-- <section class="relative bg-gradient-to-br from-[#1C2056] to-[#2d317a] py-24 overflow-hidden"> -->
         <!-- Decorative Elements -->
         <!-- Decorative Elements -->
         <div class="absolute inset-0 overflow-hidden">
@@ -382,7 +382,7 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
 
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
             <!-- Section Header -->
-            <div class="text-center max-w-3xl mx-auto mb-16">
+            <!-- <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-amber-400 font-semibold text-lg mb-4 block">Testimonials</span>
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
                     What Our Users Say
@@ -390,10 +390,10 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                 <p class="text-gray-300 text-lg">
                     Discover why thousands of professionals trust PolinemaCareer for their career journey
                 </p>
-            </div>
+            </div> -->
 
             <!-- Testimonials Grid -->
-            <div class="grid md:grid-cols-3 gap-8">
+            <!-- <div class="grid md:grid-cols-3 gap-8">
                 <?php
                 $testimonials = [
                     [
@@ -447,9 +447,9 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                     echo '</div>';
                 }
                 ?>
-            </div>
+            </div> -->
         </div>
-    </section>
+    <!-- </section> -->
     <!-- End of Testimonial Section -->
 
     <!-- Call to Action Section -->
