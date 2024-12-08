@@ -101,20 +101,22 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                         </p>
                     </div>
 
-                    <div
+                    <!-- <div
                         class="flex flex-col sm:flex-row gap-4 md:gap-6 items-center justify-center lg:justify-start delay-500">
                         <a href="<?php echo !$isLoggedIn ? './auth/login' : ($userRole == '2' ? '/browse-jobs' : '/post-job'); ?>"
-                            class="group w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 bg-[#1C2056] text-white text-base md:text-lg font-semibold rounded-xl shadow-lg hover:bg-amber-400 hover:text-indigo-900 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-                            Get Started
+                            class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold
+                            text-[#1C2056] bg-amber-400 rounded-xl hover:bg-amber-300 transition-all duration-300
+                            transform hover:scale-105 shadow-lg">
+                            Get Started Now
                             <svg xmlns="http://www.w3.org/2000/svg"
-                                class="inline-block w-4 h-4 md:w-5 md:h-5 ml-2 group-hover:translate-x-1 transition-transform"
-                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                         </a>
 
-                    </div>
+                    </div> -->
 
                     <!-- Stats with animations -->
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8 pt-6 border-t border-gray-200">
@@ -338,51 +340,50 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
 
     <!-- Testimonial Section -->
     <!-- <section class="relative bg-gradient-to-br from-[#1C2056] to-[#2d317a] py-24 overflow-hidden"> -->
-        <!-- Decorative Elements -->
-        <!-- Decorative Elements -->
-        <div class="absolute inset-0 overflow-hidden">
-            <!-- Top Left Circles -->
-            <svg class="absolute -top-24 -left-24 w-96 h-96 text-white/5" viewBox="0 0 200 200" fill="currentColor">
-                <circle cx="100" cy="100" r="80" />
-                <circle cx="100" cy="100" r="60" />
-                <circle cx="100" cy="100" r="40" />
+    <!-- Decorative Elements -->
+    <!-- Decorative Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <!-- Top Left Circles -->
+        <svg class="absolute -top-24 -left-24 w-96 h-96 text-white/5" viewBox="0 0 200 200" fill="currentColor">
+            <circle cx="100" cy="100" r="80" />
+            <circle cx="100" cy="100" r="60" />
+            <circle cx="100" cy="100" r="40" />
+        </svg>
+
+        <!-- Bottom Right Pattern -->
+        <svg class="absolute -bottom-32 -right-32 w-[40rem] h-[40rem] text-white/5" viewBox="0 0 400 400" fill="none">
+            <defs>
+                <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M0 40L40 0M0 0L40 40" stroke="currentColor" stroke-width="1" />
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+
+        <!-- Floating Dots -->
+        <div class="absolute top-1/4 left-1/3">
+            <svg class="w-8 h-8 text-amber-400/20" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="4" />
             </svg>
-
-            <!-- Bottom Right Pattern -->
-            <svg class="absolute -bottom-32 -right-32 w-[40rem] h-[40rem] text-white/5" viewBox="0 0 400 400"
-                fill="none">
-                <defs>
-                    <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-                        <path d="M0 40L40 0M0 0L40 40" stroke="currentColor" stroke-width="1" />
-                    </pattern>
-                </defs>
-                <rect width="100%" height="100%" fill="url(#grid)" />
-            </svg>
-
-            <!-- Floating Dots -->
-            <div class="absolute top-1/4 left-1/3">
-                <svg class="w-8 h-8 text-amber-400/20" viewBox="0 0 24 24" fill="currentColor">
-                    <circle cx="12" cy="12" r="4" />
-                </svg>
-            </div>
-            <div class="absolute bottom-1/3 right-1/4">
-                <svg class="w-12 h-12 text-white/10" viewBox="0 0 24 24" fill="currentColor">
-                    <circle cx="12" cy="12" r="4" />
-                </svg>
-            </div>
-
-            <!-- Abstract Lines -->
-            <svg class="absolute top-1/2 left-0 w-[30rem] h-64 text-white/5" viewBox="0 0 400 200" fill="none"
-                stroke="currentColor">
-                <path d="M0 100h400" stroke-width="1" stroke-dasharray="8 8" />
-                <path d="M0 150h400" stroke-width="1" stroke-dasharray="8 8" />
-                <path d="M0 50h400" stroke-width="1" stroke-dasharray="8 8" />
+        </div>
+        <div class="absolute bottom-1/3 right-1/4">
+            <svg class="w-12 h-12 text-white/10" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="12" r="4" />
             </svg>
         </div>
 
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <!-- Section Header -->
-            <!-- <div class="text-center max-w-3xl mx-auto mb-16">
+        <!-- Abstract Lines -->
+        <svg class="absolute top-1/2 left-0 w-[30rem] h-64 text-white/5" viewBox="0 0 400 200" fill="none"
+            stroke="currentColor">
+            <path d="M0 100h400" stroke-width="1" stroke-dasharray="8 8" />
+            <path d="M0 150h400" stroke-width="1" stroke-dasharray="8 8" />
+            <path d="M0 50h400" stroke-width="1" stroke-dasharray="8 8" />
+        </svg>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
+        <!-- Section Header -->
+        <!-- <div class="text-center max-w-3xl mx-auto mb-16">
                 <span class="text-amber-400 font-semibold text-lg mb-4 block">Testimonials</span>
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
                     What Our Users Say
@@ -392,8 +393,8 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                 </p>
             </div> -->
 
-            <!-- Testimonials Grid -->
-            <!-- <div class="grid md:grid-cols-3 gap-8">
+        <!-- Testimonials Grid -->
+        <!-- <div class="grid md:grid-cols-3 gap-8">
                 <?php
                 $testimonials = [
                     [
@@ -448,7 +449,7 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                 }
                 ?>
             </div> -->
-        </div>
+    </div>
     <!-- </section> -->
     <!-- End of Testimonial Section -->
 
@@ -483,7 +484,8 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
             <div class="absolute left-10 top-1/2 transform -translate-y-1/2">
                 <div class="grid grid-cols-3 gap-4">
                     <?php for ($i = 0; $i < 9; $i++): ?>
-                        <div class="w-2 h-2 rounded-full bg-white/10"></div>
+                        <div class="w-2 h-2 rounded-full bg-white/10">
+                        </div>
                     <?php endfor; ?>
                 </div>
             </div>
@@ -503,7 +505,9 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <a href="<?php echo !$isLoggedIn ? './auth/login' : ($userRole == '2' ? '/browse-jobs' : '/post-job'); ?>"
-                            class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-[#1C2056] bg-amber-400 rounded-xl hover:bg-amber-300 transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold
+                            text-[#1C2056] bg-amber-400 rounded-xl hover:bg-amber-300 transition-all duration-300
+                            transform hover:scale-105 shadow-lg">
                             Get Started Now
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
@@ -512,10 +516,10 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
                                     d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                         </a>
-                        <a href="/about-us"
+                        <!-- <a href="/about-us"
                             class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/20 rounded-xl hover:bg-white/10 transition-all duration-300">
                             Learn More
-                        </a>
+                        </a> -->
                     </div>
                 </div>
 

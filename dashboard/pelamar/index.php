@@ -67,7 +67,7 @@ while ($row = sqlsrv_fetch_array($stmt_aplikasi, SQLSRV_FETCH_ASSOC)) {
 // Cek apakah profil lengkap
 $isProfileComplete = !empty($profil['alamat']) && !empty($profil['foto']);
 $profileButtonText = $isProfileComplete ? 'Edit Profil' : 'Lengkapi Profil';
-$profileButtonLink = $isProfileComplete ? '/profile/pelamar/edit-profile.php' : '/profile/pelamar/edit-profile.php';
+$profileButtonLink = $isProfileComplete ? '../../profile/pelamar/edit-profile.php' : '../../profile/pelamar/edit-profile.php';
 
 // Set nilai default untuk profil yang belum lengkap
 $profileUsername = !empty($profil['User_username']) ? htmlspecialchars($profil['User_username']) : 'Pengguna';
@@ -104,10 +104,13 @@ $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat'])
                     </div>
                 </div>
                 <!-- Button to Edit or Complete Profile -->
-                <a href="<?php echo $profileButtonLink; ?>"
-                    class="inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
-                    <?php echo $profileButtonText; ?>
-                </a>
+                <!-- <button>
+                    <a href="<?php echo $profileButtonLink; ?>"
+                        class="inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
+                        <?php echo $profileButtonText; ?>
+                    </a>
+                </button> -->
+
             </div>
         </div>
 

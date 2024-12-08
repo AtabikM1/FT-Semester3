@@ -32,12 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Memperbarui status loker
-    // Memperbarui status loker
     if ($action === 'updateStatus') {
         $idLoker = $_POST['idLoker'] ?? null;
         $status = $_POST['status'] ?? null;
         if ($idLoker && in_array($status, ['approve', 'reject'])) {
-            // Cek status sebelumnya
             $sql_check_status = "SELECT status_approval FROM loker WHERE idLoker = ?";
             $params_check = array(&$idLoker);
             $stmt_check = sqlsrv_prepare($conn, $sql_check_status, $params_check);
@@ -46,29 +44,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $row = sqlsrv_fetch_array($stmt_check, SQLSRV_FETCH_ASSOC);
                 $current_status = $row['status_approval'];
 
-                // Cek jika status sudah 'ter' (2) atau 'tol' (3)
                 if ($current_status == 2 || $current_status == 3) {
                     echo json_encode(['message' => 'Aksi sudah dilakukan.']);
                     exit;
                 }
 
-                // Tentukan status baru
                 $statusApproval = ($status == 'approve') ? 2 : 3;
-
-                // Update status loker
                 $sql = "UPDATE loker SET status_approval = ? WHERE idLoker = ?";
                 $params = array($statusApproval, $idLoker);
                 $stmt = sqlsrv_prepare($conn, $sql, $params);
-
-                // if (sqlsrv_execute($stmt)) {
-                //     echo json_encode(['message' => 'Status berhasil diperbarui.']);
-                //     exit;
-                // } else {
-                //     // Menampilkan error jika query gagal
-                //     die(print_r(sqlsrv_errors(), true));
-                // }
             } else {
-                // Menampilkan error jika query pertama gagal
                 die(print_r(sqlsrv_errors(), true));
             }
         } else {
@@ -76,14 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         exit;
     }
-
 }
 
 // Query untuk mendapatkan semua loker
 $sql_loker = "SELECT l.idLoker, l.judul, l.lokasi, l.gaji, l.tanggal_post, p.nama AS nama_perusahaan, l.status_approval 
               FROM loker l
               INNER JOIN perusahaan p ON l.Username_perusahaan = p.User_username";
-
 $result_loker = sqlsrv_query($conn, $sql_loker);
 
 // Menyertakan header
@@ -100,6 +83,21 @@ include "./header.php";
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script>
         let selectedLokerId = null;
+
+        // Fungsi pencarian
+        function searchLoker() {
+            let searchTerm = document.getElementById("searchInput").value.toLowerCase();
+            let rows = document.querySelectorAll("#lokerTable tbody tr");
+
+            rows.forEach(row => {
+                let title = row.cells[0].textContent.toLowerCase();
+                if (title.includes(searchTerm)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
 
         // Membuka modal dan mengambil data detail loker
         function openModal(idLoker) {
@@ -119,7 +117,6 @@ include "./header.php";
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data); // Debugging output
                     if (data.error) {
                         modalContent.innerHTML = `<p class="text-red-500">${data.error}</p>`;
                     } else {
@@ -135,9 +132,8 @@ include "./header.php";
                 })
                 .catch(error => {
                     modalContent.innerHTML = '<p class="text-red-500">Terjadi kesalahan saat memuat data.</p>';
-                    console.error(error); // Debugging output
+                    console.error(error);
                 });
-
         }
 
         // Menutup modal
@@ -146,8 +142,6 @@ include "./header.php";
         }
 
         // Fungsi approve dan reject
-        // Fungsi approve dan reject
-        // Mengirim permintaan AJAX untuk memperbarui status
         function updateLokerStatus(action) {
             fetch('kelola_loker.php', {
                 method: 'POST',
@@ -156,13 +150,12 @@ include "./header.php";
             })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data); // Tambahkan log untuk memeriksa data respons
                     if (data.message) {
                         alert(data.message);
                         closeModal();
-                        location.reload(); // Reload halaman untuk memperbarui status
+                        location.reload();
                     } else if (data.error) {
-                        alert('Error: ' + data.error); // Menampilkan pesan error jika ada
+                        alert('Error: ' + data.error);
                     }
                 })
                 .catch(error => {
@@ -170,18 +163,21 @@ include "./header.php";
                     console.error(error);
                 });
         }
-
-
     </script>
 </head>
-<br><br><br>
 
 <body class="bg-gray-50">
-
     <div class="max-w-7xl mx-auto p-6">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Kelola Loker</h2>
-        <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
-            <table class="min-w-full table-auto">
+
+        <!-- Input Pencarian -->
+        <div class="mb-4">
+            <input type="text" id="searchInput" oninput="searchLoker()" class="border p-2 w-full"
+                placeholder="Cari berdasarkan judul loker...">
+        </div>
+
+        <div class="overflow-x-auto bg-white shadow rounded-lg mb-6" style="max-height: 300px; overflow-y: auto;">
+            <table id="lokerTable" class="min-w-full table-auto">
                 <thead class="bg-gray-200">
                     <tr>
                         <th class="px-6 py-3 text-left">Judul Loker</th>
@@ -206,7 +202,11 @@ include "./header.php";
                                     <span class="text-gray-500">Aksi sudah dilakukan</span>
                                 <?php else: ?>
                                     <button onclick="openModal('<?php echo htmlspecialchars($loker['idLoker']); ?>')"
-                                        class="bg-blue-500 text-white px-4 py-2 rounded">Detail</button>
+                                        class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Lihat</button>
+                                    <button onclick="updateLokerStatus('approve')"
+                                        class="bg-green-500 text-white px-4 py-2 rounded mr-2">Setujui</button>
+                                    <button onclick="updateLokerStatus('reject')"
+                                        class="bg-red-500 text-white px-4 py-2 rounded">Tolak</button>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -214,25 +214,19 @@ include "./header.php";
                 </tbody>
             </table>
         </div>
-    </div>
 
-    <!-- Modal -->
-    <div id="detailModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
-        <div class="bg-white rounded-lg shadow-lg w-1/2">
-            <div class="p-6">
-                <h2 id="modalTitle" class="text-xl font-bold mb-4">Detail Loker</h2>
-                <p id="modalContent" class="text-gray-700">Loading...</p>
-                <div class="mt-6 flex justify-end">
-                    <button onclick="updateLokerStatus('approve')"
-                        class="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg mr-2">Approve</button>
-                    <button onclick="updateLokerStatus('reject')"
-                        class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">Reject</button>
-                    <button onclick="closeModal()" class="ml-2 px-4 py-2 bg-gray-300 rounded-lg">Close</button>
+        <!-- Modal Detail Loker -->
+        <div id="detailModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50">
+            <div class="bg-white rounded-lg p-6 w-1/3">
+                <h3 id="modalTitle" class="text-xl font-bold mb-4">Detail Loker</h3>
+                <div id="modalContent"></div>
+                <div class="mt-4 flex justify-end">
+                    <button onclick="closeModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Tutup</button>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </body>
 
 </html>

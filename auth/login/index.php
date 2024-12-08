@@ -52,8 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     sqlsrv_execute($stmtFoto);
                     if ($fotoRow = sqlsrv_fetch_array($stmtFoto, SQLSRV_FETCH_ASSOC)) {
                         $_SESSION['perusahaanFoto'] = $fotoRow['foto']
-                            ? 'data:image/jpeg;base64,' . base64_encode($fotoRow['foto'])
-                            : 'https://via.placeholder.com/40';
+                            ? $fotoRow['foto']
+                            : '../../asset/defaultpfp.jpg';
                     }
                 } elseif ($row['Role_idRole'] == 2) { // Role pelamar
                     $fotoQuery = "SELECT foto FROM pelamar WHERE User_username = ?";
@@ -140,9 +140,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <!-- Button Login -->
                 <button type="submit"
-                    class="w-full bg-amber-400 hover:bg-amber-500 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
+                    class="w-full bg-[#1C2056] hover:text-black font-semibold py-3 px-4 rounded-lg transition duration-200">
                     Login
                 </button>
+
             </form>
 
             <div class="text-center mt-4">

@@ -17,6 +17,31 @@ $result_pelamar = sqlsrv_query($conn, $sql_pelamar);
 $sql_perusahaan = "SELECT * FROM [user] WHERE Role_idRole = 3 AND username != 'jpc'";
 $result_perusahaan = sqlsrv_query($conn, $sql_perusahaan);
 
+// Memeriksa apakah ada request POST untuk menghapus user
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['id'];
+    $type = $_POST['type'];
+
+    // Validasi dan penanganan penghapusan berdasarkan tipe
+    if ($type == 'pelamar' || $type == 'perusahaan') {
+        $sql = "DELETE FROM [user] WHERE username = ?";
+        $params = array($id);
+        $stmt = sqlsrv_query($conn, $sql, $params);
+
+        // Mengecek apakah query berhasil
+        if ($stmt === false) {
+            echo json_encode(['status' => 'error', 'message' => 'Terjadi kesalahan, coba lagi!']);
+        } else {
+            echo json_encode(['status' => 'success', 'message' => 'User berhasil dihapus!']);
+        }
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Tipe tidak valid']);
+    }
+    exit;
+}
+
+
+
 // Menyertakan header
 include "./header.php";
 ?>
@@ -24,7 +49,6 @@ include "./header.php";
 <!-- HTML Content -->
 <br><br><br>
 <div class="max-w-7xl mx-auto p-6">
-
     <!-- Daftar Pelamar -->
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Pelamar</h2>
     <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
@@ -44,9 +68,8 @@ include "./header.php";
                         <td class="px-6 py-4"><?php echo htmlspecialchars($user['nama']); ?></td>
                         <td class="px-6 py-4">Pelamar</td>
                         <td class="px-6 py-4">
-                            <a href="delete_user.php?id=<?php echo $user['username']; ?>"
-                                class="bg-red-500 text-white px-4 py-2 rounded"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus pelamar ini?');">Delete</a>
+                            <button class="bg-red-500 text-white px-4 py-2 rounded delete-btn"
+                                data-id="<?php echo $user['username']; ?>" data-type="pelamar">Delete</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>
@@ -73,17 +96,75 @@ include "./header.php";
                         <td class="px-6 py-4"><?php echo htmlspecialchars($user['nama']); ?></td>
                         <td class="px-6 py-4">Perusahaan</td>
                         <td class="px-6 py-4">
-                            <a href="delete_user.php?id=<?php echo $user['username']; ?>"
-                                class="bg-red-500 text-white px-4 py-2 rounded"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus perusahaan ini?');">Delete</a>
+                            <button class="bg-red-500 text-white px-4 py-2 rounded delete-btn"
+                                data-id="<?php echo $user['username']; ?>" data-type="perusahaan">Delete</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
         </table>
     </div>
-
 </div>
-</body>
 
-</html>
+<!-- Modal Konfirmasi Hapus -->
+<div id="deleteModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg">
+        <h3 class="text-lg font-bold mb-4">Konfirmasi Penghapusan</h3>
+        <p id="deleteMessage">Apakah Anda yakin ingin menghapus user ini?</p>
+        <div class="mt-4">
+            <button id="confirmDelete" class="bg-red-500 text-white px-4 py-2 rounded">Hapus</button>
+            <button id="cancelDelete" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Batal</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let userId = '';
+        let userType = '';
+
+        // Menampilkan modal
+        $('.delete-btn').click(function () {
+            userId = $(this).data('id');
+            userType = $(this).data('type');
+            $('#deleteMessage').text(`Apakah Anda yakin ingin menghapus ${userType} dengan username ${userId}?`);
+            $('#deleteModal').removeClass('hidden');
+        });
+
+        // Menangani konfirmasi hapus
+        $('#confirmDelete').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '', // Menggunakan file yang sama
+                data: { id: userId, type: userType },
+                success: function (response) {
+                    const res = JSON.parse(response);
+                    if (res.status == 'success') {
+                        // Menghilangkan baris yang dihapus
+                        $(`button[data-id="${userId}"]`).closest('tr').remove();
+                        alert(res.message);
+                    } else {
+                        alert(res.message);
+                    }
+                    // Reset userId dan userType setelah penghapusan
+                    userId = '';
+                    userType = '';
+                    $('#deleteModal').addClass('hidden');
+                },
+                error: function () {
+                    alert('Terjadi kesalahan saat menghapus user.');
+                    $('#deleteModal').addClass('hidden');
+                }
+            });
+        });
+
+        // Menutup modal
+        $('#cancelDelete').click(function () {
+            // Reset userId dan userType jika batal
+            userId = '';
+            userType = '';
+            $('#deleteModal').addClass('hidden');
+        });
+    });
+</script>

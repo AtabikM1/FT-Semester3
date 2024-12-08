@@ -27,6 +27,7 @@ if ($idLoker) {
         echo "Job not found.";
         exit;
     }
+    $fotoPerusahaan = !empty($job['foto']) ? htmlspecialchars($job['foto']) : '/path/to/default-logo.jpeg';
 
     // Mengonversi gaji menjadi format yang benar
     $gaji = $job['gaji'];
@@ -68,8 +69,8 @@ if (!$stmt) {
                 <div class="w-24 h-24 bg-gray-200 rounded-xl">
                     <!-- Menampilkan Foto Perusahaan -->
                     <?php if (!empty($job['foto'])): ?>
-                        <img src="<?php echo $job['foto'] ? 'data:image/jpeg;base64,' . base64_encode($job['foto']) : '/path/to/default-logo.jpeg'; ?>"
-                            alt="Logo Perusahaan" class="w-full h-full object-cover rounded-xl">
+                        <img src="<?= $fotoPerusahaan ?>" alt="Logo Perusahaan" alt="Logo Perusahaan"
+                            class="w-full h-full object-cover rounded-xl">
                     <?php else: ?>
                         <div class="w-full h-full bg-gray-300 flex items-center justify-center text-white font-semibold">No
                             Image</div>

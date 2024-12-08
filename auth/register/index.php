@@ -40,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -83,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
 
             <!-- Form Register -->
-            <form method="POST" action="/auth/register">
+            <form method="POST" action="/auth/register" onsubmit="return validatePassword()">
                 <!-- Username -->
                 <div class="mb-4">
                     <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
@@ -111,24 +110,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Password -->
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="text" name="password" id="password"
+                    <input type="password" name="password" id="password"
+                        class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200" required>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-4">
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm
+                        Password</label>
+                    <input type="password" id="confirmPassword"
                         class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-200" required>
                 </div>
 
                 <!-- Button Register -->
                 <button type="submit"
-                    class="w-full bg-amber-400 hover:bg-amber-500 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
                     Register
                 </button>
             </form>
 
             <!-- Already have an account Link -->
             <div class="text-center mt-4">
-                <a href="/auth/login" class="text-sm text-gray-600 hover:underline">Already have an account? Login</a>
+                <a href="/auth/login" class="text-sm text-blue-600 hover:underline">Already have an account? Login</a>
             </div>
         </div>
     </div>
 
+    <script>
+        // Validasi Confirm Password
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                alert("Password and Confirm Password must match.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 
 </html>
