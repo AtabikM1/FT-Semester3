@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 // Konfigurasi server dan database
 $serverName = "LAPTOP-JKH74RST\SQLEXPRESS";  // Ganti dengan nama server atau IP Address SQL Server
 $connectionOptions = array(
-    "Database" => "db_polinemakarir3",  // Ganti dengan nama database SQL Server
+    "Database" => "db_polinemakarir4",  // Ganti dengan nama database SQL Server
     "Uid" => "",  // Ganti dengan username SQL Server
     "PWD" => ""   // Ganti dengan password SQL Server
 );

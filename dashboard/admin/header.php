@@ -34,10 +34,16 @@ $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
                 </div>
 
                 <!-- Navigation Menu -->
-                <nav class="hidden md:flex items-center gap-10">
-                    <a href="/dashboard/admin/contact.php"
-                        class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Contact
-                        Us</a>
+                <nav class="hidden md:flex items-center gap-5">
+                    <a href="http://localhost/polka/dashboard/admin/managejob.php"
+                        class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Kelola
+                        Lowongan</a>
+                </nav>
+                <nav class="hidden md:flex items-center gap-5">
+                    <a href="http://localhost/polka/dashboard/admin/manageuser.php"
+                        class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Kelola
+                        User
+                    </a>
                 </nav>
 
                 <!-- Admin Profile -->

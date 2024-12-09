@@ -120,9 +120,9 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null; // Mendapatkan Role peng
                         class="text-lg font-medium text-gray-200 hover:text-amber-300 transition duration-300">Profile</a>
                 <?php elseif ($isUserLoggedIn && $userRole == '3'): ?>
                     <!-- Menu untuk perusahaan -->
-                    <a href="/dashboard/perusahaan"
+                    <a href="/polka/dashboard/perusahaan"
                         class="text-lg font-medium text-gray-200 hover:text-amber-300 transition duration-300">Dashboard</a>
-                    <a href="/profile/perusahaan"
+                    <a href="/polka/profile/perusahaan"
                         class="text-lg font-medium text-gray-200 hover:text-amber-300 transition duration-300">Profile</a>
                 <?php endif; ?>
                 <a href="/contact"
@@ -130,12 +130,12 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null; // Mendapatkan Role peng
                 <a href="/about-us"
                     class="text-lg font-medium text-gray-200 hover:text-amber-300 transition duration-300">About Us</a>
                 <?php if ($isUserLoggedIn): ?>
-                    <a href="/auth/logout"
+                    <a href="/polka/auth/logout"
                         class="text-lg font-medium text-red-600 hover:text-red-400 transition duration-300">Logout</a>
                 <?php else: ?>
-                    <a href="/auth/login"
+                    <a href="/polka/auth/login"
                         class="text-lg font-medium text-gray-200 hover:text-amber-300 transition duration-300">Login</a>
-                    <a href="/auth/register"
+                    <a href="/polka/auth/register"
                         class="text-lg font-medium text-amber-400 hover:text-amber-300 transition duration-300">Register
                         Now</a>
                 <?php endif; ?>
