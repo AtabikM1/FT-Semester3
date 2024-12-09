@@ -77,7 +77,6 @@ if ($stmt) {
 
     <!-- Hero section -->
     <section class="relative min-h-screen bg-gradient-to-br from-[#f0f8ff] to-[#e8f4ff] overflow-hidden">
-
         <!-- Decorative elements -->
         <div
             class="absolute top-20 -left-96 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#4a90e2]/10 rounded-full blur-3xl opacity-80 animate-pulse">
@@ -567,10 +566,13 @@ if ($stmt) {
                     <div
                         class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden scroll-animate animate-fadeInUp">
                         <div class="relative overflow-hidden aspect-video">
-                            <img src="<?= htmlspecialchars($article['cover']) ?>"
-                                alt="<?= htmlspecialchars($article['judul']) ?>"
-                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                            <?php if ($article['cover']): ?>
+                                <img src="<?= htmlspecialchars($article['cover']) ?>"
+                                    alt="<?= htmlspecialchars($article['judul']) ?>" class="w-full h-full object-cover ">
+                            <?php else: ?>
+                                <img src="asset/article.png" alt="Default Cover" class="w-48 h-48 object-cover">
+                            <?php endif; ?>
+                            <div class="absolute inset-0 from-black/50 to-transparent"></div>
                         </div>
 
                         <div class="p-6 flex flex-col">
@@ -606,6 +608,8 @@ if ($stmt) {
                 <?php endforeach; ?>
             </div>
         </div>
+        <?php include './include/mountain-background.php'; ?>
+
     </section>
 
     <!-- Background -->
@@ -613,6 +617,7 @@ if ($stmt) {
 
     <?php
     include 'include/footer.php';
+
     ?>
 
     <script>

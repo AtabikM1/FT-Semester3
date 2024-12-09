@@ -29,7 +29,8 @@ $buttonText = $isComplete ? "Edit Profil" : "Lengkapi Profil";
 $buttonLink = $isComplete ? "/profile/perusahaan/edit.php" : "/profile/perusahaan/complete-profile.php";
 ?>
 <div class="min-h-screen bg-gray-50 py-12">
-    <div class="max-w-5xl mx-auto">
+    <?php include '../../include/mountain-background.php' ?>
+    <div class="max-w-5xl py-16 mx-auto">
         <div class="bg-white shadow rounded-lg p-6">
             <!-- Header Perusahaan -->
             <div class="flex items-center space-x-6">

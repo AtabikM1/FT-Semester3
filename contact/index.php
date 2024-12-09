@@ -1,5 +1,5 @@
 <?php
-include '../include/header.php';
+
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -18,7 +18,7 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Contact Us | PolinemaCareer</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.1.2/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .fade-in {
@@ -39,8 +39,8 @@ $userFoto = isset($_SESSION['userFoto']) ? $_SESSION['userFoto'] : 'https://via.
     </style>
 </head>
 
-<body
-    class="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col justify-center items-center py-20 fade-in">
+<body class="min-h-screen   flex flex-col justify-center items-center py-20 fade-in">
+    <!-- <?php include '../include/header.php'; ?> -->
     <section class="relative bg-gradient-to-br from-[#f0f8ff] to-[#e8f4ff] py-24 overflow-hidden">
         <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-[#1C2056]/5 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-amber-400/5 rounded-full blur-3xl"></div>
