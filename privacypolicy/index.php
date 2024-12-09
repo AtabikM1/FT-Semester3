@@ -1,6 +1,4 @@
 <?php
-include '../include/header.php';
-// Privacy Policy Content in PHP
 $sections = [
     [
         'title' => 'Introduction',
@@ -91,18 +89,15 @@ $sections = [
     ]
 ];
 
-// Function to render the sections dynamically
 function renderSection($section)
 {
     echo '<div class="mb-8">';
     echo '<h2 class="text-xl font-bold text-gray-900 mb-4">' . htmlspecialchars($section['title']) . '</h2>';
 
-    // Render paragraphs
     foreach ($section['paragraphs'] as $paragraph) {
         echo '<p class="text-gray-700 mb-4 leading-relaxed">' . htmlspecialchars($paragraph) . '</p>';
     }
 
-    // Render list items if available
     if (isset($section['listItems'])) {
         echo '<ul class="list-disc pl-6 text-gray-700 space-y-2">';
         foreach ($section['listItems'] as $item) {
@@ -122,14 +117,14 @@ function renderSection($section)
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy</title>
+    <title>Privacy Policy | PolinemaCareer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="../asset/logooo.png" type="image/png">
 </head>
 
-<body class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-20">
-
-
-    <div class="max-w-5xl mx-auto px-6 py-8">
+<body class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+    <?php include '../include/header.php'; ?>
+    <div class="max-w-5xl mx-auto px-6 py-12">
         <div class="text-center mb-8">
             <h1 class="text-4xl font-bold text-gray-900 mb-3">Privacy Policy</h1>
             <p class="text-lg text-justify text-gray-600 leading-relaxed">
@@ -152,8 +147,8 @@ function renderSection($section)
             </div>
         </div>
     </div>
+    <?php include '../include/mountain-background.php'; ?>
+    <?php include '../include/footer.php'; ?>
 </body>
-<br>
 
 </html>
-<?php include '../include/footer.php'; ?>

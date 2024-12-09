@@ -16,6 +16,7 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | PolinemaCareer</title>
     <link rel="icon" href="./asset/logooo.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
 
 
     <!-- Custom Animations -->
@@ -245,16 +246,16 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                     [
                         'name' => 'Pramudya Surya',
                         'role' => 'CEO & Founder',
-                        'img' => '../asset/team/pram.jpg',
+                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=PramudyaSurya',
                         'social' => [
                             'github' => 'https://github.com/KrystalMood',
                             'instagram' => 'https://www.instagram.com/pramudya.ap'
                         ]
                     ],
                     [
-                        'name' => 'Giovano Alkandri',
+                        'name' => 'Giovano Alkandri', 
                         'role' => 'COO',
-                        'img' => '../asset/team/gio.jpg',
+                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=GiovanoAlkandri',
                         'social' => [
                             'github' => '#',
                             'instagram' => '#'
@@ -263,7 +264,7 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                     [
                         'name' => 'Atabik M',
                         'role' => 'Head of Marketing',
-                        'img' => '../asset/team/atabik.jpg',
+                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=AtabikM',
                         'social' => [
                             'github' => '#',
                             'instagram' => '#'
@@ -272,7 +273,7 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                     [
                         'name' => 'Fauzie Ikhsanul',
                         'role' => 'Lead Developer',
-                        'img' => '../asset/team/fauzie.jpg',
+                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=FauzieIkhsanul',
                         'social' => [
                             'github' => '#',
                             'instagram' => '#'
@@ -281,7 +282,7 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                     [
                         'name' => 'Tiara Mera',
                         'role' => 'Lead Developer',
-                        'img' => '../asset/team/tiara.jpg',
+                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=TiaraMera',
                         'social' => [
                             'github' => '#',
                             'instagram' => '#'
@@ -290,7 +291,7 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                     [
                         'name' => 'Zannur',
                         'role' => 'Lead Developer',
-                        'img' => '../asset/team/zannur.jpg',
+                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zannur',
                         'social' => [
                             'github' => '#',
                             'instagram' => '#'
@@ -301,7 +302,7 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                 foreach ($team as $index => $member) {
                     echo '<div class="bg-white rounded-xl shadow-lg p-6 opacity-0 animate-fadeInUp animate-delay-' . ($index % 3 + 1) . ' group hover:shadow-2xl transition-all duration-300">
                     <div class="relative mb-6 overflow-hidden rounded-xl">
-                        <img src="' . '../asset/kera.jpg' . '" alt="' . $member['name'] . '" 
+                        <img src="' . $member['img'] . '" alt="' . $member['name'] . '" 
                             class="w-full h-64 object-cover transform transition duration-500 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-[#1C2056]/80 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end justify-center pb-6">
                             <div class="flex space-x-4">
@@ -348,6 +349,8 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
     </script>
 
     <?php include '../include/footer.php'; ?>
+<?php include '../include/mountain-background.php'; ?>
+
 </body>
 
 </html>

@@ -1,5 +1,4 @@
 <?php
-include './include/header.php';
 
 // Cek apakah pengguna sudah login
 $isLoggedIn = isset($_SESSION['username']);
@@ -45,7 +44,7 @@ if ($stmt) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PolinemaCareer</title>
+    <title>Home | PolinemaCareer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="icon" href="../asset/logooo.png" type="image/png">
     <link rel="stylesheet" href="asset/css/style.css">
@@ -56,6 +55,7 @@ if ($stmt) {
 </head>
 
 <body class="bg-gray-50 text-gray-900 font-['Inter']">
+    <?php include './include/header.php'; ?>
 
 
 
@@ -126,8 +126,8 @@ if ($stmt) {
             class="absolute top-40 right-20 w-6 h-6 md:w-8 md:h-8 bg-amber-400/30 rounded-full animate-float hidden md:block">
         </div>
 
-        <div class="container mx-auto px-4 md:px-6 lg:px-20 py-20 md:py-12 lg:py-24">
-            <div class="flex flex-col lg:flex-row max-w-7xl mx-auto gap-8 md:gap-16 items-center">
+        <div class="container mx-auto px-4 md:px-6 lg:px-20">
+            <div class="flex flex-col lg:flex-row max-w-7xl h-screen justify-center mx-auto gap-8 md:gap-16 items-center">
                 <!-- Left content -->
                 <div class="space-y-6 md:space-y-10 animate-slideInLeft text-center lg:text-left">
                     <div class="space-y-4 md:space-y-6">

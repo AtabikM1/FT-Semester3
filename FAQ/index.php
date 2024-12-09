@@ -1,6 +1,4 @@
 <?php
-include '../include/header.php';
-// Sample FAQ data (can be fetched from a database or static array)
 $faqData = [
     [
         'question' => 'What is this website about?',
@@ -48,10 +46,12 @@ $faqData = [
 <!DOCTYPE html>
 <html lang="id">
 <br><br>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frequently Asked Questions</title>
+    <title>FAQ | PolinemaCareer</title>
+    <link rel="icon" href="../asset/logooo.png" type="image/png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         // JavaScript to handle accordion behavior without reloading page
@@ -74,7 +74,8 @@ $faqData = [
     </script>
 </head>
 
-<body class="bg-gray-50 pt-20">
+<body class="bg-gray-50 pt-8">
+    <?php include '../include/header.php'; ?>
     <div class="max-w-7xl mx-auto px-4 py-12">
         <!-- FAQ Header -->
         <div class="text-center mb-12">
@@ -109,7 +110,8 @@ $faqData = [
             </div>
         </div>
     </div>
+    <?php include '../include/footer.php'; ?>
+    <?php include '../include/mountain-background.php'; ?>
 </body>
 
 </html>
-<?php include '../include/footer.php'; ?>
