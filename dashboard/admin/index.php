@@ -88,7 +88,7 @@ include "./header.php";
             <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                 <div class="flex justify-between">
                     <div>
-                        <p class="text-sm font-medium text-slate-600">Total Pelamar</p>
+                        <p class="text-sm font-medium text-slate-600">Total Applicants</p>
                         <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo number_format($jumlah_pelamar); ?>
                         </h3>
                     </div>
@@ -106,7 +106,7 @@ include "./header.php";
             <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                 <div class="flex justify-between">
                     <div>
-                        <p class="text-sm font-medium text-slate-600">Perusahaan Terdaftar</p>
+                        <p class="text-sm font-medium text-slate-600">Registered Companies</p>
                         <h3 class="text-2xl font-bold text-slate-800 mt-2">
                             <?php echo number_format($jumlah_perusahaan); ?>
                         </h3>
@@ -125,7 +125,7 @@ include "./header.php";
             <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                 <div class="flex justify-between">
                     <div>
-                        <p class="text-sm font-medium text-slate-600">Lowongan Aktif</p>
+                        <p class="text-sm font-medium text-slate-600">Active Job Vacancies</p>
                         <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo number_format($jumlah_loker); ?>
                         </h3>
                     </div>
@@ -143,7 +143,7 @@ include "./header.php";
             <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                 <div class="flex justify-between">
                     <div>
-                        <p class="text-sm font-medium text-slate-600">Artikel Karir</p>
+                        <p class="text-sm font-medium text-slate-600">Career Articles</p>
                         <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo number_format($jumlah_artikel); ?>
                         </h3>
                     </div>
@@ -162,13 +162,13 @@ include "./header.php";
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
             <!-- Application Status Chart -->
             <div class="bg-white rounded-xl p-6 shadow-sm">
-                <h2 class="text-xl font-semibold text-slate-800 mb-6">Statistik Lamaran</h2>
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">Application Statistics</h2>
                 <canvas id="lamaranChart" height="300"></canvas>
             </div>
 
             <!-- Traffic Chart -->
             <div class="bg-white rounded-xl p-6 shadow-sm">
-                <h2 class="text-xl font-semibold text-slate-800 mb-6">Traffic Postingan Loker</h2>
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">Job Posting Traffic</h2>
                 <canvas id="trafficLokerChart" height="300"></canvas>
             </div>
         </div>
@@ -180,7 +180,7 @@ include "./header.php";
     const lamaranChart = new Chart(document.getElementById('lamaranChart'), {
         type: 'doughnut',
         data: {
-            labels: ['Dalam Proses', 'Diterima', 'Ditolak'],
+            labels: ['In Process', 'Accepted', 'Rejected'],
             datasets: [{
                 data: [
                     <?php echo isset($jumlah_lamaran[1]) ? $jumlah_lamaran[1] : 0; ?>,

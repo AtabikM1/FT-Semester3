@@ -99,7 +99,7 @@ include "./header.php";
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
+
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
@@ -115,12 +115,12 @@ include "./header.php";
             $('#lokerTable').DataTable({
                 responsive: true,
                 language: {
-                    search: "Cari:",
-                    lengthMenu: "Tampilkan _MENU_ entri",
-                    info: "Menampilkan _START_ hingga _END_ dari _TOTAL_ entri",
+                    search: "Search:",
+                    lengthMenu: "Show _MENU_ entry",
+                    info: "Displaying _START_ to _END_ of _TOTAL_ entries",
                     paginate: {
-                        previous: "Sebelumnya",
-                        next: "Berikutnya"
+                        previous: "Previous",
+                        next: "Next"
                     }
                 }
             });
@@ -200,12 +200,12 @@ include "./header.php";
             <table id="lokerTable" class="min-w-full table-auto">
                 <thead class="bg-gray-200">
                     <tr>
-                        <th class="px-6 py-3 text-left">Judul Loker</th>
-                        <th class="px-6 py-3 text-left">Perusahaan</th>
-                        <th class="px-6 py-3 text-left">Lokasi</th>
-                        <th class="px-6 py-3 text-left">Gaji</th>
-                        <th class="px-6 py-3 text-left">Tanggal Ditambahkan</th>
-                        <th class="px-6 py-3 text-left">Aksi</th>
+                        <th class="px-6 py-3 text-left">Job Title</th>
+                        <th class="px-6 py-3 text-left">Company</th>
+                        <th class="px-6 py-3 text-left">Location</th>
+                        <th class="px-6 py-3 text-left">Salary</th>
+                        <th class="px-6 py-3 text-left">Date Added</th>
+                        <th class="px-6 py-3 text-left">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -220,7 +220,7 @@ include "./header.php";
                             </td>
                             <td class="px-6 py-4">
                                 <?php if ($loker['status_approval'] == 2 || $loker['status_approval'] == 3): ?>
-                                    <span class="text-gray-500">Aksi sudah dilakukan</span>
+                                    <span class="text-gray-500">Action has been taken</span>
                                 <?php else: ?>
                                     <button onclick="openModal('<?php echo htmlspecialchars($loker['idLoker']); ?>')"
                                         class="bg-blue-500 text-white px-4 py-2 rounded">Detail</button>

@@ -102,19 +102,19 @@ include './header.php'; // Menyertakan header aplikasi Anda
         <!-- Form Post Artikel -->
         <form method="POST" action="artikelpost.php" enctype="multipart/form-data">
             <div class="mb-4">
-                <label for="judul" class="block text-sm font-medium text-gray-700">Judul Artikel</label>
+                <label for="judul" class="block text-sm font-medium text-gray-700">Article Title</label>
                 <input type="text" id="judul" name="judul" class="mt-1 p-2 w-full border border-gray-300 rounded"
                     required>
             </div>
 
             <div class="mb-4">
-                <label for="sub_judul" class="block text-sm font-medium text-gray-700">Sub Judul</label>
+                <label for="sub_judul" class="block text-sm font-medium text-gray-700">Subtitle</label>
                 <input type="text" id="sub_judul" name="sub_judul"
                     class="mt-1 p-2 w-full border border-gray-300 rounded">
             </div>
 
             <div class="mb-4">
-                <label for="konten" class="block text-sm font-medium text-gray-700">Konten</label>
+                <label for="konten" class="block text-sm font-medium text-gray-700">Content</label>
                 <textarea id="konten" name="konten" rows="5" class="mt-1 p-2 w-full border border-gray-300 rounded"
                     required></textarea>
             </div>
@@ -124,7 +124,7 @@ include './header.php'; // Menyertakan header aplikasi Anda
                 <input type="file" id="cover" name="cover" class="mt-1 p-2 w-full border border-gray-300 rounded">
             </div>
 
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Post Artikel</button>
+            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Post Article</button>
         </form>
     </div>
 

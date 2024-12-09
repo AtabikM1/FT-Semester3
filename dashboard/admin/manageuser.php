@@ -67,15 +67,15 @@ include "./header.php";
 <br><br><br>
 <div class="max-w-7xl mx-auto p-6">
     <!-- Daftar Pelamar -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Pelamar</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Applicants</h2>
     <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
         <table class="min-w-full table-auto">
             <thead class="bg-gray-200">
                 <tr>
                     <th class="px-6 py-3 text-left">Username</th>
-                    <th class="px-6 py-3 text-left">Nama</th>
+                    <th class="px-6 py-3 text-left">Name</th>
                     <th class="px-6 py-3 text-left">Role</th>
-                    <th class="px-6 py-3 text-left">Aksi</th>
+                    <th class="px-6 py-3 text-left">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -83,7 +83,7 @@ include "./header.php";
                     <tr class="border-b">
                         <td class="px-6 py-4"><?php echo htmlspecialchars($user['username']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($user['nama']); ?></td>
-                        <td class="px-6 py-4">Pelamar</td>
+                        <td class="px-6 py-4">Applicant</td>
                         <td class="px-6 py-4">
                             <button class="bg-red-500 text-white px-4 py-2 rounded delete-btn"
                                 data-id="<?php echo $user['username']; ?>" data-type="pelamar">Delete</button>
@@ -95,15 +95,15 @@ include "./header.php";
     </div>
 
     <!-- Daftar Perusahaan -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Perusahaan</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Companies</h2>
     <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
         <table class="min-w-full table-auto">
             <thead class="bg-gray-200">
                 <tr>
                     <th class="px-6 py-3 text-left">Username</th>
-                    <th class="px-6 py-3 text-left">Nama Perusahaan</th>
+                    <th class="px-6 py-3 text-left">Company Name</th>
                     <th class="px-6 py-3 text-left">Role</th>
-                    <th class="px-6 py-3 text-left">Aksi</th>
+                    <th class="px-6 py-3 text-left">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -111,7 +111,7 @@ include "./header.php";
                     <tr class="border-b">
                         <td class="px-6 py-4"><?php echo htmlspecialchars($user['username']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($user['nama']); ?></td>
-                        <td class="px-6 py-4">Perusahaan</td>
+                        <td class="px-6 py-4">Company</td>
                         <td class="px-6 py-4">
                             <button class="bg-red-500 text-white px-4 py-2 rounded delete-btn"
                                 data-id="<?php echo $user['username']; ?>" data-type="perusahaan">Delete</button>

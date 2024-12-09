@@ -205,7 +205,7 @@ include "../include/header.php";
         <div id="modalContent" class="text-sm"></div> <!-- Konten modal akan ditambahkan di sini -->
         <div class="flex justify-between">
             <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Tutup</button>
-            <button id="confirmButton" class="bg-green-500 text-white px-4 py-2 rounded hidden">Confirm</button>
+            <button id="confirmButton" class="bg-green-500 text-black px-4 py-2 rounded hidden">Confirm</button>
             <!-- Hide this for Pelamar Detail -->
         </div>
     </div>
@@ -216,24 +216,34 @@ include "../include/header.php";
     function openModal(action, pelamar_id, loker_id) {
         const modal = document.getElementById('modal');
         const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
         const confirmButton = document.getElementById('confirmButton');
 
+        // Atur judul modal berdasarkan tindakan
         if (action === 'approve') {
             modalTitle.textContent = 'Are you sure you want to approve this application?';
         } else {
             modalTitle.textContent = 'Are you sure you want to reject this application?';
         }
 
+        // Tambahkan aksi ke tombol Confirm
         confirmButton.onclick = function () {
             const form = document.createElement('form');
             form.method = 'POST';
-            form.innerHTML = `<input type="hidden" name="pelamar_id" value="${pelamar_id}"><input type="hidden" name="loker_id" value="${loker_id}"><input type="hidden" name="action" value="${action}">`;
+            form.innerHTML = `
+            <input type="hidden" name="pelamar_id" value="${pelamar_id}">
+            <input type="hidden" name="loker_id" value="${loker_id}">
+            <input type="hidden" name="action" value="${action}">
+        `;
             document.body.appendChild(form);
             form.submit();
         };
 
+        // Tampilkan tombol Confirm dan modal
+        confirmButton.classList.remove('hidden'); // Pastikan tombol tidak tersembunyi
         modal.classList.remove('hidden');
     }
+
 
     function closeModal() {
         document.getElementById('modal').classList.add('hidden');

@@ -2,7 +2,6 @@
 include './include/header.php';
 
 // Cek apakah pengguna sudah login
-
 $isLoggedIn = isset($_SESSION['username']);
 $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
 
@@ -33,6 +32,7 @@ if ($stmt) {
     ]);
     exit();
 }
+
 ?>
 
 
@@ -58,6 +58,7 @@ if ($stmt) {
 <body class="bg-gray-50 text-gray-900 font-['Inter']">
 
 
+
     <script>
         function toggleContent(id) {
             const previewContent = document.getElementById(`preview-content-${id}`);
@@ -76,6 +77,7 @@ if ($stmt) {
 
     <!-- Hero section -->
     <section class="relative min-h-screen bg-gradient-to-br from-[#f0f8ff] to-[#e8f4ff] overflow-hidden">
+
         <!-- Decorative elements -->
         <div
             class="absolute top-20 -left-96 w-[300px] md:w-[600px] h-[300px] md:h-[600px] bg-[#4a90e2]/10 rounded-full blur-3xl opacity-80 animate-pulse">
@@ -124,9 +126,6 @@ if ($stmt) {
         <div
             class="absolute top-40 right-20 w-6 h-6 md:w-8 md:h-8 bg-amber-400/30 rounded-full animate-float hidden md:block">
         </div>
-        <div
-            class="absolute bottom-44 left-28 w-8 h-8 md:w-12 md:h-12 bg-[#1C2056]/20 rounded-lg rotate-45 animate-float-delay hidden md:block">
-        </div>
 
         <div class="container mx-auto px-4 md:px-6 lg:px-20 py-20 md:py-12 lg:py-24">
             <div class="flex flex-col lg:flex-row max-w-7xl mx-auto gap-8 md:gap-16 items-center">
@@ -149,37 +148,9 @@ if ($stmt) {
                         </p>
                     </div>
 
-                    <!-- <div
-                        class="flex flex-col sm:flex-row gap-4 md:gap-6 items-center justify-center lg:justify-start delay-500">
-                        <a href="<?php echo !$isLoggedIn ? './auth/login' : ($userRole == '2' ? '/browse-jobs' : '/post-job'); ?>"
-                            class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold
-                            text-[#1C2056] bg-amber-400 rounded-xl hover:bg-amber-300 transition-all duration-300
-                            transform hover:scale-105 shadow-lg">
-                            Get Started Now
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                            </svg>
-                        </a>
-
-                    </div> -->
-
                     <!-- Stats with animations -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8 pt-6 border-t border-gray-200">
-                        <!-- <div class="text-center lg:text-left delay-700">
-                            <h4 class="text-2xl md:text-4xl font-bold text-[#1C2056]">500+</h4>
-                            <p class="text-sm md:text-base text-gray-600">Companies</p>
-                        </div>
-                        <div class="text-center lg:text-left delay-800">
-                            <h4 class="text-2xl md:text-4xl font-bold text-[#1C2056]">1000+</h4>
-                            <p class="text-sm md:text-base text-gray-600">Job Posts</p>
-                        </div>
-                        <div class="text-center lg:text-left col-span-2 sm:col-span-1 delay-900">
-                            <h4 class="text-2xl md:text-4xl font-bold text-[#1C2056]">5000+</h4>
-                            <p class="text-sm md:text-base text-gray-600">Candidates</p>
-                        </div> -->
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 md:gap-8 pt-6 border-gray-200">
+
                     </div>
                 </div>
 
@@ -386,9 +357,6 @@ if ($stmt) {
     </section>
     <!-- End of Featured Jobs Section -->
 
-    <!-- Testimonial Section -->
-    <!-- <section class="relative bg-gradient-to-br from-[#1C2056] to-[#2d317a] py-24 overflow-hidden"> -->
-    <!-- Decorative Elements -->
     <!-- Decorative Elements -->
     <div class="absolute inset-0 overflow-hidden">
         <!-- Top Left Circles -->
@@ -430,17 +398,6 @@ if ($stmt) {
     </div>
 
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <!-- Section Header -->
-        <!-- <div class="text-center max-w-3xl mx-auto mb-16">
-                <span class="text-amber-400 font-semibold text-lg mb-4 block">Testimonials</span>
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                    What Our Users Say
-                </h2>
-                <p class="text-gray-300 text-lg">
-                    Discover why thousands of professionals trust PolinemaCareer for their career journey
-                </p>
-            </div> -->
-
         <!-- Testimonials Grid -->
         <!-- <div class="grid md:grid-cols-3 gap-8">
                 <?php
@@ -532,8 +489,7 @@ if ($stmt) {
             <div class="absolute left-10 top-1/2 transform -translate-y-1/2">
                 <div class="grid grid-cols-3 gap-4">
                     <?php for ($i = 0; $i < 9; $i++): ?>
-                        <div class="w-2 h-2 rounded-full bg-white/10">
-                        </div>
+                        <div class="w-2 h-2 rounded-full bg-white/10"></div>
                     <?php endfor; ?>
                 </div>
             </div>
@@ -543,7 +499,7 @@ if ($stmt) {
         <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
                 <!-- Left Content -->
-                <div class="flex-1 text-center lg:text-left">
+                <div class="flex-1 text-center lg:text-left scroll-animate animate-fadeInUp delay-100">
                     <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
                         Ready to Take the Next Step in Your Career?
                     </h2>
@@ -553,9 +509,7 @@ if ($stmt) {
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                         <a href="<?php echo !$isLoggedIn ? './auth/login' : ($userRole == '2' ? '/browse-jobs' : '/post-job'); ?>"
-                            class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold
-                            text-[#1C2056] bg-amber-400 rounded-xl hover:bg-amber-300 transition-all duration-300
-                            transform hover:scale-105 shadow-lg">
+                            class="group inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-[#1C2056] bg-amber-400 rounded-xl hover:bg-amber-300 transition-all duration-300 transform hover:scale-105 shadow-lg">
                             Get Started Now
                             <svg xmlns="http://www.w3.org/2000/svg"
                                 class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
@@ -564,26 +518,19 @@ if ($stmt) {
                                     d="M13 7l5 5m0 0l-5 5m5-5H6" />
                             </svg>
                         </a>
-                        <!-- <a href="/about-us"
-                            class="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold text-white border-2 border-white/20 rounded-xl hover:bg-white/10 transition-all duration-300">
-                            Learn More
-                        </a> -->
                     </div>
                 </div>
 
-                <!-- Right Content - Stats -->
-                <div class="flex justify-between items-center gap-6 lg:max-w-7xl">
+                <!-- Right Content - Image -->
+                <div
+                    class="flex justify-between items-center gap-6 lg:max-w-7xl scroll-animate animate-fadeInUp delay-300">
                     <div class="rounded-xl shadow-lg relative">
                         <img src="./asset/Good team-bro.png" alt="Call To Action"
                             class="relative z-10 w-[120%] h-[400px] object-cover rounded-xl">
                         <span
-                            class="absolute inset-0 w-full h-full bg-gradient-to-br from-black/50 to-transparent rounded-xl z-20"></span>
-
-
+                            class="absolute inset-0 w-full h-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-xl"></span>
                         <span
-                            class="absolute top-2 left-2 w-full h-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 rounded-xl"></span>
-                        <span
-                            class="absolute top-2 left-6 w-full h-full bg-gradient-to-br from-blue-500/30 to-teal-500/30 rounded-xl"></span>
+                            class="absolute top-2 left-2 w-full h-full bg-gradient-to-br from-blue-500/30 to-teal-500/30 rounded-xl"></span>
                         <span
                             class="absolute -top-3 -left-12 w-full h-full bg-gradient-to-br from-amber-500/30 to-orange-500/30 rounded-xl"></span>
                         <span
@@ -594,35 +541,65 @@ if ($stmt) {
         </div>
     </section>
     <!-- End of Call to Action Section -->
-    <section class="py-10 bg-gray-50">
-        <div class="container mx-auto">
-            <h2 class="text-2xl font-bold text-center mb-8">Artikel Terbaru</h2>
-            <div class="grid grid-cols-2 gap-6">
-                <?php foreach ($articles as $article): ?>
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                        <?php if ($article['cover']): ?>
-                            <img src="<?= htmlspecialchars($article['cover']) ?>"
-                                alt="<?= htmlspecialchars($article['judul']) ?>" class="w-full h-48 object-cover">
-                        <?php else: ?>
-                            <img src="asset/article.png" alt="Default Cover" class="w-48 h-48 object-cover">
-                        <?php endif; ?>
 
-                        <div class="p-4">
-                            <h3 class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($article['judul']) ?></h3>
-                            <?php if (!empty($article['sub_judul'])): ?>
-                                <p class="text-sm text-gray-600"><?= htmlspecialchars($article['sub_judul']) ?></p>
-                            <?php endif; ?>
-                            <p class="mt-2 text-sm text-gray-700 line-clamp-3"
-                                id="preview-content-<?= htmlspecialchars($article['IdArtikel']) ?>">
-                                <?= htmlspecialchars(substr($article['konten'], 0, 0)) ?>...
-                            </p>
-                            <div id="hidden-content-<?= htmlspecialchars($article['IdArtikel']) ?>"
-                                class="hidden mt-4 text-sm text-gray-700">
-                                <?= nl2br(htmlspecialchars($article['konten'])) ?>
+    <!-- Artikel Terbaru Section -->
+    <section class="relative bg-white py-24 overflow-hidden">
+        <!-- Decorative Elements -->
+        <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-gray-50/50 to-transparent"></div>
+        <div class="absolute -top-40 -right-40 w-[600px] h-[600px] bg-amber-100/30 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-blue-100/30 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-6 lg:px-20 relative">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 scroll-animate animate-fadeInUp">
+                <span
+                    class="w-fit mx-auto text-amber-400 font-semibold text-lg mb-4 flex justify-center items-center px-4 py-2 bg-gray-100 rounded-full">Latest
+                    Updates</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
+                    Artikel Terbaru
+                </h2>
+                <p class="text-gray-600 text-lg">Temukan insight dan tips karir terbaru untuk mengembangkan karirmu</p>
+            </div>
+
+            <!-- Articles Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <?php foreach ($articles as $article): ?>
+                    <div
+                        class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden scroll-animate animate-fadeInUp">
+                        <div class="relative overflow-hidden aspect-video">
+                            <img src="<?= htmlspecialchars($article['cover']) ?>"
+                                alt="<?= htmlspecialchars($article['judul']) ?>"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        </div>
+
+                        <div class="p-6 flex flex-col">
+                            <div>
+                                <h3
+                                    class="text-2xl font-bold text-slate-900 mb-2 group-hover:text-[#1C2056] transition-colors">
+                                    <?= htmlspecialchars($article['judul']) ?>
+                                </h3>
+
+                                <?php if (!empty($article['sub_judul'])): ?>
+                                    <p class="text-amber-500 font-semibold mb-3">
+                                        <?= htmlspecialchars($article['sub_judul']) ?>
+                                    </p>
+                                <?php endif; ?>
+
+                                <p class="text-gray-600 line-clamp-3 mb-4">
+                                    <?= htmlspecialchars($article['konten']) ?>
+                                </p>
                             </div>
-                            <button class="mt-4 inline-block text-blue-500 hover:text-blue-700"
-                                onclick="toggleContent('<?= htmlspecialchars($article['IdArtikel']) ?>')">
-                                Baca Selengkapnya
+
+                            <button onclick="toggleContent(<?= $article['IdArtikel'] ?>)"
+                                class="inline-flex items-center text-[#1C2056] font-semibold hover:text-amber-500 transition-colors">
+                                Read More
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                </svg>
                             </button>
                         </div>
                     </div>
@@ -630,6 +607,9 @@ if ($stmt) {
             </div>
         </div>
     </section>
+
+    <!-- Background -->
+
 
     <?php
     include 'include/footer.php';

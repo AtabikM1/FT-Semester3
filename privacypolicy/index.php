@@ -95,7 +95,7 @@ $sections = [
 function renderSection($section)
 {
     echo '<div class="mb-8">';
-    echo '<h2 class="text-xl font-semibold text-gray-900 mb-4">' . htmlspecialchars($section['title']) . '</h2>';
+    echo '<h2 class="text-xl font-bold text-gray-900 mb-4">' . htmlspecialchars($section['title']) . '</h2>';
 
     // Render paragraphs
     foreach ($section['paragraphs'] as $paragraph) {
@@ -127,9 +127,11 @@ function renderSection($section)
 </head>
 
 <body class="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-20">
-    <div class="max-w-5xl mx-auto px-6">
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-semibold text-gray-900 mb-4">Privacy Policy</h1>
+
+
+    <div class="max-w-5xl mx-auto px-6 py-8">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-3">Privacy Policy</h1>
             <p class="text-lg text-justify text-gray-600 leading-relaxed">
                 Welcome to PolinemaCareer, your privacy is important to us. This Privacy Policy explains how we collect,
                 use, and safeguard your personal information while helping you connect with career opportunities.
@@ -142,7 +144,6 @@ function renderSection($section)
             <?php endforeach; ?>
 
             <div class="mb-8">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Contact Us</h2>
                 <p class="text-gray-700">
                     <strong>Email :</strong> contact@polinemacarrier.com
                     <br />

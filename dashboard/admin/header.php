@@ -36,13 +36,12 @@ $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
                 <!-- Navigation Menu -->
                 <nav class="hidden md:flex items-center gap-5">
                     <a href="http://project.test/dashboard/admin/managejob.php"
-                        class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Kelola
-                        Lowongan</a>
+                        class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Manage Job Listings
+                    </a>
                 </nav>
                 <nav class="hidden md:flex items-center gap-5">
                     <a href="http://project.test/dashboard/admin/manageuser.php"
-                        class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Kelola
-                        User
+                        class="text-gray-200 font-medium hover:text-amber-300 hover:scale-105 transition duration-300">Manage Users
                     </a>
                 </nav>
 
@@ -63,14 +62,12 @@ $currentUser = $isUserLoggedIn ? $_SESSION['username'] : null;
                                 <a href="/dashboard/admin"
                                     class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dashboard</a>
                                 <a href="http://project.test/dashboard/admin/managejob.php"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Kelola
-                                    Lowongan</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Manage Job Listings</a>
                                 <a href="http://project.test/dashboard/admin/manageuser.php"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Kelola
-                                    User</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Manage Users</a>
                                 <a href="http://project.test/dashboard/admin/artikelpost.php"
                                     class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Post
-                                    Artikel</a>
+                                    Article</a>
                                 <div class="h-px bg-gray-200 my-2"></div>
                                 <a href="/auth/logout" class="block px-4 py-2 text-red-600 hover:bg-red-50">Logout</a>
                             </div>

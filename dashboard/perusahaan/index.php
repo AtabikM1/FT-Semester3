@@ -123,8 +123,8 @@ include "../../include/header.php";
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <!-- Header Section -->
             <div class="mb-8">
-                <h1 class="text-3xl font-bold text-slate-800">Dashboard Perusahaan</h1>
-                <p class="mt-2 text-slate-600">Kelola lowongan dan pelamar Anda</p>
+                <h1 class="text-3xl font-bold text-slate-800">Company Dashboard</h1>
+                <p class="mt-2 text-slate-600">Manage Your Jobs and Applicants</p>
             </div>
 
             <!-- Stats Grid -->
@@ -133,10 +133,10 @@ include "../../include/header.php";
                 <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="text-sm font-medium text-slate-600">Lamaran Tertunda</p>
+                            <p class="text-sm font-medium text-slate-600">Pending Applications</p>
                             <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['tertunda']; ?></h3>
                             <p class="text-sm text-slate-500 mt-1">
-                                <?php echo round(($stats['tertunda'] / $stats['total']) * 100, 1); ?>% dari total
+                                <?php echo round(($stats['tertunda'] / $stats['total']) * 100, 1); ?>% of total
                             </p>
                         </div>
                         <div class="bg-yellow-50 p-3 rounded-lg">
@@ -151,10 +151,10 @@ include "../../include/header.php";
                 <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="text-sm font-medium text-slate-600">Lamaran Diterima</p>
+                            <p class="text-sm font-medium text-slate-600">Accepted Applications</p>
                             <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['diterima']; ?></h3>
                             <p class="text-sm text-slate-500 mt-1">
-                                <?php echo round(($stats['diterima'] / $stats['total']) * 100, 1); ?>% dari total
+                                <?php echo round(($stats['diterima'] / $stats['total']) * 100, 1); ?>% of Total
                             </p>
                         </div>
                         <div class="bg-green-50 p-3 rounded-lg">
@@ -169,10 +169,10 @@ include "../../include/header.php";
                 <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                     <div class="flex justify-between items-start">
                         <div>
-                            <p class="text-sm font-medium text-slate-600">Lamaran Ditolak</p>
+                            <p class="text-sm font-medium text-slate-600">Rejected Applications</p>
                             <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['ditolak']; ?></h3>
                             <p class="text-sm text-slate-500 mt-1">
-                                <?php echo round(($stats['ditolak'] / $stats['total']) * 100, 1); ?>% dari total
+                                <?php echo round(($stats['ditolak'] / $stats['total']) * 100, 1); ?>% of Total
                             </p>
                         </div>
                         <div class="bg-red-50 p-3 rounded-lg">
@@ -188,13 +188,13 @@ include "../../include/header.php";
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
                 <!-- Lowongan Chart -->
                 <div class="bg-white rounded-xl p-6 shadow-sm">
-                    <h2 class="text-xl font-semibold text-slate-800 mb-6">Lowongan Paling Diminati</h2>
+                    <h2 class="text-xl font-semibold text-slate-800 mb-6">Most Popular Job Listings</h2>
                     <canvas id="lokerChart" height="300"></canvas>
                 </div>
 
                 <!-- Status Applications Chart -->
                 <div class="bg-white rounded-xl p-6 shadow-sm">
-                    <h2 class="text-xl font-semibold text-slate-800 mb-6">Status Lamaran</h2>
+                    <h2 class="text-xl font-semibold text-slate-800 mb-6">Application Status</h2>
                     <canvas id="lokerChart2" height="300"></canvas>
                 </div>
             </div>
