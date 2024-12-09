@@ -1,7 +1,6 @@
 <?php
-// Mulai session untuk memastikan akses yang benar
 session_start();
-include '../../include/koneksi.php'; // Pastikan koneksi database sudah ada
+include '../../include/koneksi.php';
 
 // Pastikan pengguna adalah admin
 if ($_SESSION['Role'] != 1) {
@@ -17,30 +16,48 @@ $result_pelamar = sqlsrv_query($conn, $sql_pelamar);
 $sql_perusahaan = "SELECT * FROM [user] WHERE Role_idRole = 3 AND username != 'jpc'";
 $result_perusahaan = sqlsrv_query($conn, $sql_perusahaan);
 
-// Memeriksa apakah ada request POST untuk menghapus user
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+// Menangani penghapusan user
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id']) && isset($_POST['type'])) {
     $id = $_POST['id'];
     $type = $_POST['type'];
 
-    // Validasi dan penanganan penghapusan berdasarkan tipe
     if ($type == 'pelamar' || $type == 'perusahaan') {
-        $sql = "DELETE FROM [user] WHERE username = ?";
-        $params = array($id);
-        $stmt = sqlsrv_query($conn, $sql, $params);
+        // Mulai transaksi
+        sqlsrv_begin_transaction($conn);
 
-        // Mengecek apakah query berhasil
-        if ($stmt === false) {
-            echo json_encode(['status' => 'error', 'message' => 'Terjadi kesalahan, coba lagi!']);
-        } else {
+        try {
+            // Menghapus data terkait
+            if ($type == 'pelamar') {
+                // Hapus data pelamar
+                sqlsrv_query($conn, "DELETE FROM [studi] WHERE Profile_User_username = ?", array($id));
+                sqlsrv_query($conn, "DELETE FROM [sertifikat] WHERE Profile_User_username = ?", array($id));
+                sqlsrv_query($conn, "DELETE FROM [pengalaman] WHERE Profile_User_username = ?", array($id));
+                sqlsrv_query($conn, "DELETE FROM [melamar] WHERE User_pelamar = ?", array($id));
+                sqlsrv_query($conn, "DELETE FROM [pelamar] WHERE User_username = ?", array($id));
+            } else if ($type == 'perusahaan') {
+                // Hapus data perusahaan
+                sqlsrv_query($conn, "DELETE FROM [artikel] WHERE User_username = ?", array($id));
+                sqlsrv_query($conn, "DELETE FROM [loker] WHERE Username_perusahaan = ?", array($id));
+                sqlsrv_query($conn, "DELETE FROM [perusahaan] WHERE User_username = ?", array($id));
+            }
+
+            // Hapus user
+            sqlsrv_query($conn, "DELETE FROM [user] WHERE username = ?", array($id));
+
+            // Commit transaksi
+            sqlsrv_commit($conn);
             echo json_encode(['status' => 'success', 'message' => 'User berhasil dihapus!']);
+        } catch (Exception $e) {
+            // Rollback transaksi jika ada error
+            sqlsrv_rollback($conn);
+            echo json_encode(['status' => 'error', 'message' => 'Terjadi kesalahan saat menghapus user!']);
         }
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Tipe tidak valid']);
     }
-    exit;
+
+    exit; // Menyelesaikan request setelah penghapusan
 }
-
-
 
 // Menyertakan header
 include "./header.php";
