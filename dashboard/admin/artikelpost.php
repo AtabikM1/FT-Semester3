@@ -8,42 +8,56 @@ if ($_SESSION['Role'] != 1) {
     exit;
 }
 
+// Inisialisasi variabel pesan
+$success = $error = null;
+
 // Menangani pengiriman form
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $judul = $_POST['judul'] ?? '';
     $sub_judul = $_POST['sub_judul'] ?? '';
     $konten = $_POST['konten'] ?? '';
-    $cover = $_FILES['cover']['name'] ?? '';
     $user_username = $_SESSION['username']; // Ambil username dari session admin
+    $cover = null; // Default value jika tidak ada gambar
 
     // Validasi form
     if (!$judul || !$konten || !$user_username) {
         $error = "Semua kolom harus diisi.";
     } else {
         // Proses upload gambar jika ada
-        if ($cover) {
-            $targetDir = "uploads/";
-            $targetFile = $targetDir . basename($cover);
-            if (move_uploaded_file($_FILES['cover']['tmp_name'], $targetFile)) {
-                // Gambar berhasil di-upload
+        if (!empty($_FILES['cover']['tmp_name'])) {
+            $cover_tmp = $_FILES['cover']['tmp_name'];
+            $cover_name = basename($_FILES['cover']['name']);
+            $target_dir = "../../asset/upload/"; // Folder tujuan upload
+            $target_file = $target_dir . $cover_name;
+
+            // Cek apakah file berhasil diupload
+            if (move_uploaded_file($cover_tmp, $target_file)) {
+                $cover = '/asset/upload/' . $cover_name; // Simpan path untuk database
             } else {
                 $error = "Terjadi kesalahan saat meng-upload gambar.";
             }
         }
 
-        // Menyimpan artikel ke database
+        // Menyimpan artikel ke database jika tidak ada error
         if (!isset($error)) {
+            // Buat ID 4 karakter
+            $idArtikel = substr(uniqid(), -4);
+
             $sql = "INSERT INTO artikel (IdArtikel, judul, sub_judul, konten, cover, User_username) 
-                    VALUES (NEWID(), ?, ?, ?, ?, ?)";
-            $params = array($judul, $sub_judul, $konten, $cover, $user_username);
+            VALUES (?, ?, ?, ?, ?, ?)";
+            $params = array($idArtikel, $judul, $sub_judul, $konten, $cover, $user_username);
             $stmt = sqlsrv_prepare($conn, $sql, $params);
 
-            if (sqlsrv_execute($stmt)) {
+            if (!$stmt) {
+                $error = "Kesalahan saat mempersiapkan query: " . print_r(sqlsrv_errors(), true);
+            } elseif (sqlsrv_execute($stmt)) {
                 $success = "Artikel berhasil diposting.";
             } else {
-                $error = "Terjadi kesalahan saat menyimpan artikel.";
+                $error = "Terjadi kesalahan saat menyimpan artikel: " . print_r(sqlsrv_errors(), true);
             }
         }
+
+
     }
 }
 
@@ -58,6 +72,12 @@ include './header.php'; // Menyertakan header aplikasi Anda
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post Artikel</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script>
+        // JavaScript untuk menampilkan pop-up jika artikel berhasil diposting
+        function showPopup(message) {
+            alert(message);
+        }
+    </script>
 </head>
 
 <body class="bg-gray-50">
@@ -65,17 +85,22 @@ include './header.php'; // Menyertakan header aplikasi Anda
     <div class="max-w-7xl mx-auto p-6">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Post Artikel Baru</h2>
 
-        <?php if (isset($error)): ?>
+        <!-- Pop-Up Success -->
+        <?php if ($success): ?>
+            <script>
+                showPopup("<?php echo htmlspecialchars($success); ?>");
+            </script>
+        <?php endif; ?>
+
+        <!-- Pesan Error -->
+        <?php if ($error): ?>
             <div class="bg-red-500 text-white p-4 rounded mb-4">
                 <?php echo htmlspecialchars($error); ?>
             </div>
-        <?php elseif (isset($success)): ?>
-            <div class="bg-green-500 text-white p-4 rounded mb-4">
-                <?php echo htmlspecialchars($success); ?>
-            </div>
         <?php endif; ?>
 
-        <form method="POST" action="post_artikel.php" enctype="multipart/form-data">
+        <!-- Form Post Artikel -->
+        <form method="POST" action="artikelpost.php" enctype="multipart/form-data">
             <div class="mb-4">
                 <label for="judul" class="block text-sm font-medium text-gray-700">Judul Artikel</label>
                 <input type="text" id="judul" name="judul" class="mt-1 p-2 w-full border border-gray-300 rounded"

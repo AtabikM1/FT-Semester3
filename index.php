@@ -2,9 +2,40 @@
 include './include/header.php';
 
 // Cek apakah pengguna sudah login
+
 $isLoggedIn = isset($_SESSION['username']);
 $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
+
+// Koneksi ke database
+include './include/koneksi.php';
+
+// Query untuk mengambil data artikel
+$sql = "SELECT TOP 6 IdArtikel, judul, sub_judul, konten, cover
+FROM dbo.artikel
+ORDER BY IdArtikel DESC;
+";
+
+// Menjalankan query menggunakan SQLSRV
+$stmt = sqlsrv_query($conn, $sql);
+
+$articles = [];
+if ($stmt) {
+    // Fetch semua data artikel
+    while ($row = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) {
+        $articles[] = $row;
+    }
+} else {
+    // Menangani error query
+    echo json_encode([
+        "success" => false,
+        "message" => "Query gagal dieksekusi",
+        "error" => sqlsrv_errors()
+    ]);
+    exit();
+}
 ?>
+
+
 
 <!-- Start of HTML -->
 <!DOCTYPE html>
@@ -25,6 +56,23 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
 </head>
 
 <body class="bg-gray-50 text-gray-900 font-['Inter']">
+
+
+    <script>
+        function toggleContent(id) {
+            const previewContent = document.getElementById(`preview-content-${id}`);
+            const hiddenContent = document.getElementById(`hidden-content-${id}`);
+            if (hiddenContent.classList.contains('hidden')) {
+                hiddenContent.classList.remove('hidden');
+                previewContent.classList.add('hidden');
+            } else {
+                hiddenContent.classList.add('hidden');
+                previewContent.classList.remove('hidden');
+            }
+        }
+    </script>
+
+
 
     <!-- Hero section -->
     <section class="relative min-h-screen bg-gradient-to-br from-[#f0f8ff] to-[#e8f4ff] overflow-hidden">
@@ -546,6 +594,42 @@ $userRole = $isLoggedIn ? $_SESSION['Role'] : null;
         </div>
     </section>
     <!-- End of Call to Action Section -->
+    <section class="py-10 bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-2xl font-bold text-center mb-8">Artikel Terbaru</h2>
+            <div class="grid grid-cols-2 gap-6">
+                <?php foreach ($articles as $article): ?>
+                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                        <?php if ($article['cover']): ?>
+                            <img src="<?= htmlspecialchars($article['cover']) ?>"
+                                alt="<?= htmlspecialchars($article['judul']) ?>" class="w-full h-48 object-cover">
+                        <?php else: ?>
+                            <img src="asset/article.png" alt="Default Cover" class="w-48 h-48 object-cover">
+                        <?php endif; ?>
+
+                        <div class="p-4">
+                            <h3 class="text-lg font-semibold text-gray-800"><?= htmlspecialchars($article['judul']) ?></h3>
+                            <?php if (!empty($article['sub_judul'])): ?>
+                                <p class="text-sm text-gray-600"><?= htmlspecialchars($article['sub_judul']) ?></p>
+                            <?php endif; ?>
+                            <p class="mt-2 text-sm text-gray-700 line-clamp-3"
+                                id="preview-content-<?= htmlspecialchars($article['IdArtikel']) ?>">
+                                <?= htmlspecialchars(substr($article['konten'], 0, 0)) ?>...
+                            </p>
+                            <div id="hidden-content-<?= htmlspecialchars($article['IdArtikel']) ?>"
+                                class="hidden mt-4 text-sm text-gray-700">
+                                <?= nl2br(htmlspecialchars($article['konten'])) ?>
+                            </div>
+                            <button class="mt-4 inline-block text-blue-500 hover:text-blue-700"
+                                onclick="toggleContent('<?= htmlspecialchars($article['IdArtikel']) ?>')">
+                                Baca Selengkapnya
+                            </button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
 
     <?php
     include 'include/footer.php';

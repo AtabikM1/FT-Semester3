@@ -38,6 +38,33 @@ if (isset($_POST['action'], $_POST['pelamar_id'], $_POST['loker_id'])) {
 }
 
 
+if (isset($_POST['username'])) {
+    $username = $_POST['username'];
+
+    $sql_user = "EXEC GetUserProfile ?";
+    $stmt_user = sqlsrv_prepare($conn, $sql_user, array($username));
+    sqlsrv_execute($stmt_user);
+
+    $user = sqlsrv_fetch_array($stmt_user, SQLSRV_FETCH_ASSOC) ?: [];
+
+    if ($user) {
+        // Menyusun data yang akan dikirim ke client
+        echo json_encode([
+            'nama' => htmlspecialchars($user['nama'] ?? 'Pengguna Baru'),
+            'foto' => $user['foto'] ? $user['foto'] : '../../asset/defaultpfp.jpg',
+            'alamat' => htmlspecialchars($user['alamat'] ?? 'Alamat belum diisi'),
+            'tanggal_lahir' => isset($user['tanggal_lahir']) ? $user['tanggal_lahir']->format('Y-m-d') : 'Tanggal lahir belum diisi',
+            'gender' => $user['gender'] ? ($user['gender'] == 'L' ? 'Laki-laki' : 'Perempuan') : 'Gender belum diisi',
+            'telepon' => htmlspecialchars($user['telepon'] ?? 'Telepon belum diisi'),
+            'email' => htmlspecialchars($user['email'] ?? 'Email belum diisi'),
+            'bio' => htmlspecialchars($user['bio'] ?? 'Belum ada deskripsi.')
+        ]);
+    } else {
+        echo json_encode(['error' => 'Data pelamar tidak ditemukan']);
+    }
+} else {
+    echo json_encode(['error' => 'Username tidak ditemukan']);
+}
 
 // Query untuk mendapatkan lowongan yang diposting oleh perusahaan ini
 $sql_loker = "SELECT * FROM loker WHERE Username_perusahaan = ?";
@@ -88,18 +115,18 @@ $sql_loker_stats = "
 $stmt_loker_stats = sqlsrv_prepare($conn, $sql_loker_stats, array($_SESSION['username']));
 sqlsrv_execute($stmt_loker_stats);
 
-// Statistik Aplikasi
-$sql_stats = "
-    SELECT 
-        SUM(CASE WHEN status_lamaran_id = 1 THEN 1 ELSE 0 END) AS tertunda,
-        SUM(CASE WHEN status_lamaran_id = 2 THEN 1 ELSE 0 END) AS diterima,
-        SUM(CASE WHEN status_lamaran_id = 3 THEN 1 ELSE 0 END) AS ditolak,
-        COUNT(*) AS total
-    FROM melamar 
-    WHERE Loker_idLoker IN (SELECT idLoker FROM loker WHERE Username_perusahaan = ?)";
-$stmt_stats = sqlsrv_prepare($conn, $sql_stats, array($_SESSION['username']));
-sqlsrv_execute($stmt_stats);
-$stats = sqlsrv_fetch_array($stmt_stats, SQLSRV_FETCH_ASSOC);
+// // Statistik Aplikasi
+// $sql_stats = "
+//     SELECT 
+//         SUM(CASE WHEN status_lamaran_id = 1 THEN 1 ELSE 0 END) AS tertunda,
+//         SUM(CASE WHEN status_lamaran_id = 2 THEN 1 ELSE 0 END) AS diterima,
+//         SUM(CASE WHEN status_lamaran_id = 3 THEN 1 ELSE 0 END) AS ditolak,
+//         COUNT(*) AS total
+//     FROM melamar 
+//     WHERE Loker_idLoker IN (SELECT idLoker FROM loker WHERE Username_perusahaan = ?)";
+// $stmt_stats = sqlsrv_prepare($conn, $sql_stats, array($_SESSION['username']));
+// sqlsrv_execute($stmt_stats);
+// $stats = sqlsrv_fetch_array($stmt_stats, SQLSRV_FETCH_ASSOC);
 
 include "../include/header.php";
 ?>
@@ -107,39 +134,6 @@ include "../include/header.php";
 <br><br><br>
 <!-- Dashboard Content -->
 <div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
-
-
-    <!-- Daftar Lowongan -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
-    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
-        <table class="min-w-full table-auto">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-6 py-3 text-left">Judul</th>
-                    <th class="px-6 py-3 text-left">Tipe</th>
-                    <th class="px-6 py-3 text-left">Lokasi</th>
-
-                    <th class="px-6 py-3 text-left">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($loker = sqlsrv_fetch_array($stmt_loker, SQLSRV_FETCH_ASSOC)): ?>
-                    <tr class="border-b">
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['judul']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['tipe_loker']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['lokasi']); ?></td>
-
-                        <td class="px-6 py-4">
-
-                            <a href="delete_loker.php?id=<?php echo $loker['idLoker']; ?>"
-                                class="bg-red-500 text-white px-4 py-2 rounded"
-                                onclick="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">Delete</a>
-
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div>
 
     <!-- Daftar Pelamar -->
     <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Pelamar</h2>
@@ -156,7 +150,12 @@ include "../include/header.php";
             <tbody>
                 <?php while ($pelamar = sqlsrv_fetch_array($stmt_pelamar, SQLSRV_FETCH_ASSOC)): ?>
                     <tr class="border-b">
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['pelamar_nama']); ?></td>
+                        <td class="px-6 py-4">
+                            <a href="#" onclick="showPelamarDetail('<?php echo $pelamar['pelamar_username']; ?>')">
+                                <?php echo htmlspecialchars($pelamar['pelamar_nama']); ?>
+                            </a>
+                        </td>
+
                         <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['judul_loker']); ?></td>
                         <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['deskripsi_status']); ?></td>
                         <td class="px-6 py-4">
@@ -188,6 +187,58 @@ include "../include/header.php";
             </tbody>
         </table>
     </div>
+
+    <!-- Daftar Lowongan -->
+    <!-- <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
+    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left">Judul</th>
+                    <th class="px-6 py-3 text-left">Tipe</th>
+                    <th class="px-6 py-3 text-left">Lokasi</th>
+
+                    <th class="px-6 py-3 text-left">Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($loker = sqlsrv_fetch_array($stmt_loker, SQLSRV_FETCH_ASSOC)): ?>
+                    <tr class="border-b">
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['judul']); ?></td>
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['tipe_loker']); ?></td>
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker['lokasi']); ?></td>
+
+                        <td class="px-6 py-4">
+
+                            <a href="delete_loker.php?id=<?php echo $loker['idLoker']; ?>"
+                                class="bg-red-500 text-white px-4 py-2 rounded"
+                                onclick="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?');">Delete</a>
+
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div> -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
+    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gray-200">
+                <tr>
+                    <th class="px-6 py-3 text-left">Lowongan</th>
+                    <th class="px-6 py-3 text-left">Jumlah Pelamar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($loker_stats = sqlsrv_fetch_array($stmt_loker_stats, SQLSRV_FETCH_ASSOC)): ?>
+                    <tr class="border-b">
+                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker_stats['judul_loker']); ?></td>
+                        <td class="px-6 py-4"><?php echo $loker_stats['jumlah_pelamar']; ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
+    </div>
+
 </div>
 <!-- Modal Konfirmasi -->
 <div id="confirmModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
@@ -205,6 +256,20 @@ include "../include/header.php";
         <button id="closeModal" class="mt-4 bg-gray-300 px-4 py-2 rounded">Tutup</button>
     </div>
 </div>
+<!-- Modal Detail Pelamar -->
+<div id="detailModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white p-6 rounded shadow-lg max-w-md w-full">
+        <h2 id="modalTitle" class="text-xl font-bold mb-4">Detail Pelamar</h2>
+        <div id="modalContent"></div>
+        <button id="closeModal" class="mt-4 bg-gray-300 px-4 py-2 rounded">Tutup</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('closeModal').onclick = function () {
+        document.getElementById('detailModal').classList.add('hidden');
+    }
+</script>
 
 <?php include '../include/footer.php'; ?>
 
@@ -292,6 +357,40 @@ include "../include/header.php";
                 console.error(error);
             });
     };
+    function showPelamarDetail(username) {
+        const modal = document.getElementById('detailModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalContent = document.getElementById('modalContent');
+
+        // Tampilkan modal
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+
+        // Ambil data detail pelamar menggunakan fetch
+        fetch('get_user_details.php', {
+            method: 'GET', // atau 'POST' jika diperlukan
+            headers: { 'Content-Type': 'application/json' }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    console.error(data.error);
+                } else {
+                    // Proses data untuk ditampilkan di frontend
+                    document.getElementById('nama').innerText = data.nama;
+                    document.getElementById('foto').src = data.foto;
+                    document.getElementById('alamat').innerText = data.alamat;
+                    document.getElementById('tanggal_lahir').innerText = data.tanggal_lahir;
+                    document.getElementById('gender').innerText = data.gender;
+                    document.getElementById('telepon').innerText = data.telepon;
+                    document.getElementById('email').innerText = data.email;
+                    document.getElementById('bio').innerText = data.bio;
+                }
+            })
+            .catch(error => console.error('Error fetching user details:', error));
+
+    }
+
 
 
 </script>

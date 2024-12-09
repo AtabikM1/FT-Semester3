@@ -1,8 +1,8 @@
 <?php
 // Tambahkan header CORS yang lengkap
-header("Access-Control-Allow-Origin: *");  // Mengizinkan akses dari semua domain
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  // Metode yang diizinkan
-header("Access-Control-Allow-Headers: Content-Type, Authorization");  // Header yang diizinkan
+// header("Access-Control-Allow-Origin: *");  // Mengizinkan akses dari semua domain
+// header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");  // Metode yang diizinkan
+// header("Access-Control-Allow-Headers: Content-Type, Authorization");  // Header yang diizinkan
 
 // Menangani preflight request untuk metode POST
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {

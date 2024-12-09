@@ -108,7 +108,8 @@ include "./header.php";
                     <div>
                         <p class="text-sm font-medium text-slate-600">Perusahaan Terdaftar</p>
                         <h3 class="text-2xl font-bold text-slate-800 mt-2">
-                            <?php echo number_format($jumlah_perusahaan); ?></h3>
+                            <?php echo number_format($jumlah_perusahaan); ?>
+                        </h3>
                     </div>
                     <div class="bg-purple-50 p-3 rounded-lg">
                         <svg class="w-6 h-6 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
