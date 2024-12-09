@@ -150,6 +150,12 @@ if (!$stmt) {
     <div id="applyModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex items-center justify-center hidden">
         <div class="bg-white p-6 rounded-xl shadow-lg w-1/3">
             <h3 class="text-lg font-semibold mb-4">Are you sure you want to apply for this job?</h3>
+            <p class="text-gray-700 mb-4">
+                Make sure your entire profile is complete with the most
+                attractive information. You are also fully responsible for the accuracy and truthfulness of the data you
+                submit.
+            </p>
+
             <form action="apply_job.php" method="POST">
                 <!-- Input hidden untuk mengirimkan data ke PHP -->
                 <input type="hidden" name="user_id" value="<?= htmlspecialchars($_SESSION['username']) ?>" />

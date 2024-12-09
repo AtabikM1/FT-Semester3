@@ -57,7 +57,7 @@ $dates = [];
 $postingan_counts = [];
 
 while ($row = sqlsrv_fetch_array($result_traffic_loker, SQLSRV_FETCH_ASSOC)) {
-    $dates[] = $row['tanggal'];
+    $dates[] = $row['tanggal']->format('Y-m-d'); // Pastikan ini dalam format yang benar
     $postingan_counts[] = $row['jumlah_postingan'];
 }
 
