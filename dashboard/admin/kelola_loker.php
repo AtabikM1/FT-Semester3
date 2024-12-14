@@ -34,15 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     echo json_encode($detail);
                     exit;
                 } else {
-                    echo json_encode(['error' => 'Data tidak ditemukan.']);
+                    echo json_encode(['error' => 'Data not found.']);
                     exit;
                 }
             } else {
-                echo json_encode(['error' => 'Gagal menjalankan query: ' . print_r(sqlsrv_errors(), true)]);
+                echo json_encode(['error' => 'Failed to run query: ' . print_r(sqlsrv_errors(), true)]);
                 exit;
             }
         } else {
-            echo json_encode(['error' => 'ID Loker tidak ditemukan.']);
+            echo json_encode(['error' => 'Job ID not found.']);
             exit;
         }
     }
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Cek jika status sudah 'ter' (2) atau 'tol' (3)
                 if ($current_status === 2 || $current_status === 3) {
-                    echo json_encode(['message' => 'Aksi sudah dilakukan.']);
+                    echo json_encode(['message' => 'Action already performed.']);
                     exit;
                 }
 
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt = sqlsrv_prepare($conn, $sql, $params);
 
                 if (sqlsrv_execute($stmt)) {
-                    echo json_encode(['message' => 'Status berhasil diperbarui.']);
+                    echo json_encode(['message' => 'Status updated successfully.']);
                     exit;
                 } else {
                     // Menampilkan error jika query gagal
@@ -85,13 +85,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 die(print_r(sqlsrv_errors(), true));
             }
         } else {
-            echo json_encode(['message' => 'Gagal memperbarui status.']);
+            echo json_encode(['message' => 'Failed to update status.']);
         }
         exit;
     }
 
     // Jika action tidak dikenali
-    echo json_encode(['error' => 'Aksi tidak dikenali.']);
+    echo json_encode(['error' => 'Action not recognized.']);
     exit;
 }
 ?>

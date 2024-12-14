@@ -20,15 +20,15 @@ sqlsrv_execute($stmt_user);
 $user = sqlsrv_fetch_array($stmt_user, SQLSRV_FETCH_ASSOC) ?: [];
 
 // Default nilai untuk data user jika kosong
-$nama = htmlspecialchars($user['nama'] ?? 'Pengguna Baru');
+$nama = htmlspecialchars($user['nama'] ?? 'New User');
 // Default nilai untuk foto profil
 $foto = $user['foto'] ? '' . $user['foto'] : '../../asset/defaultpfp.jpg';
-$alamat = htmlspecialchars($user['alamat'] ?? 'Alamat belum diisi');
-$tanggal_lahir = isset($user['tanggal_lahir']) ? $user['tanggal_lahir']->format('Y-m-d') : 'Tanggal lahir belum diisi';
-$gender = $user['gender'] ? ($user['gender'] == 'L' ? 'Laki-laki' : 'Perempuan') : 'Gender belum diisi';
-$telepon = htmlspecialchars($user['telepon'] ?? 'Telepon belum diisi');
-$email = htmlspecialchars($user['email'] ?? 'Email belum diisi');
-$bio = htmlspecialchars($user['bio'] ?? 'Belum ada deskripsi.');
+$alamat = htmlspecialchars($user['alamat'] ?? 'Address not filled');
+$tanggal_lahir = isset($user['tanggal_lahir']) ? $user['tanggal_lahir']->format('Y-m-d') : 'Birthdate not filled';
+$gender = $user['gender'] ? ($user['gender'] == 'L' ? 'Laki-laki' : 'Perempuan') : 'Gender not filled';
+$telepon = htmlspecialchars($user['telepon'] ?? 'Telephone not filled');
+$email = htmlspecialchars($user['email'] ?? 'Email not filled');
+$bio = htmlspecialchars($user['bio'] ?? 'No description.');
 
 $isProfileComplete = !empty($user['nama']) && !empty($user['alamat']) && !empty($user['bio']);
 
@@ -57,7 +57,7 @@ $buttonLink = $isProfileComplete ? '/profile/pelamar/edit-profile.php' : '/profi
                 <img src="<?php echo $foto; ?>" alt="Profile Picture"
                     class="rounded-full border-4 border-white shadow-lg object-cover w-24 h-24 mx-auto">
                 <h1 class="text-2xl font-semibold mt-4"><?php echo $nama; ?></h1>
-                <p class="text-gray-600"><?php echo $isProfileComplete ? 'Kandidat' : 'Profil Belum Lengkap'; ?></p>
+                <p class="text-gray-600"><?php echo $isProfileComplete ? 'Candidate' : 'Profile not complete'; ?></p>
 
                 <a href="<?php echo $buttonLink; ?>"
                     class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
@@ -71,21 +71,21 @@ $buttonLink = $isProfileComplete ? '/profile/pelamar/edit-profile.php' : '/profi
         <div class="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
             <!-- About -->
             <div class="bg-white rounded-xl shadow-md p-6">
-                <h2 class="text-xl font-semibold mb-4">Tentang</h2>
+                <h2 class="text-xl font-semibold mb-4">About</h2>
                 <p class="text-gray-600"><?php echo $bio; ?></p>
             </div>
 
             <!-- Profile Details -->
             <div class="lg:col-span-2 space-y-8">
                 <div class="bg-white rounded-xl shadow-md p-6">
-                    <h2 class="text-xl font-semibold mb-4">Detail Profil</h2>
+                    <h2 class="text-xl font-semibold mb-4">Profile Details</h2>
                     <div class="space-y-4">
                         <div>
-                            <strong>Alamat:</strong>
+                            <strong>Address:</strong>
                             <p class="text-gray-600"><?php echo $alamat; ?></p>
                         </div>
                         <div>
-                            <strong>Tanggal Lahir:</strong>
+                            <strong>Birthdate:</strong>
                             <p class="text-gray-600"><?php echo $tanggal_lahir; ?></p>
                         </div>
                         <div>
@@ -93,7 +93,7 @@ $buttonLink = $isProfileComplete ? '/profile/pelamar/edit-profile.php' : '/profi
                             <p class="text-gray-600"><?php echo $gender; ?></p>
                         </div>
                         <div>
-                            <strong>Telepon:</strong>
+                            <strong>Telephone:</strong>
                             <p class="text-gray-600"><?php echo $telepon; ?></p>
                         </div>
                         <div>
@@ -111,16 +111,16 @@ $buttonLink = $isProfileComplete ? '/profile/pelamar/edit-profile.php' : '/profi
                         $formatted_resume = htmlspecialchars($user['resume']);
                         $formatted_resume = str_replace(
                             ["Pendidikan:", "Pengalaman Kerja:", "- ", "Keahlian:"],
-                            ["<strong>Pendidikan:</strong>", "<strong>Pengalaman Kerja:</strong>", "<li>", "<strong>Keahlian:</strong>"],
+                            ["<strong>Education:</strong>", "<strong>Work Experience:</strong>", "<li>", "<strong>Skills:</strong>"],
                             $formatted_resume
                         );
 
                         // Bungkus Work Experience dengan list
-                        $formatted_resume = preg_replace('/<strong>Pengalaman Kerja:<\/strong>(.*?)<strong>/s', '<strong>Work Experience:</strong><ul>$1</ul><strong>', $formatted_resume);
+                        $formatted_resume = preg_replace('/<strong>Work Experience:<\/strong>(.*?)<strong>/s', '<strong>Work Experience:</strong><ul>$1</ul><strong>', $formatted_resume);
 
                         echo nl2br($formatted_resume);
                     } else {
-                        echo 'Unggah resume Anda di pengaturan profil.';
+                        echo 'Upload your resume in the profile settings.';
                     }
                     ?>
                 </div>

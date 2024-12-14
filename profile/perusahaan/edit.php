@@ -63,10 +63,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $sql_update .= $isFirst ? "foto = ?" : ", foto = ?";
                 $params[] = '/asset/upload/' . $foto_name; // Simpan path foto
             } else {
-                $_SESSION['error'] = "Foto gagal diunggah.";
+                $_SESSION['error'] = "Failed to upload photo";
             }
         } else {
-            $_SESSION['error'] = "Format file tidak valid. Hanya JPG, JPEG, PNG, dan GIF yang diperbolehkan.";
+            $_SESSION['error'] = "Invalid file format. Only JPG, JPEG, PNG, and GIF are allowed.";
         }
     }
 
@@ -78,12 +78,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt_update = sqlsrv_prepare($conn, $sql_update, $params);
 
         if (sqlsrv_execute($stmt_update)) {
-            $_SESSION['message'] = "Profil berhasil diperbarui!";
+            $_SESSION['message'] = "Profile updated successfully!";
         } else {
-            $_SESSION['error'] = "Gagal memperbarui profil. Error: " . print_r(sqlsrv_errors(), true);
+            $_SESSION['error'] = "Failed to update profile. Error: " . print_r(sqlsrv_errors(), true);
         }
     } else {
-        $_SESSION['error'] = "Tidak ada perubahan yang disimpan.";
+        $_SESSION['error'] = "No changes were saved.";
     }
 }
 ?>
@@ -143,8 +143,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="text-center">
                     <button type="submit"
-                        class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">Simpan
-                        Perubahan</button>
+                        class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">Save
+                        Changes</button>
                 </div>
             </form>
         </div>

@@ -47,12 +47,12 @@ if (!$user) {
                 if (move_uploaded_file($_FILES['foto']['tmp_name'], $upload_file)) {
                     $foto_path = '/asset/' . basename($_FILES['foto']['name']); // Simpan path foto
                 } else {
-                    $_SESSION['error'] = "Terjadi kesalahan saat mengunggah foto.";
+                    $_SESSION['error'] = "An error occurred while uploading the photo.";
                     header("Location: profile.php");
                     exit;
                 }
             } else {
-                $_SESSION['error'] = "Hanya gambar yang diperbolehkan (JPG, JPEG, PNG, GIF).";
+                $_SESSION['error'] = "Only images are allowed (JPG, JPEG, PNG, GIF).";
                 header("Location: profile.php");
                 exit;
             }
@@ -79,18 +79,18 @@ if (!$user) {
         $stmt_insert = sqlsrv_prepare($conn, $sql_insert, $params);
 
         if (sqlsrv_execute($stmt_insert)) {
-            $_SESSION['message'] = "Profil berhasil ditambahkan!";
+            $_SESSION['message'] = "Profile added successfully!";
             header("Location: profile.php"); // Redirect setelah berhasil
             exit;
         } else {
-            $_SESSION['error'] = "Gagal menambahkan profil. Error: " . print_r(sqlsrv_errors(), true);
+            $_SESSION['error'] = "Failed to add profile. Error: " . print_r(sqlsrv_errors(), true);
             header("Location: profile.php");
             exit;
         }
     }
 } else {
     // Jika data sudah ada, beri pesan bahwa profil sudah terdaftar
-    $_SESSION['error'] = "Profil sudah terdaftar.";
+    $_SESSION['error'] = "Profile already registered.";
     header("Location: profile.php");
     exit;
 }
@@ -104,7 +104,7 @@ if (!$user) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profil</title>
+    <title>Complete Profile</title>
     <!-- Tailwind CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
     <!-- Notiflix CDN -->
@@ -114,7 +114,7 @@ if (!$user) {
 <body class="bg-gray-50 min-h-screen">
     <div class="max-w-2xl mx-auto px-4 py-12">
         <div class="bg-white rounded-xl shadow-md overflow-hidden p-8">
-            <h1 class="text-2xl font-semibold mb-6 text-center">Edit Profil</h1>
+            <h1 class="text-2xl font-semibold mb-6 text-center">Complete Profile</h1>
 
             <!-- Menampilkan Pesan Status -->
             <?php if (isset($_SESSION['message'])): ?>
@@ -125,7 +125,7 @@ if (!$user) {
                 <?php unset($_SESSION['error']); ?>
             <?php endif; ?>
 
-            <!-- Form Edit Profil -->
+            <!-- Form Complete Profile -->
             <form method="POST" enctype="multipart/form-data">
                 <div class="mb-6 text-center">
                     <img src="<?php echo isset($user['foto']) ? 'data:image/jpeg;base64,' . base64_encode($user['foto']) : '/asset/defaultpfp.jpg'; ?>"
@@ -134,18 +134,18 @@ if (!$user) {
                     <input type="file" name="foto" class="w-full text-sm text-gray-700 py-2 px-3 rounded-md">
                 </div>
                 <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700">email</label>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
                     <textarea name="email" id="email" rows="1"
                         class="w-full mt-1 px-3 py-2 border rounded-md"><?php echo htmlspecialchars($user['resume'] ?? ''); ?></textarea>
                 </div>
                 <div class="mb-4">
-                    <label for="telepon" class="block text-sm font-medium text-gray-700">telepon</label>
+                    <label for="telepon" class="block text-sm font-medium text-gray-700">Telephone</label>
                     <textarea name="telepon" id="telepon" rows="1"
                         class="w-full mt-1 px-3 py-2 border rounded-md"><?php echo htmlspecialchars($user['resume'] ?? ''); ?></textarea>
                 </div>
 
                 <div class="mb-4">
-                    <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat</label>
+                    <label for="alamat" class="block text-sm font-medium text-gray-700">Address</label>
                     <textarea name="alamat" id="alamat" rows="4"
                         class="w-full mt-1 px-3 py-2 border rounded-md"><?php echo htmlspecialchars($user['alamat'] ?? ''); ?></textarea>
                 </div>
@@ -157,7 +157,7 @@ if (!$user) {
                 </div>
 
                 <div class="mb-4">
-                    <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Tanggal Lahir</label>
+                    <label for="tanggal_lahir" class="block text-sm font-medium text-gray-700">Birth Date</label>
                     <input type="date" name="tanggal_lahir" id="tanggal_lahir"
                         value="<?php echo isset($user['tanggal_lahir']) ? $user['tanggal_lahir']->format('Y-m-d') : ''; ?>"
                         class="w-full mt-1 px-3 py-2 border rounded-md">
@@ -184,8 +184,8 @@ if (!$user) {
 
                 <div class="text-center">
                     <button type="submit"
-                        class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">Simpan
-                        Perubahan</button>
+                        class="px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">Save
+                        Changes</button>
                 </div>
             </form>
         </div>

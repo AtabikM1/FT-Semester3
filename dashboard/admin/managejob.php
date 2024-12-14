@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
         }
-        echo json_encode(['error' => 'Gagal memuat data loker.']);
+        echo json_encode(['error' => 'Failed to load job data.']);
         exit;
     }
 
@@ -48,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Cek jika status sudah 'ter' (2) atau 'tol' (3)
                 if ($current_status == 2 || $current_status == 3) {
-                    echo json_encode(['message' => 'Aksi sudah dilakukan.']);
+                    echo json_encode(['message' => 'Action already performed.']);
                     exit;
                 }
 
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 die(print_r(sqlsrv_errors(), true));
             }
         } else {
-            echo json_encode(['message' => 'Gagal memperbarui status.']);
+            echo json_encode(['message' => 'Failed to update status.']);
         }
         exit;
     }
@@ -95,7 +95,7 @@ include "./header.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kelola Loker</title>
+    <title>Manage Jobs</title>
 
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
@@ -160,7 +160,7 @@ include "./header.php";
                     }
                 })
                 .catch(error => {
-                    modalContent.innerHTML = '<p class="text-red-500">Terjadi kesalahan saat memuat data.</p>';
+                    modalContent.innerHTML = '<p class="text-red-500">An error occurred while loading data.</p>';
                 });
         }
 
@@ -195,7 +195,7 @@ include "./header.php";
 
 <body class="bg-gray-50">
     <div class="max-w-7xl mx-auto p-6">
-        <h2 class="text-2xl font-bold text-gray-800 mb-4">Kelola Loker</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">Manage Jobs</h2>
         <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
             <table id="lokerTable" class="min-w-full table-auto">
                 <thead class="bg-gray-200">
@@ -237,7 +237,7 @@ include "./header.php";
     <div id="detailModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
         <div class="bg-white rounded-lg shadow-lg w-1/2">
             <div class="p-6">
-                <h2 id="modalTitle" class="text-xl font-bold mb-4">Detail Loker</h2>
+                <h2 id="modalTitle" class="text-xl font-bold mb-4">Job Details</h2>
                 <p id="modalContent" class="text-gray-700">Loading...</p>
                 <div class="mt-6 flex justify-end">
                     <button onclick="updateLokerStatus('approve')"

@@ -25,7 +25,7 @@ include "../../include/header.php";
 
 // Tombol dinamis: jika data kosong, tampilkan "Lengkapi Profil"; jika terisi, "Edit Profil"
 $isComplete = !empty($perusahaan['nama']) && !empty($perusahaan['alamat']) && !empty($perusahaan['email']);
-$buttonText = $isComplete ? "Edit Profil" : "Lengkapi Profil";
+$buttonText = $isComplete ? "Edit Profile" : "Complete Profile";
 $buttonLink = $isComplete ? "/profile/perusahaan/edit.php" : "/profile/perusahaan/complete-profile.php";
 ?>
 <div class="min-h-screen bg-gray-50 py-12">
@@ -40,7 +40,7 @@ $buttonLink = $isComplete ? "/profile/perusahaan/edit.php" : "/profile/perusahaa
                     <h1 class="text-2xl font-semibold">
                         <?php echo !empty($perusahaan['nama']) ? htmlspecialchars($perusahaan['nama']) : "Perusahaan"; ?>
                     </h1>
-                    <p class="text-sm text-gray-600">Profil Perusahaan</p>
+                    <p class="text-sm text-gray-600">Company Profile</p>
                 </div>
                 <a href="<?php echo $buttonLink; ?>"
                     class="px-4 py-2 bg-blue-500 text-white text-sm rounded-md hover:bg-blue-600">
@@ -53,23 +53,23 @@ $buttonLink = $isComplete ? "/profile/perusahaan/edit.php" : "/profile/perusahaa
                 <div>
                     <h2 class="text-sm font-semibold text-gray-500">Email</h2>
                     <p class="text-gray-700">
-                        <?php echo !empty($perusahaan['email']) ? htmlspecialchars($perusahaan['email']) : "Tidak tersedia"; ?>
+                        <?php echo !empty($perusahaan['email']) ? htmlspecialchars($perusahaan['email']) : "Not available"; ?>
                     </p>
                 </div>
                 <div>
-                    <h2 class="text-sm font-semibold text-gray-500">Telepon</h2>
+                    <h2 class="text-sm font-semibold text-gray-500">Telephone</h2>
                     <p class="text-gray-700">
                         <?php echo !empty($perusahaan['telepon']) ? htmlspecialchars($perusahaan['telepon']) : "+62 123 456 789"; ?>
                     </p>
                 </div>
                 <div>
-                    <h2 class="text-sm font-semibold text-gray-500">Alamat</h2>
+                    <h2 class="text-sm font-semibold text-gray-500">Address</h2>
                     <p class="text-gray-700">
                         <?php echo !empty($perusahaan['alamat']) ? htmlspecialchars($perusahaan['alamat']) : "Tidak tersedia"; ?>
                     </p>
                 </div>
                 <div>
-                    <h2 class="text-sm font-semibold text-gray-500">Tanggal Berdiri</h2>
+                    <h2 class="text-sm font-semibold text-gray-500">Established Date</h2>
                     <p class="text-gray-700">
                         <?php echo isset($perusahaan['tanggal_berdiri']) && $perusahaan['tanggal_berdiri'] instanceof DateTime
                             ? $perusahaan['tanggal_berdiri']->format("F Y")
@@ -80,7 +80,7 @@ $buttonLink = $isComplete ? "/profile/perusahaan/edit.php" : "/profile/perusahaa
 
             <!-- Tentang Perusahaan -->
             <div class="mt-6">
-                <h2 class="text-lg font-semibold text-gray-800">Tentang Perusahaan</h2>
+                <h2 class="text-lg font-semibold text-gray-800">About Company</h2>
                 <p class="mt-2 text-gray-700">
                     <?php echo !empty($perusahaan['deskripsi']) ? htmlspecialchars($perusahaan['deskripsi']) : "Belum ada deskripsi."; ?>
                 </p>

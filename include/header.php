@@ -70,24 +70,24 @@ if (empty($_SESSION['perusahaanFoto'])) {
                             <?php if ($userRole == '2'): ?>
                                 <!-- Menu untuk pelamar -->
                                 <a href="/dashboard/pelamar"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dasbor</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dashboard</a>
                                 <a href="/profile/pelamar"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profil</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profile</a>
                                 <a href="/browse-jobs"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Cari
-                                    Lowongan</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Search
+                                    Job</a>
                             <?php elseif ($userRole == '3'): ?>
                                 <!-- Menu untuk perusahaan -->
                                 <a href="/dashboard/perusahaan"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dasbor</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Dashboard</a>
                                 <a href="/manage-aplication"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Kelola
-                                    Lamaran</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Manage
+                                    Application</a>
                                 <a href="/post-job"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Posting
-                                    Lowongan</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Post
+                                    Job</a>
                                 <a href="/profile/perusahaan"
-                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profil</a>
+                                    class="block px-4 py-2 text-gray-800 hover:bg-amber-100 hover:text-amber-600">Profile</a>
 
                             <?php endif; ?>
                             <div class="h-px bg-gray-200 my-2"></div>

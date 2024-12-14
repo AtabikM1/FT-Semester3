@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validasi input
     if (empty($username) || empty($password)) {
-        $error = "Username dan password tidak boleh kosong";
+        $error = "Username and password cannot be empty";
     } else {
         // Mengubah password menjadi hash MD5
         $hashedPassword = md5($password);
@@ -69,10 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 exit;
             } else {
-                $error = "Username atau password salah";
+                $error = "Invalid username or password";
             }
         } else {
-            $error = "Terjadi kesalahan saat login";
+            $error = "An error occurred during login";
         }
     }
 }

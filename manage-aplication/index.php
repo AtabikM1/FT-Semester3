@@ -50,21 +50,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($user) {
             echo json_encode([
-                'nama' => htmlspecialchars($user['nama'] ?? 'Pengguna Baru'),
+                'nama' => htmlspecialchars($user['nama'] ?? 'New User'),
                 'foto' => $user['foto'] ? $user['foto'] : '../../asset/defaultpfp.jpg',
-                'alamat' => htmlspecialchars($user['alamat'] ?? 'Alamat belum diisi'),
+                'alamat' => htmlspecialchars($user['alamat'] ?? 'Address not filled'),
                 'tanggal_lahir' => isset($user['tanggal_lahir']) ? $user['tanggal_lahir']->format('Y-m-d') : 'Tanggal lahir belum diisi',
                 'gender' => $user['gender'] ? ($user['gender'] == 'L' ? 'Laki-laki' : 'Perempuan') : 'Gender belum diisi',
-                'telepon' => htmlspecialchars($user['telepon'] ?? 'Telepon belum diisi'),
-                'email' => htmlspecialchars($user['email'] ?? 'Email belum diisi'),
-                'bio' => htmlspecialchars($user['bio'] ?? 'Belum ada deskripsi.'),
-                'resume' => htmlspecialchars($user['resume'] ?? 'Belum ada resume.')
+                'telepon' => htmlspecialchars($user['telepon'] ?? 'Telephone not filled'),
+                'email' => htmlspecialchars($user['email'] ?? 'Email not filled'),
+                'bio' => htmlspecialchars($user['bio'] ?? 'No description.'),
+                'resume' => htmlspecialchars($user['resume'] ?? 'No resume.')
             ]);
         } else {
-            echo json_encode(['error' => 'Data pelamar tidak ditemukan']);
+            echo json_encode(['error' => 'Applicant data not found']);
         }
     } else {
-        echo json_encode(['error' => 'Username tidak ditemukan']);
+        echo json_encode(['error' => 'Username not found']);
     }
     exit; // Ensure no further output after JSON response
 }
@@ -126,16 +126,16 @@ include "../include/header.php";
 <!-- Dashboard Content -->
 <div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
 
-    <!-- Daftar Pelamar -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Daftar Pelamar</h2>
+    <!-- List of Applicants -->
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Applicants</h2>
     <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
         <table class="min-w-full table-auto">
             <thead class="bg-gray-200">
                 <tr>
-                    <th class="px-6 py-3 text-left">Nama Pelamar</th>
-                    <th class="px-6 py-3 text-left">Lowongan</th>
+                    <th class="px-6 py-3 text-left">Applicant Name</th>
+                    <th class="px-6 py-3 text-left">Job</th>
                     <th class="px-6 py-3 text-left">Status</th>
-                    <th class="px-6 py-3 text-left">Aksi</th>
+                    <th class="px-6 py-3 text-left">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -177,13 +177,13 @@ include "../include/header.php";
     </div>
 
     <!-- Statistik Lowongan -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">Lowongan Saya</h2>
+    <h2 class="text-2xl font-bold text-gray-800 mb-4">My Job</h2>
     <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
         <table class="min-w-full table-auto">
             <thead class="bg-gray-200">
                 <tr>
-                    <th class="px-6 py-3 text-left">Lowongan</th>
-                    <th class="px-6 py-3 text-left">Jumlah Pelamar</th>
+                    <th class="px-6 py-3 text-left">Job</th>
+                    <th class="px-6 py-3 text-left">Number of Applicants</th>
                 </tr>
             </thead>
             <tbody>
@@ -204,7 +204,7 @@ include "../include/header.php";
         <h3 class="text-xl font-semibold mb-4" id="modalTitle">Modal Title</h3>
         <div id="modalContent" class="text-sm"></div> <!-- Konten modal akan ditambahkan di sini -->
         <div class="flex justify-between">
-            <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Tutup</button>
+            <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Close</button>
             <button id="confirmButton" class="bg-green-500 text-black px-4 py-2 rounded hidden">Confirm</button>
             <!-- Hide this for Pelamar Detail -->
         </div>

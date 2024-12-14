@@ -25,9 +25,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validasi input
     if (empty($judul) || empty($deskripsi) || empty($tipe_loker) || empty($lokasi) || empty($tanggal_deadline) || empty($username_perusahaan)) {
-        $response = ['status' => 'error', 'message' => 'Semua kolom wajib diisi kecuali gaji.'];
+        $response = ['status' => 'error', 'message' => 'All fields except salary must be filled.'];
     } elseif (!in_array($tipe_loker, ['Part Time', 'Magang', 'Full Time'])) {
-        $response = ['status' => 'error', 'message' => 'Tipe loker tidak valid.'];
+        $response = ['status' => 'error', 'message' => 'Invalid job type.'];
     } else {
         // Generate ID Loker
         $idLoker = strtoupper(bin2hex(random_bytes(4)));
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = sqlsrv_prepare($conn, $sql, $params);
 
         if ($stmt && sqlsrv_execute($stmt)) {
-            $response = ['status' => 'success', 'message' => 'Lowongan kerja berhasil diposting.'];
+            $response = ['status' => 'success', 'message' => 'Job posting successful.'];
         } else {
             $errorMessages = [];
             if (($errors = sqlsrv_errors()) != null) {

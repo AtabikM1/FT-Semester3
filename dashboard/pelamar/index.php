@@ -119,7 +119,7 @@ $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat'])
             <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-sm font-medium text-slate-600">Lamaran Tertunda</p>
+                        <p class="text-sm font-medium text-slate-600">Pending Application</p>
                         <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['tertunda']; ?></h3>
                     </div>
                 </div>
@@ -127,7 +127,7 @@ $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat'])
             <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-sm font-medium text-slate-600">Lamaran Diterima</p>
+                        <p class="text-sm font-medium text-slate-600">Accepted Application</p>
                         <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['diterima']; ?></h3>
                     </div>
                 </div>
@@ -135,7 +135,7 @@ $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat'])
             <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
                 <div class="flex justify-between items-start">
                     <div>
-                        <p class="text-sm font-medium text-slate-600">Lamaran Ditolak</p>
+                        <p class="text-sm font-medium text-slate-600">Rejected Application</p>
                         <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['ditolak']; ?></h3>
                     </div>
                 </div>
@@ -144,7 +144,7 @@ $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat'])
 
         <!-- Application List -->
         <div class="bg-white rounded-xl p-6 shadow-sm">
-            <h2 class="text-xl font-semibold text-slate-800 mb-6">Lamaran Terbaru</h2>
+            <h2 class="text-xl font-semibold text-slate-800 mb-6">Latest Application</h2>
             <div class="overflow-x-auto">
                 <table class="min-w-full">
                     <thead class="bg-slate-50">
