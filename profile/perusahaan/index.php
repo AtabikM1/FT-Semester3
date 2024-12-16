@@ -28,6 +28,8 @@ $isComplete = !empty($perusahaan['nama']) && !empty($perusahaan['alamat']) && !e
 $buttonText = $isComplete ? "Edit Profile" : "Complete Profile";
 $buttonLink = $isComplete ? "/profile/perusahaan/edit.php" : "/profile/perusahaan/complete-profile.php";
 ?>
+
+<script src="https://cdn.tailwindcss.com"></script>
 <div class="min-h-screen bg-gray-50 py-12">
     <?php include '../../include/mountain-background.php' ?>
     <div class="max-w-5xl py-16 mx-auto">

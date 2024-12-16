@@ -105,6 +105,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.3/dist/tailwind.min.css" rel="stylesheet">
     <!-- Notiflix CDN -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notiflix@3.1.0/dist/notiflix-3.1.0.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-gray-50 min-h-screen">

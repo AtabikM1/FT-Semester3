@@ -8,7 +8,7 @@ if ($_SESSION['Role'] != 2) {
     exit;
 }
 
-include "../../include/header.php";
+
 
 // Query untuk mengambil data profil pelamar
 $sql_profil = "SELECT * FROM pelamar WHERE User_username = ?";
@@ -77,6 +77,9 @@ $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat'])
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="../asset/logooo.png" type="image/png">
+<?php include '../../include/header.php'; ?>
 
 <!-- Main Dashboard -->
 <div class="min-h-screen bg-slate-50 pt-24 relative">

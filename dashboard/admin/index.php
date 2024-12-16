@@ -27,10 +27,6 @@ $sql_artikel = "SELECT COUNT(*) AS jumlah_artikel FROM artikel";
 $result_artikel = sqlsrv_query($conn, $sql_artikel);
 $jumlah_artikel = sqlsrv_fetch_array($result_artikel, SQLSRV_FETCH_ASSOC)['jumlah_artikel'];
 
-$sql_sertifikat = "SELECT COUNT(*) AS jumlah_sertifikat FROM sertifikat";
-$result_sertifikat = sqlsrv_query($conn, $sql_sertifikat);
-$jumlah_sertifikat = sqlsrv_fetch_array($result_sertifikat, SQLSRV_FETCH_ASSOC)['jumlah_sertifikat'];
-
 // Query untuk menghitung jumlah lamaran berdasarkan status
 $sql_lamaran = "SELECT status_lamaran_id, COUNT(*) AS jumlah FROM melamar GROUP BY status_lamaran_id";
 $result_lamaran = sqlsrv_query($conn, $sql_lamaran);
@@ -63,7 +59,7 @@ while ($row = sqlsrv_fetch_array($result_traffic_loker, SQLSRV_FETCH_ASSOC)) {
 
 include "./header.php";
 ?>
-
+<script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <!-- Main Dashboard -->
 <div class="min-h-screen bg-slate-50 pt-24 relative">

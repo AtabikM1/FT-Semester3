@@ -3,7 +3,7 @@
 session_start();
 
 // Inklusi koneksi database
-// include '../../include/koneksi.php';
+include '../../include/koneksi.php';
 
 // Variabel untuk menangani error
 $error = '';

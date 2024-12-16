@@ -105,7 +105,7 @@ include "../../include/header.php";
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<script src="https://cdn.tailwindcss.com"></script>
 <!-- Main Dashboard -->
 <div class="min-h-screen bg-slate-50 pt-24 relative">
     <?php if ($profil_incomplete): ?>
