@@ -253,21 +253,21 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                         ]
                     ],
                     [
-                        'name' => 'Giovano Alkandri', 
-                        'role' => 'COO',
-                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=GiovanoAlkandri',
+                        'name' => 'Atabik M',
+                        'role' => 'Head of Marketing',
+                        'img' => "https://api.dicebear.com/9.x/adventurer/svg?seed=Jocelyn",
                         'social' => [
-                            'github' => '#',
-                            'instagram' => '#'
+                             'github' => 'https://github.com/KrystalMood',
+                            'instagram' => 'https://www.instagram.com/pramudya.ap'
                         ]
                     ],
                     [
-                        'name' => 'Atabik M',
-                        'role' => 'Head of Marketing',
-                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=AtabikM',
+                        'name' => 'Giovano Alkandri',
+                        'role' => 'COO',
+                        'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=GiovanoAlkandri',
                         'social' => [
-                            'github' => '#',
-                            'instagram' => '#'
+                             'github' => 'https://github.com/KrystalMood',
+                            'instagram' => 'https://www.instagram.com/pramudya.ap'
                         ]
                     ],
                     [
@@ -275,8 +275,8 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                         'role' => 'Lead Developer',
                         'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=FauzieIkhsanul',
                         'social' => [
-                            'github' => '#',
-                            'instagram' => '#'
+                             'github' => 'https://github.com/KrystalMood',
+                            'instagram' => 'https://www.instagram.com/pramudya.ap'
                         ]
                     ],
                     [
@@ -284,8 +284,8 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                         'role' => 'Lead Developer',
                         'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=TiaraMera',
                         'social' => [
-                            'github' => '#',
-                            'instagram' => '#'
+                             'github' => 'https://github.com/KrystalMood',
+                            'instagram' => 'https://www.instagram.com/pramudya.ap'
                         ]
                     ],
                     [
@@ -293,8 +293,8 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
                         'role' => 'Lead Developer',
                         'img' => 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zannur',
                         'social' => [
-                            'github' => '#',
-                            'instagram' => '#'
+                             'github' => 'https://github.com/KrystalMood',
+                            'instagram' => 'https://www.instagram.com/pramudya.ap'
                         ]
                     ]
                 ];
@@ -349,7 +349,7 @@ $userRole = $isUserLoggedIn ? $_SESSION['Role'] : null;
     </script>
 
     <?php include '../include/footer.php'; ?>
-<?php include '../include/mountain-background.php'; ?>
+    <?php include '../include/mountain-background.php'; ?>
 
 </body>
 

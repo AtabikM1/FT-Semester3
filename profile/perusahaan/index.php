@@ -67,7 +67,7 @@ $buttonLink = $isComplete ? "/profile/perusahaan/edit.php" : "/profile/perusahaa
                 <div>
                     <h2 class="text-sm font-semibold text-gray-500">Address</h2>
                     <p class="text-gray-700">
-                        <?php echo !empty($perusahaan['alamat']) ? htmlspecialchars($perusahaan['alamat']) : "Tidak tersedia"; ?>
+                        <?php echo !empty($perusahaan['alamat']) ? htmlspecialchars($perusahaan['alamat']) : "Not available"; ?>
                     </p>
                 </div>
                 <div>

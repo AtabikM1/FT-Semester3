@@ -127,7 +127,8 @@ if ($stmt) {
         </div>
 
         <div class="container mx-auto px-4 md:px-6 lg:px-20">
-            <div class="flex flex-col lg:flex-row max-w-7xl h-screen justify-center mx-auto gap-8 md:gap-16 items-center">
+            <div
+                class="flex flex-col lg:flex-row max-w-7xl h-screen justify-center mx-auto gap-8 md:gap-16 items-center">
                 <!-- Left content -->
                 <div class="space-y-6 md:space-y-10 animate-slideInLeft text-center lg:text-left">
                     <div class="space-y-4 md:space-y-6">
@@ -588,25 +589,41 @@ if ($stmt) {
                                     </p>
                                 <?php endif; ?>
 
-                                <p class="text-gray-600 line-clamp-3 mb-4">
-                                    <?= htmlspecialchars($article['konten']) ?>
+                                <?php
+                                $contentWords = explode(' ', strip_tags($article['konten']));
+                                $isLongContent = count($contentWords) > 23;
+                                $shortContent = implode(' ', array_slice($contentWords, 0, 23));
+                                ?>
+
+                                <p id="content-<?= $article['IdArtikel'] ?>"
+                                    class="text-gray-600 mb-4 line-clamp-3 transition-all duration-300">
+                                    <?= htmlspecialchars($shortContent) ?>
+                                    <?php if ($isLongContent): ?>
+                                        <span class="hidden" id="full-content-<?= $article['IdArtikel'] ?>">
+                                            <?= htmlspecialchars(implode(' ', $contentWords)) ?>
+                                        </span>
+                                    <?php endif; ?>
                                 </p>
                             </div>
 
-                            <button onclick="toggleContent(<?= $article['IdArtikel'] ?>)"
-                                class="inline-flex items-center text-[#1C2056] font-semibold hover:text-amber-500 transition-colors">
-                                Read More
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                    class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
-                                    viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                                </svg>
-                            </button>
+                            <?php if ($isLongContent): ?>
+                                <button onclick="toggleContent(<?= $article['IdArtikel'] ?>)"
+                                    class="inline-flex items-center text-[#1C2056] font-semibold hover:text-amber-500 transition-colors">
+                                    Read More
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                        class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                </button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 <?php endforeach; ?>
             </div>
+
+
         </div>
         <?php include './include/mountain-background.php'; ?>
 
@@ -662,6 +679,22 @@ if ($stmt) {
                 observer.observe(element);
             });
         });
+        function toggleContent(id) {
+            const contentElement = document.getElementById(`content-${id}`);
+            const fullContentElement = document.getElementById(`full-content-${id}`);
+
+            if (contentElement.classList.contains('line-clamp-3')) {
+                // Jika konten dipotong, tampilkan full content
+                contentElement.classList.remove('line-clamp-3');
+                contentElement.innerHTML = fullContentElement.innerHTML;
+            } else {
+                // Jika konten penuh, kembalikan ke tampilan pendek
+                const shortContent = fullContentElement.innerHTML.split(' ').slice(0, 23).join(' ') + '...';
+                contentElement.classList.add('line-clamp-3');
+                contentElement.innerHTML = shortContent;
+            }
+        }
+
     </script>
 </body>
 
