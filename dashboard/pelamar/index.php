@@ -75,97 +75,110 @@ $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat'])
 
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="icon" href="../asset/logooo.png" type="image/png">
-<?php include '../../include/header.php'; ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-<!-- Main Dashboard -->
-<div class="min-h-screen bg-slate-50 pt-24 relative">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute -top-10 w-full">
-        <path fill="#3b82f6" fill-opacity="0.1"
-            d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
-        </path>
-    </svg>
+<body>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Profile Section -->
-        <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200 my-16">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center space-x-4">
-                    <img src="<?php echo $foto; ?>" alt="Profile Picture"
-                        class="rounded-full border-4 border-white shadow-lg object-cover w-24 h-24 mx-auto">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="../asset/logooo.png" type="image/png">
+    <?php include '../../include/header.php'; ?>
+
+    <!-- Main Dashboard -->
+    <div class="min-h-screen bg-slate-50 pt-24 relative">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute -top-10 w-full">
+            <path fill="#3b82f6" fill-opacity="0.1"
+                d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+            </path>
+        </svg>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Profile Section -->
+            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200 my-16">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-4">
+                        <img src="<?php echo $foto; ?>" alt="Profile Picture"
+                            class="rounded-full border-4 border-white shadow-lg object-cover w-24 h-24 mx-auto">
 
 
-                    <div>
-                        <h2 class="text-2xl font-bold text-slate-800">
-                            Selamat <?php echo (date('H') < 12) ? 'Pagi' : ((date('H') < 17) ? 'Siang' : 'Sore'); ?>,
-                            <?php echo $profileUsername; ?>
-                        </h2>
-                        <p class="text-slate-600"><?php echo $profileAlamat; ?></p>
+                        <div>
+                            <h2 class="text-2xl font-bold text-slate-800">
+                                Selamat
+                                <?php echo (date('H') < 12) ? 'Pagi' : ((date('H') < 17) ? 'Siang' : 'Sore'); ?>,
+                                <?php echo $profileUsername; ?>
+                            </h2>
+                            <p class="text-slate-600"><?php echo $profileAlamat; ?></p>
+                        </div>
                     </div>
-                </div>
-                <!-- Button to Edit or Complete Profile -->
-                <!-- <button>
+                    <!-- Button to Edit or Complete Profile -->
+                    <!-- <button>
                     <a href="<?php echo $profileButtonLink; ?>"
                         class="inline-block px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700">
                         <?php echo $profileButtonText; ?>
                     </a>
                 </button> -->
 
+                </div>
             </div>
-        </div>
 
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-sm font-medium text-slate-600">Pending Application</p>
-                        <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['tertunda']; ?></h3>
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-600">Pending Application</p>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['tertunda']; ?></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-600">Accepted Application</p>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['diterima']; ?></h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-sm font-medium text-slate-600">Rejected Application</p>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['ditolak']; ?></h3>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-sm font-medium text-slate-600">Accepted Application</p>
-                        <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['diterima']; ?></h3>
-                    </div>
-                </div>
-            </div>
-            <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-sm font-medium text-slate-600">Rejected Application</p>
-                        <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['ditolak']; ?></h3>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Application List -->
-        <div class="bg-white rounded-xl p-6 shadow-sm">
-            <h2 class="text-xl font-semibold text-slate-800 mb-6">Latest Application</h2>
-            <div class="overflow-x-auto">
-                <table class="min-w-full">
-                    <thead class="bg-slate-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                Lowongan</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
-                                Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-slate-200">
-                        <?php foreach ($aplikasi_list as $aplikasi): ?>
+            <!-- Application List -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h2 class="text-xl font-semibold text-slate-800 mb-6">Latest Application</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full">
+                        <thead class="bg-slate-50">
                             <tr>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
-                                    <?php echo htmlspecialchars($aplikasi['judul_lowongan']); ?>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 py-1 text-xs font-medium rounded-full 
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    Lowongan</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">
+                                    Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200">
+                            <?php foreach ($aplikasi_list as $aplikasi): ?>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-800">
+                                        <?php echo htmlspecialchars($aplikasi['judul_lowongan']); ?>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-medium rounded-full 
                                         <?php
                                         switch ($aplikasi['status_lamaran']) {
                                             case 'Tertunda':
@@ -179,49 +192,52 @@ $profileAlamat = !empty($profil['alamat']) ? htmlspecialchars($profil['alamat'])
                                                 break;
                                         }
                                         ?>">
-                                        <?php echo htmlspecialchars($aplikasi['status_lamaran']); ?>
-                                    </span>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                                            <?php echo htmlspecialchars($aplikasi['status_lamaran']); ?>
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-    // Chart configuration
-    const ctx = document.getElementById('statusChart').getContext('2d');
-    const statusChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Tertunda', 'Diterima', 'Ditolak'],
-            datasets: [{
-                data: [
-                    <?php echo $stats['tertunda']; ?>,
-                    <?php echo $stats['diterima']; ?>,
-                    <?php echo $stats['ditolak']; ?>
-                ],
-                backgroundColor: ['#FCD34D', '#34D399', '#EF4444'],
-                borderWidth: 0
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        usePointStyle: true,
-                        padding: 20
-                    }
-                }
+    <script>
+        // Chart configuration
+        const ctx = document.getElementById('statusChart').getContext('2d');
+        const statusChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Tertunda', 'Diterima', 'Ditolak'],
+                datasets: [{
+                    data: [
+                        <?php echo $stats['tertunda']; ?>,
+                        <?php echo $stats['diterima']; ?>,
+                        <?php echo $stats['ditolak']; ?>
+                    ],
+                    backgroundColor: ['#FCD34D', '#34D399', '#EF4444'],
+                    borderWidth: 0
+                }]
             },
-            cutout: '70%'
-        }
-    });
-</script>
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+    </script>
 
-<?php include '../../include/footer.php'; ?>
+    <?php include '../../include/footer.php'; ?>
+</body>
+
+</html>

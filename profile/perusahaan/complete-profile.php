@@ -40,78 +40,93 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-include "../../include/header.php";
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<div class="min-h-screen bg-gray-50 py-12">
-    <div class="max-w-4xl mx-auto bg-white shadow rounded-lg p-8">
-        <h1 class="text-2xl font-semibold mb-6">Complete Company Profile</h1>
-        <?php if (!empty($error_message)): ?>
-            <div class="bg-red-100 text-red-600 p-4 rounded mb-6">
-                <?php echo htmlspecialchars($error_message); ?>
-            </div>
-        <?php endif; ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Profile</title>
+</head>
 
-        <form method="POST" action="">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Nama -->
-                <div>
-                    <label for="nama" class="block text-sm font-medium text-gray-700">Company Name</label>
-                    <input type="text" name="nama" id="nama" required class="mt-1 p-2 w-full border rounded"
-                        value="<?php echo htmlspecialchars($_POST['nama'] ?? ''); ?>">
+<body>
+
+    <?php
+    include "../../include/header.php"; ?>
+    <div class="min-h-screen bg-gray-50 py-12">
+        <div class="max-w-4xl mx-auto bg-white shadow rounded-lg p-8">
+            <h1 class="text-2xl font-semibold mb-6">Complete Company Profile</h1>
+            <?php if (!empty($error_message)): ?>
+                <div class="bg-red-100 text-red-600 p-4 rounded mb-6">
+                    <?php echo htmlspecialchars($error_message); ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="POST" action="">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Nama -->
+                    <div>
+                        <label for="nama" class="block text-sm font-medium text-gray-700">Company Name</label>
+                        <input type="text" name="nama" id="nama" required class="mt-1 p-2 w-full border rounded"
+                            value="<?php echo htmlspecialchars($_POST['nama'] ?? ''); ?>">
+                    </div>
+
+                    <!-- Email -->
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                        <input type="email" name="email" id="email" required class="mt-1 p-2 w-full border rounded"
+                            value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+                    </div>
+
+                    <!-- Telepon -->
+                    <div>
+                        <label for="telepon" class="block text-sm font-medium text-gray-700">Telephone</label>
+                        <input type="text" name="telepon" id="telepon" class="mt-1 p-2 w-full border rounded"
+                            value="<?php echo htmlspecialchars($_POST['telepon'] ?? ''); ?>">
+                    </div>
+
+                    <!-- Website -->
+                    <div>
+                        <label for="website" class="block text-sm font-medium text-gray-700">Website</label>
+                        <input type="url" name="website" id="website" class="mt-1 p-2 w-full border rounded"
+                            value="<?php echo htmlspecialchars($_POST['website'] ?? ''); ?>">
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="md:col-span-2">
+                        <label for="alamat" class="block text-sm font-medium text-gray-700">Address</label>
+                        <input type="text" name="alamat" id="alamat" required class="mt-1 p-2 w-full border rounded"
+                            value="<?php echo htmlspecialchars($_POST['alamat'] ?? ''); ?>">
+                    </div>
+
+                    <!-- Tanggal Berdiri -->
+                    <div>
+                        <label for="tanggal_berdiri" class="block text-sm font-medium text-gray-700">Established
+                            Date</label>
+                        <input type="date" name="tanggal_berdiri" id="tanggal_berdiri"
+                            class="mt-1 p-2 w-full border rounded"
+                            value="<?php echo htmlspecialchars($_POST['tanggal_berdiri'] ?? ''); ?>">
+                    </div>
+
+                    <!-- Deskripsi -->
+                    <div class="md:col-span-2">
+                        <label for="deskripsi" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea name="deskripsi" id="deskripsi" required class="mt-1 p-2 w-full border rounded"
+                            rows="4"><?php echo htmlspecialchars($_POST['deskripsi'] ?? ''); ?></textarea>
+                    </div>
                 </div>
 
-                <!-- Email -->
-                <div>
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" name="email" id="email" required class="mt-1 p-2 w-full border rounded"
-                        value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+                <div class="mt-6 text-right">
+                    <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        Save
+                    </button>
                 </div>
-
-                <!-- Telepon -->
-                <div>
-                    <label for="telepon" class="block text-sm font-medium text-gray-700">Telephone</label>
-                    <input type="text" name="telepon" id="telepon" class="mt-1 p-2 w-full border rounded"
-                        value="<?php echo htmlspecialchars($_POST['telepon'] ?? ''); ?>">
-                </div>
-
-                <!-- Website -->
-                <div>
-                    <label for="website" class="block text-sm font-medium text-gray-700">Website</label>
-                    <input type="url" name="website" id="website" class="mt-1 p-2 w-full border rounded"
-                        value="<?php echo htmlspecialchars($_POST['website'] ?? ''); ?>">
-                </div>
-
-                <!-- Alamat -->
-                <div class="md:col-span-2">
-                    <label for="alamat" class="block text-sm font-medium text-gray-700">Address</label>
-                    <input type="text" name="alamat" id="alamat" required class="mt-1 p-2 w-full border rounded"
-                        value="<?php echo htmlspecialchars($_POST['alamat'] ?? ''); ?>">
-                </div>
-
-                <!-- Tanggal Berdiri -->
-                <div>
-                    <label for="tanggal_berdiri" class="block text-sm font-medium text-gray-700">Established Date</label>
-                    <input type="date" name="tanggal_berdiri" id="tanggal_berdiri"
-                        class="mt-1 p-2 w-full border rounded"
-                        value="<?php echo htmlspecialchars($_POST['tanggal_berdiri'] ?? ''); ?>">
-                </div>
-
-                <!-- Deskripsi -->
-                <div class="md:col-span-2">
-                    <label for="deskripsi" class="block text-sm font-medium text-gray-700">Description</label>
-                    <textarea name="deskripsi" id="deskripsi" required class="mt-1 p-2 w-full border rounded"
-                        rows="4"><?php echo htmlspecialchars($_POST['deskripsi'] ?? ''); ?></textarea>
-                </div>
-            </div>
-
-            <div class="mt-6 text-right">
-                <button type="submit" class="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-                    Save
-                </button>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
 
-<?php include '../../include/footer.php'; ?>
+    <?php include '../../include/footer.php'; ?>
+</body>
+
+</html>

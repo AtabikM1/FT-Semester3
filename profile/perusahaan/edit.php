@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
 }
 
 $username = $_SESSION['username'];
-include "../../include/header.php";
+
 
 // Periksa apakah pengguna sudah ada di tabel perusahaan
 $sql_check = "SELECT * FROM perusahaan WHERE User_username = ?";
@@ -100,6 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="bg-gray-50 min-h-screen">
+    <?php include "../../include/header.php"; ?>
     <div class="max-w-2xl mx-auto px-4 py-12">
         <div class="bg-white rounded-xl shadow-md overflow-hidden p-8">
             <h1 class="text-2xl font-semibold mb-6 text-center">Edit Profil Perusahaan</h1>
@@ -181,6 +182,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             });
             <?php unset($_SESSION['error']); endif; ?>
     </script>
+    <?php include "../../include/footer.php"; ?>
+
 </body>
 
 </html>

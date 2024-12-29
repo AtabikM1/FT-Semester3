@@ -1,7 +1,7 @@
 <?php
 session_start();
 include '../include/koneksi.php';
-include '../include/header.php';
+
 // Memastikan user sudah login
 if (isset($_SESSION['username'])) {
     $user_id = $_SESSION['username']; // Menggunakan session untuk user_id
@@ -71,6 +71,7 @@ if (sqlsrv_execute($stmt_perusahaan)) {
 </head>
 
 <body class="bg-gray-50 pt-20 ">
+    <?php include '../include/header.php';?>
     <div class="max-w-7xl mx-auto px-4 py-12 min-h-screen">
         <!-- Header Section -->
         <br>
@@ -255,8 +256,8 @@ if (sqlsrv_execute($stmt_perusahaan)) {
         }
 
     </script>
+    <?php include '../include/footer.php'; ?>
+
 </body>
 
 </html>
-
-<?php include '../include/footer.php'; ?>

@@ -118,8 +118,7 @@ $total_pages = ceil($total_row / $limit);
             <?php endfor; ?>
         </div>
     </div>
+    <?php include '../include/footer.php'; ?>
 </body>
 
 </html>
-
-<?php include '../include/footer.php'; ?>

@@ -60,128 +60,145 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id']) && isset($_POST[
 }
 
 // Menyertakan header
-include "./header.php";
 ?>
 
 <!-- HTML Content -->
-<br><br><br>
-<div class="max-w-7xl mx-auto p-6">
-    <!-- Daftar Pelamar -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Applicants</h2>
-    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
-        <table class="min-w-full table-auto">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-6 py-3 text-left">Username</th>
-                    <th class="px-6 py-3 text-left">Name</th>
-                    <th class="px-6 py-3 text-left">Role</th>
-                    <th class="px-6 py-3 text-left">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($user = sqlsrv_fetch_array($result_pelamar, SQLSRV_FETCH_ASSOC)): ?>
-                    <tr class="border-b">
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($user['username']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($user['nama']); ?></td>
-                        <td class="px-6 py-4">Applicant</td>
-                        <td class="px-6 py-4">
-                            <button class="bg-red-500 text-white px-4 py-2 rounded delete-btn"
-                                data-id="<?php echo $user['username']; ?>" data-type="pelamar">Delete</button>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div>
 
-    <!-- Daftar Perusahaan -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Companies</h2>
-    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
-        <table class="min-w-full table-auto">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-6 py-3 text-left">Username</th>
-                    <th class="px-6 py-3 text-left">Company Name</th>
-                    <th class="px-6 py-3 text-left">Role</th>
-                    <th class="px-6 py-3 text-left">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($user = sqlsrv_fetch_array($result_perusahaan, SQLSRV_FETCH_ASSOC)): ?>
-                    <tr class="border-b">
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($user['username']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($user['nama']); ?></td>
-                        <td class="px-6 py-4">Company</td>
-                        <td class="px-6 py-4">
-                            <button class="bg-red-500 text-white px-4 py-2 rounded delete-btn"
-                                data-id="<?php echo $user['username']; ?>" data-type="perusahaan">Delete</button>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
 
-<!-- Modal Konfirmasi Hapus -->
-<div id="deleteModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
-    <div class="bg-white p-6 rounded shadow-lg">
-        <h3 class="text-lg font-bold mb-4">Konfirmasi Penghapusan</h3>
-        <p id="deleteMessage">Apakah Anda yakin ingin menghapus user ini?</p>
-        <div class="mt-4">
-            <button id="confirmDelete" class="bg-red-500 text-white px-4 py-2 rounded">Hapus</button>
-            <button id="cancelDelete" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Batal</button>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <? include "./header.php"; ?>
+
+    <br><br><br>
+    <div class="max-w-7xl mx-auto p-6">
+        <!-- Daftar Pelamar -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Applicants</h2>
+        <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Username</th>
+                        <th class="px-6 py-3 text-left">Name</th>
+                        <th class="px-6 py-3 text-left">Role</th>
+                        <th class="px-6 py-3 text-left">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($user = sqlsrv_fetch_array($result_pelamar, SQLSRV_FETCH_ASSOC)): ?>
+                        <tr class="border-b">
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($user['username']); ?></td>
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($user['nama']); ?></td>
+                            <td class="px-6 py-4">Applicant</td>
+                            <td class="px-6 py-4">
+                                <button class="bg-red-500 text-white px-4 py-2 rounded delete-btn"
+                                    data-id="<?php echo $user['username']; ?>" data-type="pelamar">Delete</button>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Daftar Perusahaan -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Companies</h2>
+        <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Username</th>
+                        <th class="px-6 py-3 text-left">Company Name</th>
+                        <th class="px-6 py-3 text-left">Role</th>
+                        <th class="px-6 py-3 text-left">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($user = sqlsrv_fetch_array($result_perusahaan, SQLSRV_FETCH_ASSOC)): ?>
+                        <tr class="border-b">
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($user['username']); ?></td>
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($user['nama']); ?></td>
+                            <td class="px-6 py-4">Company</td>
+                            <td class="px-6 py-4">
+                                <button class="bg-red-500 text-white px-4 py-2 rounded delete-btn"
+                                    data-id="<?php echo $user['username']; ?>" data-type="perusahaan">Delete</button>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function () {
-        let userId = '';
-        let userType = '';
+    <!-- Modal Konfirmasi Hapus -->
+    <div id="deleteModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center hidden">
+        <div class="bg-white p-6 rounded shadow-lg">
+            <h3 class="text-lg font-bold mb-4">Confirm Delete</h3>
+            <p id="deleteMessage">Are you sure to delete this account?</p>
+            <div class="mt-4">
+                <button id="confirmDelete" class="bg-red-500 text-white px-4 py-2 rounded">Delete</button>
+                <button id="cancelDelete" class="bg-gray-500 text-white px-4 py-2 rounded ml-2">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-        // Menampilkan modal
-        $('.delete-btn').click(function () {
-            userId = $(this).data('id');
-            userType = $(this).data('type');
-            $('#deleteMessage').text(`Apakah Anda yakin ingin menghapus ${userType} dengan username ${userId}?`);
-            $('#deleteModal').removeClass('hidden');
-        });
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let userId = '';
+            let userType = '';
 
-        // Menangani konfirmasi hapus
-        $('#confirmDelete').click(function () {
-            $.ajax({
-                type: 'POST',
-                url: '', // Menggunakan file yang sama
-                data: { id: userId, type: userType },
-                success: function (response) {
-                    const res = JSON.parse(response);
-                    if (res.status == 'success') {
-                        // Menghilangkan baris yang dihapus
-                        $(`button[data-id="${userId}"]`).closest('tr').remove();
-                        alert(res.message);
-                    } else {
-                        alert(res.message);
+            // Menampilkan modal
+            $('.delete-btn').click(function () {
+                userId = $(this).data('id');
+                userType = $(this).data('type');
+                $('#deleteMessage').text(`Are you sure you want delete ${userType} with username ${userId}?`);
+                $('#deleteModal').removeClass('hidden');
+            });
+
+            // Menangani konfirmasi hapus
+            $('#confirmDelete').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '', // Menggunakan file yang sama
+                    data: { id: userId, type: userType },
+                    success: function (response) {
+                        const res = JSON.parse(response);
+                        if (res.status == 'success') {
+                            // Menghilangkan baris yang dihapus
+                            $(`button[data-id="${userId}"]`).closest('tr').remove();
+                            alert(res.message);
+                        } else {
+                            alert(res.message);
+                        }
+                        // Reset userId dan userType setelah penghapusan
+                        userId = '';
+                        userType = '';
+                        $('#deleteModal').addClass('hidden');
+                    },
+                    error: function () {
+                        alert('Error occured while delete.');
+                        $('#deleteModal').addClass('hidden');
                     }
-                    // Reset userId dan userType setelah penghapusan
-                    userId = '';
-                    userType = '';
-                    $('#deleteModal').addClass('hidden');
-                },
-                error: function () {
-                    alert('Terjadi kesalahan saat menghapus user.');
-                    $('#deleteModal').addClass('hidden');
-                }
+                });
+            });
+
+            // Menutup modal
+            $('#cancelDelete').click(function () {
+                // Reset userId dan userType jika batal
+                userId = '';
+                userType = '';
+                $('#deleteModal').addClass('hidden');
             });
         });
+    </script>
+    <?php include '../../include/koneksi.php'; ?>
+</body>
 
-        // Menutup modal
-        $('#cancelDelete').click(function () {
-            // Reset userId dan userType jika batal
-            userId = '';
-            userType = '';
-            $('#deleteModal').addClass('hidden');
-        });
-    });
-</script>
+</html>

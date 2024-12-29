@@ -556,9 +556,9 @@ if ($stmt) {
                     class="w-fit mx-auto text-amber-400 font-semibold text-lg mb-4 flex justify-center items-center px-4 py-2 bg-gray-100 rounded-full">Latest
                     Updates</span>
                 <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-                    Artikel Terbaru
+                    Latest Artikel
                 </h2>
-                <p class="text-gray-600 text-lg">Temukan insight dan tips karir terbaru untuk mengembangkan karirmu</p>
+                <p class="text-gray-600 text-lg">Find insight and tips to growth your career</p>
             </div>
 
             <!-- Articles Grid -->

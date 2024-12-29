@@ -119,152 +119,166 @@ $sql_loker_stats = "
 $stmt_loker_stats = sqlsrv_prepare($conn, $sql_loker_stats, array($_SESSION['username']));
 sqlsrv_execute($stmt_loker_stats);
 
-include "../include/header.php";
+
 ?>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<br><br><br>
-<!-- Dashboard Content -->
-<div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
+<!DOCTYPE html>
+<html lang="en">
 
-    <!-- List of Applicants -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Applicants</h2>
-    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
-        <table class="min-w-full table-auto">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-6 py-3 text-left">Applicant Name</th>
-                    <th class="px-6 py-3 text-left">Job</th>
-                    <th class="px-6 py-3 text-left">Status</th>
-                    <th class="px-6 py-3 text-left">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($pelamar = sqlsrv_fetch_array($stmt_pelamar, SQLSRV_FETCH_ASSOC)): ?>
-                    <tr class="border-b">
-                        <td class="px-6 py-4">
-                            <a href="#" onclick="showPelamarDetail('<?php echo $pelamar['pelamar_username']; ?>')">
-                                <?php echo htmlspecialchars($pelamar['pelamar_nama']); ?>
-                            </a>
-                        </td>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['judul_loker']); ?></td>
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['deskripsi_status']); ?></td>
-                        <td class="px-6 py-4">
-                            <?php if ((int) $pelamar['status_lamaran'] === 1): ?>
-                                <form id="approveForm" method="POST" style="display:inline;">
-                                    <input type="hidden" name="pelamar_id" value="<?php echo $pelamar['pelamar_username']; ?>">
-                                    <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
-                                    <button type="button" class="bg-green-500 text-white px-4 py-2 rounded"
-                                        onclick="openModal('approve', '<?php echo $pelamar['pelamar_username']; ?>', '<?php echo $pelamar['Loker_idLoker']; ?>')">Approve</button>
-                                </form>
-                                <form id="rejectForm" method="POST" style="display:inline;">
-                                    <input type="hidden" name="pelamar_id" value="<?php echo $pelamar['pelamar_username']; ?>">
-                                    <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
-                                    <button type="button" class="bg-red-500 text-white px-4 py-2 rounded"
-                                        onclick="openModal('reject', '<?php echo $pelamar['pelamar_username']; ?>', '<?php echo $pelamar['Loker_idLoker']; ?>')">Reject</button>
-                                </form>
-                            <?php else: ?>
-                                <a href="mailto:<?php echo htmlspecialchars($pelamar['pelamar_email'] ?? ''); ?>?subject=Status Lamaran&body=Halo, %0A%0AKami ingin memberitahukan bahwa status lamaran Anda untuk posisi <?php echo htmlspecialchars($pelamar['judul_loker'] ?? ''); ?> adalah <?php echo htmlspecialchars($pelamar['deskripsi_status'] ?? ''); ?>.%0A%0ATerima kasih."
-                                    class="bg-blue-500 text-white px-4 py-2 rounded">
-                                    Contact the applicant's email.
+<body>
+
+    <?php include "../include/header.php"; ?>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <br><br><br>
+    <!-- Dashboard Content -->
+    <div class="max-w-7xl mx-auto p-6 flex flex-col min-h-screen">
+
+        <!-- List of Applicants -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">List of Applicants</h2>
+        <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Applicant Name</th>
+                        <th class="px-6 py-3 text-left">Job</th>
+                        <th class="px-6 py-3 text-left">Status</th>
+                        <th class="px-6 py-3 text-left">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($pelamar = sqlsrv_fetch_array($stmt_pelamar, SQLSRV_FETCH_ASSOC)): ?>
+                        <tr class="border-b">
+                            <td class="px-6 py-4">
+                                <a href="#" onclick="showPelamarDetail('<?php echo $pelamar['pelamar_username']; ?>')">
+                                    <?php echo htmlspecialchars($pelamar['pelamar_nama']); ?>
                                 </a>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div>
+                            </td>
 
-    <!-- Statistik Lowongan -->
-    <h2 class="text-2xl font-bold text-gray-800 mb-4">My Job</h2>
-    <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
-        <table class="min-w-full table-auto">
-            <thead class="bg-gray-200">
-                <tr>
-                    <th class="px-6 py-3 text-left">Job</th>
-                    <th class="px-6 py-3 text-left">Number of Applicants</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php while ($loker_stats = sqlsrv_fetch_array($stmt_loker_stats, SQLSRV_FETCH_ASSOC)): ?>
-                    <tr class="border-b">
-                        <td class="px-6 py-4"><?php echo htmlspecialchars($loker_stats['judul_loker']); ?></td>
-                        <td class="px-6 py-4"><?php echo $loker_stats['jumlah_pelamar']; ?></td>
-                    </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
-    </div>
-</div>
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['judul_loker']); ?></td>
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($pelamar['deskripsi_status']); ?></td>
+                            <td class="px-6 py-4">
+                                <?php if ((int) $pelamar['status_lamaran'] === 1): ?>
+                                    <form id="approveForm" method="POST" style="display:inline;">
+                                        <input type="hidden" name="pelamar_id"
+                                            value="<?php echo $pelamar['pelamar_username']; ?>">
+                                        <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
+                                        <button type="button" class="bg-green-500 text-white px-4 py-2 rounded"
+                                            onclick="openModal('approve', '<?php echo $pelamar['pelamar_username']; ?>', '<?php echo $pelamar['Loker_idLoker']; ?>')">Approve</button>
+                                    </form>
+                                    <form id="rejectForm" method="POST" style="display:inline;">
+                                        <input type="hidden" name="pelamar_id"
+                                            value="<?php echo $pelamar['pelamar_username']; ?>">
+                                        <input type="hidden" name="loker_id" value="<?php echo $pelamar['Loker_idLoker']; ?>">
+                                        <button type="button" class="bg-red-500 text-white px-4 py-2 rounded"
+                                            onclick="openModal('reject', '<?php echo $pelamar['pelamar_username']; ?>', '<?php echo $pelamar['Loker_idLoker']; ?>')">Reject</button>
+                                    </form>
+                                <?php else: ?>
+                                    <a href="mailto:<?php echo htmlspecialchars($pelamar['pelamar_email'] ?? ''); ?>?subject=Status Lamaran&body=Halo, %0A%0AKami ingin memberitahukan bahwa status lamaran Anda untuk posisi <?php echo htmlspecialchars($pelamar['judul_loker'] ?? ''); ?> adalah <?php echo htmlspecialchars($pelamar['deskripsi_status'] ?? ''); ?>.%0A%0ATerima kasih."
+                                        class="bg-blue-500 text-white px-4 py-2 rounded">
+                                        Contact the applicant's email.
+                                    </a>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
 
-<!-- Modal for Dynamic Actions (Pelamar Detail, Approve/Reject) -->
-<div id="modal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50 hidden">
-    <div class="bg-white p-6 rounded-lg shadow-lg">
-        <h3 class="text-xl font-semibold mb-4" id="modalTitle">Modal Title</h3>
-        <div id="modalContent" class="text-sm"></div> <!-- Konten modal akan ditambahkan di sini -->
-        <div class="flex justify-between">
-            <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Close</button>
-            <button id="confirmButton" class="bg-green-500 text-black px-4 py-2 rounded hidden">Confirm</button>
-            <!-- Hide this for Pelamar Detail -->
+        <!-- Statistik Lowongan -->
+        <h2 class="text-2xl font-bold text-gray-800 mb-4">My Job</h2>
+        <div class="overflow-x-auto bg-white shadow rounded-lg mb-6">
+            <table class="min-w-full table-auto">
+                <thead class="bg-gray-200">
+                    <tr>
+                        <th class="px-6 py-3 text-left">Job</th>
+                        <th class="px-6 py-3 text-left">Number of Applicants</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php while ($loker_stats = sqlsrv_fetch_array($stmt_loker_stats, SQLSRV_FETCH_ASSOC)): ?>
+                        <tr class="border-b">
+                            <td class="px-6 py-4"><?php echo htmlspecialchars($loker_stats['judul_loker']); ?></td>
+                            <td class="px-6 py-4"><?php echo $loker_stats['jumlah_pelamar']; ?></td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
+
+    <!-- Modal for Dynamic Actions (Pelamar Detail, Approve/Reject) -->
+    <div id="modal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 z-50 hidden">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h3 class="text-xl font-semibold mb-4" id="modalTitle">Modal Title</h3>
+            <div id="modalContent" class="text-sm"></div> <!-- Konten modal akan ditambahkan di sini -->
+            <div class="flex justify-between">
+                <button onclick="closeModal()" class="bg-gray-400 text-white px-4 py-2 rounded">Close</button>
+                <button id="confirmButton" class="bg-green-500 text-black px-4 py-2 rounded hidden">Confirm</button>
+                <!-- Hide this for Pelamar Detail -->
+            </div>
+        </div>
+    </div>
 
 
-<script>
-    function openModal(action, pelamar_id, loker_id) {
-        const modal = document.getElementById('modal');
-        const modalTitle = document.getElementById('modalTitle');
-        const modalContent = document.getElementById('modalContent');
-        const confirmButton = document.getElementById('confirmButton');
+    <script>
+        function openModal(action, pelamar_id, loker_id) {
+            const modal = document.getElementById('modal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const confirmButton = document.getElementById('confirmButton');
 
-        // Atur judul modal berdasarkan tindakan
-        if (action === 'approve') {
-            modalTitle.textContent = 'Are you sure you want to approve this application?';
-        } else {
-            modalTitle.textContent = 'Are you sure you want to reject this application?';
-        }
+            // Atur judul modal berdasarkan tindakan
+            if (action === 'approve') {
+                modalTitle.textContent = 'Are you sure you want to approve this application?';
+            } else {
+                modalTitle.textContent = 'Are you sure you want to reject this application?';
+            }
 
-        // Tambahkan aksi ke tombol Confirm
-        confirmButton.onclick = function () {
-            const form = document.createElement('form');
-            form.method = 'POST';
-            form.innerHTML = `
+            // Tambahkan aksi ke tombol Confirm
+            confirmButton.onclick = function () {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.innerHTML = `
             <input type="hidden" name="pelamar_id" value="${pelamar_id}">
             <input type="hidden" name="loker_id" value="${loker_id}">
             <input type="hidden" name="action" value="${action}">
         `;
-            document.body.appendChild(form);
-            form.submit();
-        };
+                document.body.appendChild(form);
+                form.submit();
+            };
 
-        // Tampilkan tombol Confirm dan modal
-        confirmButton.classList.remove('hidden'); // Pastikan tombol tidak tersembunyi
-        modal.classList.remove('hidden');
-    }
+            // Tampilkan tombol Confirm dan modal
+            confirmButton.classList.remove('hidden'); // Pastikan tombol tidak tersembunyi
+            modal.classList.remove('hidden');
+        }
 
 
-    function closeModal() {
-        document.getElementById('modal').classList.add('hidden');
-    }
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
 
-    function showPelamarDetail(username) {
-        fetch('', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username })
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    // Display data in modal
-                    document.getElementById('modalTitle').textContent = 'Pelamar Detail';
+        function showPelamarDetail(username) {
+            fetch('', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        // Display data in modal
+                        document.getElementById('modalTitle').textContent = 'Pelamar Detail';
 
-                    const modalContent = `
+                        const modalContent = `
         <div class="space-y-4">
             <div class="flex items-center space-x-4">
                 <img src="${data.foto}" alt="Foto Pelamar" class="w-32 h-32 object-cover rounded-full border-2 border-gray-300">
@@ -300,12 +314,16 @@ include "../include/header.php";
         </div>
     `;
 
-                    document.getElementById('modalContent').innerHTML = modalContent;
+                        document.getElementById('modalContent').innerHTML = modalContent;
 
-                    // Show the modal
-                    document.getElementById('modal').classList.remove('hidden');
-                }
+                        // Show the modal
+                        document.getElementById('modal').classList.remove('hidden');
+                    }
 
-            });
-    }
-</script>
+                });
+        }
+    </script>
+    <?php include '../include/footer.php'; ?>
+</body>
+
+</html>

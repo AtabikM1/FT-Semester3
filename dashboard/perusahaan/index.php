@@ -101,184 +101,199 @@ $stmt_stats = sqlsrv_prepare($conn, $sql_stats, array($_SESSION['username']));
 sqlsrv_execute($stmt_stats);
 $stats = sqlsrv_fetch_array($stmt_stats, SQLSRV_FETCH_ASSOC);
 
-include "../../include/header.php";
+
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- Main Dashboard -->
-<div class="min-h-screen bg-slate-50 pt-24 relative">
-    <?php if ($profil_incomplete): ?>
-        <div class="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg max-w-4xl mx-auto mb-8">
-            <strong>Profil Belum Lengkap!</strong>
-            <p>Silakan lengkapi profil perusahaan Anda terlebih dahulu untuk mengakses fitur ini.</p>
-        </div>
-    <?php else: ?>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute -top-10 w-full">
-            <path fill="#3b82f6" fill-opacity="0.1"
-                d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
-            </path>
-        </svg>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <!-- Header Section -->
-            <div class="mb-8">
-                <h1 class="text-3xl font-bold text-slate-800">Company Dashboard</h1>
-                <p class="mt-2 text-slate-600">Manage Your Jobs and Applicants</p>
+<body>
+
+
+    <?php include "../../include/header.php"; ?>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Main Dashboard -->
+    <div class="min-h-screen bg-slate-50 pt-24 relative">
+        <?php if ($profil_incomplete): ?>
+            <div class="p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg max-w-4xl mx-auto mb-8">
+                <strong>Profil Belum Lengkap!</strong>
+                <p>Silakan lengkapi profil perusahaan Anda terlebih dahulu untuk mengakses fitur ini.</p>
             </div>
+        <?php else: ?>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="absolute -top-10 w-full">
+                <path fill="#3b82f6" fill-opacity="0.1"
+                    d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+                </path>
+            </svg>
 
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <!-- Tertunda Card -->
-                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-sm font-medium text-slate-600">Pending Applications</p>
-                            <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['tertunda']; ?></h3>
-                            <p class="text-sm text-slate-500 mt-1">
-                                <?php echo round(($stats['tertunda'] / $stats['total']) * 100, 1); ?>% of total
-                            </p>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <!-- Header Section -->
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-slate-800">Company Dashboard</h1>
+                    <p class="mt-2 text-slate-600">Manage Your Jobs and Applicants</p>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Tertunda Card -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm font-medium text-slate-600">Pending Applications</p>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['tertunda']; ?></h3>
+                                <p class="text-sm text-slate-500 mt-1">
+                                    <?php echo round(($stats['tertunda'] / $stats['total']) * 100, 1); ?>% of total
+                                </p>
+                            </div>
+                            <div class="bg-yellow-50 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
                         </div>
-                        <div class="bg-yellow-50 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
+                    </div>
+
+                    <!-- Diterima Card -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm font-medium text-slate-600">Accepted Applications</p>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['diterima']; ?></h3>
+                                <p class="text-sm text-slate-500 mt-1">
+                                    <?php echo round(($stats['diterima'] / $stats['total']) * 100, 1); ?>% of Total
+                                </p>
+                            </div>
+                            <div class="bg-green-50 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ditolak Card -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-sm font-medium text-slate-600">Rejected Applications</p>
+                                <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['ditolak']; ?></h3>
+                                <p class="text-sm text-slate-500 mt-1">
+                                    <?php echo round(($stats['ditolak'] / $stats['total']) * 100, 1); ?>% of Total
+                                </p>
+                            </div>
+                            <div class="bg-red-50 p-3 rounded-lg">
+                                <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Diterima Card -->
-                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-sm font-medium text-slate-600">Accepted Applications</p>
-                            <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['diterima']; ?></h3>
-                            <p class="text-sm text-slate-500 mt-1">
-                                <?php echo round(($stats['diterima'] / $stats['total']) * 100, 1); ?>% of Total
-                            </p>
-                        </div>
-                        <div class="bg-green-50 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
+                <!-- Charts Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Lowongan Chart -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <h2 class="text-xl font-semibold text-slate-800 mb-6">Most Popular Job Listings</h2>
+                        <canvas id="lokerChart" height="300"></canvas>
                     </div>
-                </div>
 
-                <!-- Ditolak Card -->
-                <div class="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-all border border-slate-200">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <p class="text-sm font-medium text-slate-600">Rejected Applications</p>
-                            <h3 class="text-2xl font-bold text-slate-800 mt-2"><?php echo $stats['ditolak']; ?></h3>
-                            <p class="text-sm text-slate-500 mt-1">
-                                <?php echo round(($stats['ditolak'] / $stats['total']) * 100, 1); ?>% of Total
-                            </p>
-                        </div>
-                        <div class="bg-red-50 p-3 rounded-lg">
-                            <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                        </div>
+                    <!-- Status Applications Chart -->
+                    <div class="bg-white rounded-xl p-6 shadow-sm">
+                        <h2 class="text-xl font-semibold text-slate-800 mb-6">Application Status</h2>
+                        <canvas id="lokerChart2" height="300"></canvas>
                     </div>
                 </div>
             </div>
+        <?php endif; ?>
+    </div>
 
-            <!-- Charts Section -->
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <!-- Lowongan Chart -->
-                <div class="bg-white rounded-xl p-6 shadow-sm">
-                    <h2 class="text-xl font-semibold text-slate-800 mb-6">Most Popular Job Listings</h2>
-                    <canvas id="lokerChart" height="300"></canvas>
-                </div>
+    <script>
+        // Dummy data untuk chart
+        var lokerLabels = ['Frontend Developer', 'Backend Developer', 'UI/UX Designer', 'Project Manager'];
+        var lokerData = [25, 18, 15, 12];
 
-                <!-- Status Applications Chart -->
-                <div class="bg-white rounded-xl p-6 shadow-sm">
-                    <h2 class="text-xl font-semibold text-slate-800 mb-6">Application Status</h2>
-                    <canvas id="lokerChart2" height="300"></canvas>
-                </div>
-            </div>
-        </div>
-    <?php endif; ?>
-</div>
-
-<script>
-    // Dummy data untuk chart
-    var lokerLabels = ['Frontend Developer', 'Backend Developer', 'UI/UX Designer', 'Project Manager'];
-    var lokerData = [25, 18, 15, 12];
-
-    // Chart configurations
-    const lokerChart = new Chart(document.getElementById('lokerChart'), {
-        type: 'bar',
-        data: {
-            labels: lokerLabels,
-            datasets: [{
-                label: 'Jumlah Pelamar',
-                data: lokerData,
-                backgroundColor: '#3B82F6',
-                borderColor: '#2563EB',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
-                }
+        // Chart configurations
+        const lokerChart = new Chart(document.getElementById('lokerChart'), {
+            type: 'bar',
+            data: {
+                labels: lokerLabels,
+                datasets: [{
+                    label: 'Jumlah Pelamar',
+                    data: lokerData,
+                    backgroundColor: '#3B82F6',
+                    borderColor: '#2563EB',
+                    borderWidth: 1
+                }]
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
                         display: false
                     }
                 },
-                x: {
-                    grid: {
-                        display: false
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
-        }
-    });
+        });
 
-    // Chart kedua dengan tipe berbeda
-    const lokerChart2 = new Chart(document.getElementById('lokerChart2'), {
-        type: 'line',
-        data: {
-            labels: lokerLabels,
-            datasets: [{
-                label: 'Jumlah Pelamar',
-                data: lokerData,
-                backgroundColor: '#2196F3',
-                borderColor: '#1976D2',
-                borderWidth: 2,
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
-                }
+        // Chart kedua dengan tipe berbeda
+        const lokerChart2 = new Chart(document.getElementById('lokerChart2'), {
+            type: 'line',
+            data: {
+                labels: lokerLabels,
+                datasets: [{
+                    label: 'Jumlah Pelamar',
+                    data: lokerData,
+                    backgroundColor: '#2196F3',
+                    borderColor: '#1976D2',
+                    borderWidth: 2,
+                    fill: false
+                }]
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
                         display: false
                     }
                 },
-                x: {
-                    grid: {
-                        display: false
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
                     }
                 }
             }
-        }
-    });
-</script>
+        });
+    </script>
 
-<?php include '../../include/footer.php'; ?>
+    <?php include '../../include/footer.php'; ?>
+</body>
+
+</html>
